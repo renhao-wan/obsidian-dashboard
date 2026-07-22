@@ -1,7 +1,7 @@
 import { Notice } from 'obsidian';
-import type DashboardPlugin from './core/main';
-import type { DashboardSettings } from './core/types';
-import { t } from './i18n';
+import type DashboardPlugin from '../core/main';
+import type { DashboardSettings } from '../core/types';
+import { t } from '../i18n';
 
 export type PomodoroPhase = 'work' | 'short-break' | 'long-break';
 export type PomodoroStatus = 'idle' | 'running' | 'paused';

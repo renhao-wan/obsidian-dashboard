@@ -1,6 +1,6 @@
 import { App, Modal } from 'obsidian';
 import type { WeatherConfig } from './core/types';
-import { geocodeCity, type GeocodeResult } from './weather-service';
+import { geocodeCity, type GeocodeResult } from './services/weather';
 import { t } from './i18n';
 
 export class WeatherConfigModal extends Modal {

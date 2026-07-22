@@ -1,5 +1,5 @@
 import { Solar } from 'lunar-typescript';
-import { fetchHolidayData, getHolidayForDate, type HolidayInfo } from './holiday-service';
+import { fetchHolidayData, getHolidayForDate, type HolidayInfo } from './services/holiday';
 import { getTodayAlmanac } from './lunar-almanac';
 import { getLanguage } from './i18n';
 import type { App } from 'obsidian';

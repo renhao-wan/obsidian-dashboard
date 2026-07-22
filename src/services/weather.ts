@@ -1,6 +1,6 @@
 import { requestUrl } from 'obsidian';
-import type { WeatherConfig, WeatherData } from './core/types';
-import { getLanguage } from './i18n';
+import type { WeatherConfig, WeatherData } from '../core/types';
+import { getLanguage } from '../i18n';
 
 // ---------- API response shapes ----------
 // `requestUrl(...).json` is typed `any`; these interfaces model each provider's

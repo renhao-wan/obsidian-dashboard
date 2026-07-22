@@ -2,7 +2,7 @@ import { App, Notice, PluginSettingTab, Setting } from 'obsidian';
 import type DashboardPlugin from './core/main';
 import { DEFAULT_SETTINGS, type DashboardSettings, type CountdownConfig } from './core/types';
 import { t, setLanguage, type Language } from './i18n';
-import { geocodeCity } from './weather-service';
+import { geocodeCity } from './services/weather';
 import { CountdownSettingsModal } from './countdown-modal';
 import { ConfirmModal } from './confirm-modal';
 

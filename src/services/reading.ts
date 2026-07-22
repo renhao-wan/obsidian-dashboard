@@ -1,6 +1,6 @@
 import { Notice } from 'obsidian';
-import type DashboardPlugin from './core/main';
-import { t } from './i18n';
+import type DashboardPlugin from '../core/main';
+import { t } from '../i18n';
 
 export type ReadingStatus = 'idle' | 'running' | 'paused';
 

@@ -10,14 +10,14 @@ import { resolveVaultImage } from './banner';
 import { attachFileSuggest } from './file-suggest';
 import { showConfirmDialog } from './confirm-dialog';
 import { attachNoteHover } from './hover-preview';
-import { fetchWeather, getCachedWeather, getWeatherEmoji, getWeatherDescription } from './weather-service';
-import { readTrackerData, computeStreak } from './tracker-service';
-import type { PomodoroService } from './pomodoro-service';
-import type { ReadingService } from './reading-service';
-import { searchBooks, downloadCoverAsBlobUrl } from './book-service';
-import { activityColor } from './pomodoro-service';
+import { fetchWeather, getCachedWeather, getWeatherEmoji, getWeatherDescription } from './services/weather';
+import { readTrackerData, computeStreak } from './services/tracker';
+import type { PomodoroService } from './services/pomodoro';
+import type { ReadingService } from './services/reading';
+import { searchBooks, downloadCoverAsBlobUrl } from './services/book';
+import { activityColor } from './services/pomodoro';
 import { renderSidebarLunarWidget } from './lunar-widget';
-import type { HolidayInfo } from './holiday-service';
+import type { HolidayInfo } from './services/holiday';
 import { CountdownSettingsModal } from './countdown-modal';
 import { Chart, LineController, LineElement, PointElement, BarController, BarElement, LinearScale, CategoryScale, Filler, Tooltip } from 'chart.js';
 
@@ -1046,7 +1046,7 @@ export function renderSidebarReading(
 		showReadingStats(widget.ownerDocument, service);
 	});
 
-	function showEndModal(book: import('./reading-service').BookInfo): void {
+	function showEndModal(book: import('./services/reading').BookInfo): void {
 		const elapsed = service.getElapsedSeconds();
 		openEndReadingModal(widget.ownerDocument, service, book, elapsed, () => refreshCards());
 	}
@@ -1062,7 +1062,7 @@ export function renderSidebarReading(
 function openEndReadingModal(
 	doc: Document,
 	service: ReadingService,
-	book: import('./reading-service').BookInfo,
+	book: import('./services/reading').BookInfo,
 	elapsedSeconds: number,
 	onDone: () => void,
 ): void {
@@ -1240,7 +1240,7 @@ function openEndReadingModal(
 function openEditBookInfo(
 	doc: Document,
 	service: ReadingService,
-	book: import('./reading-service').BookInfo,
+	book: import('./services/reading').BookInfo,
 	onDone: () => void,
 ): void {
 	const overlay = doc.body.createDiv({ cls: 'dashboard-reading-end-overlay' });
@@ -1334,7 +1334,7 @@ function openEditBookInfo(
 function openBookSearch(
 	doc: Document,
 	service: ReadingService,
-	onSelect: (book: import('./reading-service').BookInfo | null) => void,
+	onSelect: (book: import('./services/reading').BookInfo | null) => void,
 ): void {
 	const overlay = doc.body.createDiv({ cls: 'dashboard-reading-book-overlay' });
 	const modal = overlay.createDiv({ cls: 'dashboard-reading-book-modal' });
@@ -1404,7 +1404,7 @@ function openBookSearch(
 				if (searching) return;
 				searching = true;
 
-				let results: import('./book-service').BookSearchResult[] = [];
+				let results: import('./services/book').BookSearchResult[] = [];
 				try {
 					results = await searchBooks(query);
 				} catch {
