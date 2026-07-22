@@ -1,0 +1,10 @@
+{
+	"id": "obsidian-dashboard",
+	"name": "Obsidian Dashboard",
+	"version": "1.0.0",
+	"minAppVersion": "1.8.7",
+	"description": "Your personal command center — memos, todos, and projects in one stunning glassmorphism dashboard.",
+	"author": "Renhao Wan",
+	"authorUrl": "https://github.com/renhao-wan",
+	"isDesktopOnly": false
+}
