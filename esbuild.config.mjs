@@ -17,6 +17,16 @@ const context = await esbuild.context({
 	},
 	entryPoints: ["src/main.ts"],
 	bundle: true,
+	alias: {
+		'@core': './src/core',
+		'@data': './src/data',
+		'@services': './src/services',
+		'@renderers': './src/renderers',
+		'@sections': './src/sections',
+		'@modals': './src/modals',
+		'@components': './src/components',
+		'@utils': './src/utils'
+	},
 	external: [
 		"obsidian",
 		"electron",

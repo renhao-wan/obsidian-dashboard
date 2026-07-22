@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"baseUrl": "src",
+		"baseUrl": ".",
 		"inlineSourceMap": true,
 		"inlineSources": true,
 		"module": "ESNext",
@@ -20,7 +20,17 @@
 		"lib": [
 			"DOM",
 			"ESNext"
-		]
+		],
+		"paths": {
+			"@core/*": ["src/core/*"],
+			"@data/*": ["src/data/*"],
+			"@services/*": ["src/services/*"],
+			"@renderers/*": ["src/renderers/*"],
+			"@sections/*": ["src/sections/*"],
+			"@modals/*": ["src/modals/*"],
+			"@components/*": ["src/components/*"],
+			"@utils/*": ["src/utils/*"]
+		}
 	},
 	"include": [
 		"src/**/*.ts"
