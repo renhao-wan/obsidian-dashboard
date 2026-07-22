@@ -1,8 +1,8 @@
 import { App, Notice, Platform, TFile, setIcon } from 'obsidian';
 import type { HoverParent } from 'obsidian';
 import type { DashboardColumn } from '../core/types';
-import { resolveVaultImage } from '../banner';
-import { t } from '../i18n';
+import { resolveVaultImage } from '../renderers/banner';
+import { t } from '../utils/i18n';
 import { showConfirmDialog } from '../components/confirm-dialog';
 import { MediaLightboxModal } from '../modals/media-lightbox';
 import { renderPagination } from './library-views';

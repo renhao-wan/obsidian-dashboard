@@ -1,7 +1,7 @@
 import { App, Notice, setIcon, TFile } from 'obsidian';
 import type { HoverParent } from 'obsidian';
 import type { DashboardColumn } from '../core/types';
-import { t } from '../i18n';
+import { t } from '../utils/i18n';
 import {
 	collectVaultTasks,
 	indexTasksByDay,
@@ -9,7 +9,7 @@ import {
 	toggleTaskInFile,
 	invalidatePath,
 	type VaultTask,
-} from '../alltasks-scan';
+} from '../utils/alltasks-scan';
 import { renderMonthGrid, renderWeekGrid, mondayOf } from './calendar-grid';
 import { CalendarMonthModal, DayAgendaModal } from '../modals/calendar';
 

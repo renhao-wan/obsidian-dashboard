@@ -14,7 +14,7 @@ import type {
 	HeatmapConfig,
 } from '../core/types';
 import { parse as parseYaml } from 'yaml';
-import { t } from '../i18n';
+import { t } from '../utils/i18n';
 
 const KNOWN_METADATA_KEYS = new Set(['id', 'link', 'progress', 'due', 'streak', 'type', 'color', 'cover', 'width', 'size', 'lat', 'lon', 'city', 'track', 'days', 'cols', 'rows', 'gcol', 'grow']);
 

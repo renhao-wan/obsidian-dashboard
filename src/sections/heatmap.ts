@@ -1,6 +1,6 @@
 import { App } from 'obsidian';
 import type { DashboardColumn, TrackerDataPoint } from '../core/types';
-import { t, getLanguage } from '../i18n';
+import { t, getLanguage } from '../utils/i18n';
 import { readTrackerDataForRange, computeStreak, pastYearRange, thisYearRange } from '../services/tracker';
 
 /** Layout constants for the GitHub-style heatmap. */

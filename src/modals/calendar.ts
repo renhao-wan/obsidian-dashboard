@@ -1,9 +1,9 @@
 import { App, Modal, Notice, setIcon } from 'obsidian';
 import type { TFile } from 'obsidian';
-import { t } from '../i18n';
+import { t } from '../utils/i18n';
 import { renderTextWithLinks } from '../renderers/dashboard';
 import { renderMonthGrid, renderWeekTimeGrid, mondayOf, taskTime, byTaskTime } from '../sections/calendar-grid';
-import { toIsoDate, type VaultTask } from '../alltasks-scan';
+import { toIsoDate, type VaultTask } from '../utils/alltasks-scan';
 import { appendTaskToDailyNote } from '../components/daily-notes';
 
 interface CalendarModalCallbacks {

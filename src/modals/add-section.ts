@@ -1,5 +1,5 @@
 import { Modal, setIcon } from 'obsidian';
-import { t } from '../i18n';
+import { t } from '../utils/i18n';
 
 export interface SectionTypeOption {
 	value: string;

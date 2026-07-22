@@ -1,11 +1,11 @@
 import { App, setIcon, TFile } from 'obsidian';
-import { t } from '../i18n';
+import { t } from '../utils/i18n';
 import { renderTextWithLinks } from '../renderers/dashboard';
 import {
 	dateBucketOf,
 	toIsoDate,
 	type VaultTask,
-} from '../alltasks-scan';
+} from '../utils/alltasks-scan';
 
 /** Options controlling how a month grid is rendered and how its tasks behave. */
 export interface MonthGridOptions {

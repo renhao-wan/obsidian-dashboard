@@ -2,7 +2,7 @@ import { App, TFile } from 'obsidian';
 import type { DashboardSettings, DashboardCard, DashboardData, TaskItem, DocNode, QuickAction, BannerData, CardType } from '../core/types';
 import { parse, serialize, generateDefaultMarkdown, isDefaultContent } from './parser';
 import { Storage } from './storage';
-import { t } from '../i18n';
+import { t } from '../utils/i18n';
 import {
 	type TaskPath,
 	updateTaskAt,

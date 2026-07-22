@@ -1,6 +1,6 @@
 import { App, Platform, setIcon } from 'obsidian';
 import type { DashboardSettings, WeatherData } from '../core/types';
-import { t, getLanguage } from '../i18n';
+import { t, getLanguage } from '../utils/i18n';
 import { renderSidebarLunarWidget } from '../modals/lunar';
 import type { HolidayInfo } from '../services/holiday';
 import { CountdownSettingsModal } from '../modals/countdown';

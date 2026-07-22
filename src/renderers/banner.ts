@@ -1,6 +1,6 @@
 import { App, Modal, setIcon } from 'obsidian';
-import type { BannerData, QuoteItem } from './core/types';
-import { t } from './i18n';
+import type { BannerData, QuoteItem } from '../core/types';
+import { t } from '../utils/i18n';
 
 export function getActiveQuote(banner: BannerData): QuoteItem {
 	if (banner.quotes && banner.quotes.length > 0) {

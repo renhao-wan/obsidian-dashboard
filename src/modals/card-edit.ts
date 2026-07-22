@@ -1,6 +1,6 @@
 import { App, Modal, setIcon } from 'obsidian';
 import type { DashboardCard } from '../core/types';
-import { t } from '../i18n';
+import { t } from '../utils/i18n';
 
 export class CardEditModal extends Modal {
 	private card: DashboardCard;

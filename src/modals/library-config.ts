@@ -1,7 +1,7 @@
 import { App, Modal, setIcon } from 'obsidian';
 import type { LibraryConfig } from '../core/types';
 import { extractFrontmatterProperties } from '../sections/library-config';
-import { t } from '../i18n';
+import { t } from '../utils/i18n';
 
 export class LibraryConfigModal extends Modal {
 	private config: LibraryConfig;

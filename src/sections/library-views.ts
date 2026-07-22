@@ -1,7 +1,7 @@
 import { App, Platform, TFile, setIcon } from 'obsidian';
 import type { HoverParent } from 'obsidian';
 import type { LibraryConfig } from '../core/types';
-import { t } from '../i18n';
+import { t } from '../utils/i18n';
 import { attachNoteHover } from '../modals/hover-preview';
 import type { LibraryFileResult } from './library-config';
 import { loadPreview, formatDate, formatBadgeValue, str } from './library-config';

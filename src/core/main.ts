@@ -1,8 +1,8 @@
 import { Notice, Plugin } from 'obsidian';
 import { DEFAULT_SETTINGS, type DashboardSettings, type CountdownConfig } from './types';
-import { DashboardSettingTab } from '../settings';
-import { DashboardView, DASHBOARD_VIEW_TYPE } from '../view';
-import { setLanguage, t } from '../i18n';
+import { DashboardSettingTab } from '../core/settings';
+import { DashboardView, DASHBOARD_VIEW_TYPE } from './view';
+import { setLanguage, t } from '../utils/i18n';
 
 /** All valid style preset keys — single source of truth for migration. */
 const VALID_STYLE_PRESETS = ['earth', 'nordic', 'aurora', 'island', 'tundra', 'blossom', 'matcha', 'lilac', 'haze', 'jade', 'carbon', 'onyx', 'mono'] as const;

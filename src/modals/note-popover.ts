@@ -1,5 +1,5 @@
 import { App, MarkdownView, Modal, TFile, WorkspaceLeaf, setIcon } from 'obsidian';
-import { t } from '../i18n';
+import { t } from '../utils/i18n';
 
 const MODE_STORAGE_KEY = 'obsidian-dashboard-note-popover-mode';
 type NoteViewMode = 'source' | 'preview';

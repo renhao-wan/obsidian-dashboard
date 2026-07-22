@@ -1,7 +1,7 @@
 import { App, Notice, TFile, setIcon } from 'obsidian';
 import type { HoverParent } from 'obsidian';
 import type { LibraryConfig, PropertyFilter, LibraryViewMode } from '../core/types';
-import { t, getLanguage } from '../i18n';
+import { t, getLanguage } from '../utils/i18n';
 import { FolderSuggestModal } from '../modals/folder-config';
 import { showConfirmDialog } from '../components/confirm-dialog';
 import { LibraryFileResult, DEFAULT_PAGE_SIZE, PAGE_SIZE_OPTIONS, queryVaultFiles } from './library-config';

@@ -1,5 +1,5 @@
 import { App, Modal } from 'obsidian';
-import { t } from '../i18n';
+import { t } from '../utils/i18n';
 
 export class ReminderNoticeModal extends Modal {
 	private readonly taskText: string;

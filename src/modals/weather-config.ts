@@ -1,7 +1,7 @@
 import { App, Modal } from 'obsidian';
 import type { WeatherConfig } from '../core/types';
 import { geocodeCity, type GeocodeResult } from '../services/weather';
-import { t } from '../i18n';
+import { t } from '../utils/i18n';
 
 export class WeatherConfigModal extends Modal {
 	private onSave: (title: string, config: WeatherConfig) => void;

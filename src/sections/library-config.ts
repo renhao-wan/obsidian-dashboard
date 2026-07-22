@@ -1,6 +1,6 @@
 import { App, TFile } from 'obsidian';
 import type { LibraryConfig, PropertyFilter } from '../core/types';
-import { t, getLanguage } from '../i18n';
+import { t, getLanguage } from '../utils/i18n';
 
 // ===== Types & Constants =====
 

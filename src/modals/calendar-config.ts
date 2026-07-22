@@ -1,6 +1,6 @@
 import { App, Modal } from 'obsidian';
 import type { LibraryConfig } from '../core/types';
-import { t } from '../i18n';
+import { t } from '../utils/i18n';
 import { FolderSuggestModal } from './folder-config';
 
 /**

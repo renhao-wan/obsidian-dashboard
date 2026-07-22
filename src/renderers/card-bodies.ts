@@ -1,13 +1,13 @@
 import { App, Platform, setIcon } from 'obsidian';
 import type { HoverParent, TFile } from 'obsidian';
 import type { DashboardCard, DashboardColumn, TaskItem, DocNode, DashboardSettings, CardSize, TrackerStyle, WeatherData, RenderCallbacks, DashboardData } from '../core/types';
-import { t, getLanguage } from '../i18n';
+import { t, getLanguage } from '../utils/i18n';
 import { fetchWeather, getCachedWeather, getWeatherEmoji, getWeatherDescription } from '../services/weather';
 import { readTrackerData, computeStreak } from '../services/tracker';
 import { attachFileSuggest } from '../utils/file-suggest';
 import { showConfirmDialog } from '../components/confirm-dialog';
 import { attachNoteHover } from '../modals/hover-preview';
-import { resolveVaultImage } from '../banner';
+import { resolveVaultImage } from '../renderers/banner';
 import { Chart } from 'chart.js';
 import {
 	getCSSVar,

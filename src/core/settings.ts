@@ -1,10 +1,10 @@
 import { App, Notice, PluginSettingTab, Setting } from 'obsidian';
-import type DashboardPlugin from './core/main';
-import { DEFAULT_SETTINGS, type DashboardSettings, type CountdownConfig } from './core/types';
-import { t, setLanguage, type Language } from './i18n';
-import { geocodeCity } from './services/weather';
-import { CountdownSettingsModal } from './modals/countdown';
-import { ConfirmModal } from './confirm-modal';
+import type DashboardPlugin from './main';
+import { DEFAULT_SETTINGS, type DashboardSettings, type CountdownConfig } from './types';
+import { t, setLanguage, type Language } from '../utils/i18n';
+import { geocodeCity } from '../services/weather';
+import { CountdownSettingsModal } from '../modals/countdown';
+import { showConfirmDialog } from '../components/confirm-dialog';
 
 export type { DashboardSettings };
 
@@ -526,13 +526,15 @@ export class DashboardSettingTab extends PluginSettingTab {
 				.setButtonText(t('settings.resetToDefaults'))
 				.setWarning()
 				.onClick(() => {
-					new ConfirmModal(this.app, t('settings.resetConfirm'), async () => {
-						this.plugin.settings = { ...DEFAULT_SETTINGS };
-						await this.plugin.saveSettings();
-						new Notice(t('settings.resetDone'));
-						this.display();
-						this.plugin.refreshAllDashboards();
-					}).open();
+					showConfirmDialog(this.app, { title: t('settings.resetConfirm'), message: '' }).then(async (confirmed) => {
+						if (confirmed) {
+							this.plugin.settings = { ...DEFAULT_SETTINGS };
+							await this.plugin.saveSettings();
+							new Notice(t('settings.resetDone'));
+							this.display();
+							this.plugin.refreshAllDashboards();
+						}
+					}).catch(console.error);
 				}));
 	}
 }

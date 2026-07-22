@@ -1,6 +1,6 @@
 import { App, Modal, setIcon } from 'obsidian';
 import type { TFile } from 'obsidian';
-import { resolveVaultImage } from '../banner';
+import { resolveVaultImage } from '../renderers/banner';
 import { releaseVideoMedia } from '../sections/media';
 
 /**

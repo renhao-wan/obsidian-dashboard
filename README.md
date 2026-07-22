@@ -96,6 +96,20 @@ All themes support both Obsidian light and dark modes.
 
 > **Note:** Deleting, renaming, or reordering sections must be done by editing the `dashboard.md` file directly. Any changes made to the note will take effect in the dashboard view immediately.
 
+## Project Structure
+
+```
+src/
+├── core/          # 核心层
+├── data/          # 数据层
+├── services/      # 服务层
+├── renderers/     # 渲染层
+├── sections/      # 业务区域
+├── modals/        # 模态框
+├── components/    # 通用组件
+└── utils/         # 工具函数
+```
+
 ## Compatibility
 
 - Obsidian v0.15.0+

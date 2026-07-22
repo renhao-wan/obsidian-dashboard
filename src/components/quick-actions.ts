@@ -1,7 +1,7 @@
 import { App, Modal, setIcon } from 'obsidian';
 import type { QuickAction } from '../core/types';
 import { PRESET_ACTIONS } from '../core/types';
-import { t } from '../i18n';
+import { t } from '../utils/i18n';
 import type { AppWithCommands } from '../utils/obsidian-internal';
 
 function actionKey(action: QuickAction, isPreset: boolean): string {
