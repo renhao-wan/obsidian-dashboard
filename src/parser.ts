@@ -18,6 +18,25 @@ import { t } from './i18n';
 
 const KNOWN_METADATA_KEYS = new Set(['id', 'link', 'progress', 'due', 'streak', 'type', 'color', 'cover', 'width', 'size', 'lat', 'lon', 'city', 'track', 'days', 'cols', 'rows', 'gcol', 'grow']);
 
+// 简单的字符串 hash 函数 (djb2)
+function simpleHash(str: string): string {
+	let hash = 5381;
+	for (let i = 0; i < str.length; i++) {
+		hash = ((hash << 5) + hash) + str.charCodeAt(i);
+		hash = hash & hash; // 转换为 32 位整数
+	}
+	return Math.abs(hash).toString(36);
+}
+
+// 计算内容的 hash（排除动态部分）
+function getContentHash(content: string): string {
+	// 移除日期部分和 contentHash 字段后计算 hash
+	const normalized = content
+		.replace(/\d{4}-\d{2}-\d{2}/g, 'DATE_PLACEHOLDER')
+		.replace(/contentHash:\s*\w+\n?/g, '');
+	return simpleHash(normalized);
+}
+
 // Card colors are persisted without the leading '#' (see serialize) so Obsidian
 // does not register them as tags. Restore the '#' here; legacy '#xxxxxx' values
 // are still accepted.
@@ -36,6 +55,14 @@ const DEFAULT_BANNER: BannerData = {
 	author: 'Buddha',
 	image: '',
 };
+
+function getDefaultBanner(): BannerData {
+	return {
+		quote: t('default.bannerQuote'),
+		author: t('default.bannerAuthor'),
+		image: '',
+	};
+}
 
 const DEFAULT_COLUMNS = [
 	{ name: 'Memo', color: '#f59e0b', sectionType: 'memo' },
@@ -56,14 +83,20 @@ export function parse(markdown: string): DashboardData {
 	if (quickActionOrder) data.quickActionOrder = quickActionOrder;
 	const hiddenPresets = parseHiddenPresets(frontmatter);
 	if (hiddenPresets) data.hiddenPresets = hiddenPresets;
+	const contentHash = frontmatter.contentHash;
+	if (typeof contentHash === 'string') data.contentHash = contentHash;
 	return data;
 }
 
-export function serialize(data: DashboardData): string {
+export function serialize(data: DashboardData, contentHash?: string): string {
 	const lines: string[] = [];
 
 	lines.push('---');
 	lines.push('dashboard: true');
+
+	if (contentHash) {
+		lines.push(`contentHash: ${contentHash}`);
+	}
 
 	lines.push('banner:');
 	lines.push(`  quote: "${escapeYamlString(data.banner.quote)}"`);
@@ -313,24 +346,36 @@ export function serialize(data: DashboardData): string {
 
 /**
  * 检测 dashboard.md 是否还是默认内容（未被用户修改）
- * 通过匹配特征文本来判断
+ * 通过比较 contentHash 来精确判断
  */
 export function isDefaultContent(markdown: string): boolean {
-	const enMarker = 'Welcome to Obsidian Dashboard';
-	const zhMarker = '欢迎使用 Obsidian Dashboard';
-	return markdown.includes(enMarker) || markdown.includes(zhMarker);
+	const { frontmatter } = splitFrontmatter(markdown);
+	const storedHash = frontmatter.contentHash;
+	if (typeof storedHash !== 'string' || !storedHash) return false;
+
+	// 移除 contentHash 字段后计算 hash，与存储的 hash 比较
+	const normalized = markdown.replace(/contentHash:\s*\w+\n?/g, '');
+	const currentHash = getContentHash(normalized);
+	return currentHash === storedHash;
 }
 
 export function generateDefaultMarkdown(): string {
 	const today = new Date();
 	const dateStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
 
-	return serialize({
-		banner: DEFAULT_BANNER,
+	// 翻译后的列名
+	const colMemo = t('default.colMemo');
+	const colTodo = t('default.colTodo');
+	const colProjects = t('default.colProjects');
+	const colLibrary = t('default.colLibrary');
+
+	// 先生成内容（不包含 hash）
+	const data: DashboardData = {
+		banner: getDefaultBanner(),
 		quickActions: [],
 		columns: [
 			{
-				name: 'Memo',
+				name: colMemo,
 				color: '#f59e0b',
 				sectionType: 'memo',
 				cards: [
@@ -338,7 +383,7 @@ export function generateDefaultMarkdown(): string {
 						id: 'demo-memo-1',
 						title: t('default.memoTitle', { date: dateStr }),
 						type: 'generic',
-						column: 'Memo',
+						column: colMemo,
 						body: t('default.memoBody'),
 						tasks: [],
 						docs: [],
@@ -361,7 +406,7 @@ export function generateDefaultMarkdown(): string {
 						id: 'demo-memo-path',
 						title: t('default.memoPathTitle'),
 						type: 'generic',
-						column: 'Memo',
+						column: colMemo,
 						body: t('default.memoPathBody'),
 						tasks: [],
 						docs: [],
@@ -384,7 +429,7 @@ export function generateDefaultMarkdown(): string {
 						id: 'demo-memo-delete',
 						title: t('default.memoDeleteTitle'),
 						type: 'generic',
-						column: 'Memo',
+						column: colMemo,
 						body: t('default.memoDeleteBody'),
 						tasks: [],
 						docs: [],
@@ -406,7 +451,7 @@ export function generateDefaultMarkdown(): string {
 				],
 			},
 			{
-				name: 'Todo',
+				name: colTodo,
 				color: '#6366f1',
 				sectionType: 'todo',
 				cards: [
@@ -414,7 +459,7 @@ export function generateDefaultMarkdown(): string {
 						id: 'demo-todo-1',
 						title: t('default.todoTitle1'),
 						type: 'task',
-						column: 'Todo',
+						column: colTodo,
 						body: '',
 						tasks: [
 							{ text: t('default.todo1'), checked: false },
@@ -442,7 +487,7 @@ export function generateDefaultMarkdown(): string {
 						id: 'demo-todo-2',
 						title: t('default.todoTitle2'),
 						type: 'task',
-						column: 'Todo',
+						column: colTodo,
 						body: '',
 						tasks: [
 							{ text: t('default.guide1'), checked: false },
@@ -469,7 +514,7 @@ export function generateDefaultMarkdown(): string {
 				],
 			},
 			{
-				name: 'Projects',
+				name: colProjects,
 				color: '#10b981',
 				sectionType: 'projects',
 				cards: [
@@ -477,7 +522,7 @@ export function generateDefaultMarkdown(): string {
 						id: 'demo-project-1',
 						title: t('default.projectTitle'),
 						type: 'project',
-						column: 'Projects',
+						column: colProjects,
 						body: '',
 						tasks: [],
 						docs: [],
@@ -499,7 +544,7 @@ export function generateDefaultMarkdown(): string {
 				],
 			},
 			{
-				name: 'Library',
+				name: colLibrary,
 				color: '#8b5cf6',
 				sectionType: 'projects',
 				cards: [
@@ -507,7 +552,7 @@ export function generateDefaultMarkdown(): string {
 						id: 'demo-lib-reading',
 						title: t('default.libReading'),
 						type: 'project',
-						column: 'Library',
+						column: colLibrary,
 						body: '',
 						tasks: [],
 						docs: [],
@@ -530,7 +575,7 @@ export function generateDefaultMarkdown(): string {
 						id: 'demo-lib-toread',
 						title: t('default.libToRead'),
 						type: 'project',
-						column: 'Library',
+						column: colLibrary,
 						body: '',
 						tasks: [],
 						docs: [],
@@ -553,7 +598,7 @@ export function generateDefaultMarkdown(): string {
 						id: 'demo-lib-done',
 						title: t('default.libDone'),
 						type: 'project',
-						column: 'Library',
+						column: colLibrary,
 						body: '',
 						tasks: [],
 						docs: [],
@@ -575,7 +620,14 @@ export function generateDefaultMarkdown(): string {
 				],
 			},
 		],
-	});
+	};
+
+	// 计算内容的 hash（排除动态日期）
+	const content = serialize(data);
+	const hash = getContentHash(content);
+
+	// 返回包含 hash 的内容
+	return serialize(data, hash);
 }
 
 function splitFrontmatter(markdown: string): { frontmatter: Record<string, unknown>; body: string } {

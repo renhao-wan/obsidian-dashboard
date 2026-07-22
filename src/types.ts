@@ -246,6 +246,7 @@ export interface DashboardData {
 	quickActionOrder?: string[];
 	hiddenPresets?: string[];
 	columns: DashboardColumn[];
+	contentHash?: string;
 }
 
 export interface RenderCallbacks {
