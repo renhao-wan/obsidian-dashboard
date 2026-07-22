@@ -1,6 +1,6 @@
 import { App, Modal, FuzzySuggestModal, TFolder, setIcon } from 'obsidian';
 import { t } from '../i18n';
-import { extractFrontmatterProperties, getAllTags, renderTagsSelector } from '../library-section';
+import { extractFrontmatterProperties, getAllTags, renderTagsSelector } from '../sections/library-config';
 
 export interface FolderConfigResult {
 	folders: string[];

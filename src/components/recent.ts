@@ -1,5 +1,5 @@
 import { App } from 'obsidian';
-import { t } from './i18n';
+import { t } from '../i18n';
 
 export interface RecentDoc {
 	name: string;

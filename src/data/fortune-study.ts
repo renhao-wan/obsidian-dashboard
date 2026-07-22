@@ -1,4 +1,4 @@
-import type { FortuneStick } from '../fortune-stick';
+import type { FortuneStick } from '../components/fortune-stick';
 
 export const STUDY_STICKS: readonly FortuneStick[] = [
 	// ===== 上上签 (12 items) =====

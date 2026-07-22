@@ -1,8 +1,8 @@
 import { App, Modal, setIcon } from 'obsidian';
-import type { QuickAction } from './core/types';
-import { PRESET_ACTIONS } from './core/types';
-import { t } from './i18n';
-import type { AppWithCommands } from './obsidian-internal';
+import type { QuickAction } from '../core/types';
+import { PRESET_ACTIONS } from '../core/types';
+import { t } from '../i18n';
+import type { AppWithCommands } from '../utils/obsidian-internal';
 
 function actionKey(action: QuickAction, isPreset: boolean): string {
 	return isPreset ? `p:${action.target}` : `c:${action.target}`;

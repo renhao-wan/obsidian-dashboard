@@ -1,9 +1,9 @@
-import { LOVE_STICKS } from './data/fortune-love';
-import { CAREER_STICKS } from './data/fortune-career';
-import { STUDY_STICKS } from './data/fortune-study';
-import { HEALTH_STICKS } from './data/fortune-health';
-import { RELATIONSHIP_STICKS } from './data/fortune-relationship';
-import { WEALTH_STICKS } from './data/fortune-wealth';
+import { LOVE_STICKS } from '../data/fortune-love';
+import { CAREER_STICKS } from '../data/fortune-career';
+import { STUDY_STICKS } from '../data/fortune-study';
+import { HEALTH_STICKS } from '../data/fortune-health';
+import { RELATIONSHIP_STICKS } from '../data/fortune-relationship';
+import { WEALTH_STICKS } from '../data/fortune-wealth';
 
 export type FortuneCategory = 'love' | 'career' | 'study' | 'health' | 'relationship' | 'wealth';
 
