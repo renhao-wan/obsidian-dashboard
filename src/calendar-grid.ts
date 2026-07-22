@@ -1,6 +1,6 @@
 import { App, setIcon, TFile } from 'obsidian';
 import { t } from './i18n';
-import { renderTextWithLinks } from './renderer';
+import { renderTextWithLinks } from './renderers/dashboard';
 import {
 	dateBucketOf,
 	toIsoDate,
