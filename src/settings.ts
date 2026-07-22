@@ -4,6 +4,7 @@ import { DEFAULT_SETTINGS, type DashboardSettings, type CountdownConfig } from '
 import { t, setLanguage, type Language } from './i18n';
 import { geocodeCity } from './weather-service';
 import { CountdownSettingsModal } from './countdown-modal';
+import { ConfirmModal } from './confirm-modal';
 
 export type { DashboardSettings };
 
@@ -524,15 +525,14 @@ export class DashboardSettingTab extends PluginSettingTab {
 			.addButton(btn => btn
 				.setButtonText(t('settings.resetToDefaults'))
 				.setWarning()
-				.onClick(async () => {
-					const confirmed = confirm(t('settings.resetConfirm'));
-					if (!confirmed) return;
-
-					this.plugin.settings = { ...DEFAULT_SETTINGS };
-					await this.plugin.saveSettings();
-					new Notice(t('settings.resetDone'));
-					this.display();
-					this.plugin.refreshAllDashboards();
+				.onClick(() => {
+					new ConfirmModal(this.app, t('settings.resetConfirm'), async () => {
+						this.plugin.settings = { ...DEFAULT_SETTINGS };
+						await this.plugin.saveSettings();
+						new Notice(t('settings.resetDone'));
+						this.display();
+						this.plugin.refreshAllDashboards();
+					}).open();
 				}));
 	}
 }
