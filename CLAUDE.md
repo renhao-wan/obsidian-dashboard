@@ -33,7 +33,7 @@ npm install          # Install dependencies
 - **Section rendering**: Each section type exports a `render*Section(container, config, data, callbacks)` function.
 - **Cleanup**: Every renderer returns cleanup functions stored in `cleanupFns[]`. The view calls them all on unload.
 - **Platform checks**: Use `Platform.isDesktop` / `Platform.isMobile` for feature gating.
-- **Theme styles**: 14 themes defined in `styles.css` with CSS custom properties. Theme keys: earth, nordic, aurora, island, tundra, blossom, matcha, lilac, haze, jade, carbon, onyx, mono.
+- **Theme styles**: 14 themes defined in `src/styles.css` with CSS custom properties. Theme keys: earth, nordic, aurora, island, tundra, blossom, matcha, lilac, haze, jade, carbon, onyx, mono.
 
 ## Dependencies
 

@@ -13,6 +13,7 @@ version-bump.mjs
 .editorconfig
 
 # Build artifacts
+main.js
 *.map
 
 # IDE
