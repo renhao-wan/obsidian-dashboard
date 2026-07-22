@@ -10,8 +10,8 @@ import { renderQuickActions, AddActionModal, DocSearchModal } from './quick-acti
 import { setupDragAndDrop } from './utils/dnd';
 import { CardEditModal } from './card-edit-modal';
 import { NotePopoverModal } from './note-popover-modal';
-import { showConfirmDialog } from './confirm-dialog';
-import { showPromptDialog } from './prompt-dialog';
+import { showConfirmDialog } from './components/confirm-dialog';
+import { showPromptDialog } from './components/prompt-dialog';
 import { clearWeatherCache } from './services/weather';
 import { renderSidebarLunarWidget, loadHolidayData } from './lunar-widget';
 import type { HolidayInfo } from './services/holiday';
@@ -28,7 +28,7 @@ import { PomodoroService } from './services/pomodoro';
 import { ReadingService } from './services/reading';
 import { ReminderNoticeModal } from './reminder-notice';
 import { t } from './i18n';
-import { archiveCompleted, serializeTasksForNote } from './task-tree';
+import { archiveCompleted, serializeTasksForNote } from './components/task-tree';
 import type { App } from 'obsidian';
 
 interface DailyNotesOptions {

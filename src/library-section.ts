@@ -4,7 +4,7 @@ import type { LibraryConfig, PropertyFilter, LibraryViewMode } from './core/type
 import { t, getLanguage } from './i18n';
 import { attachNoteHover } from './hover-preview';
 import { FolderSuggestModal } from './folder-config-modal';
-import { showConfirmDialog } from './confirm-dialog';
+import { showConfirmDialog } from './components/confirm-dialog';
 
 // Set once per render by renderLibrarySection so the grid/list/table/kanban
 // renderers can route opens through the note popover and attach hover previews

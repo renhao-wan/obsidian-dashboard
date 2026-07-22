@@ -1,4 +1,4 @@
-import type { DocNode } from './core/types';
+import type { DocNode } from '../core/types';
 
 export type DocPath = number[];
 

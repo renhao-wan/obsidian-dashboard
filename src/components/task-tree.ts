@@ -1,4 +1,4 @@
-import type { TaskItem } from './core/types';
+import type { TaskItem } from '../core/types';
 
 export type TaskPath = number[];
 

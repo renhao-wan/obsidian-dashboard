@@ -14,7 +14,7 @@ import {
 	promoteToTopLevel,
 	recalcChecked,
 	archiveCompleted,
-} from '../task-tree';
+} from '../components/task-tree';
 import {
 	type DocPath,
 	updateDocAt,
@@ -22,7 +22,7 @@ import {
 	insertDocSibling,
 	appendDocChild,
 	demoteDocToChild,
-} from '../doc-tree';
+} from '../components/doc-tree';
 
 type DataCallback = (data: DashboardData) => void;
 

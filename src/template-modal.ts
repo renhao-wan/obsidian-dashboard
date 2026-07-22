@@ -2,7 +2,7 @@ import { Modal, setIcon } from 'obsidian';
 import type DashboardPlugin from './core/main';
 import type { TaskTemplate } from './core/types';
 import { t } from './i18n';
-import { showConfirmDialog } from './confirm-dialog';
+import { showConfirmDialog } from './components/confirm-dialog';
 
 type TemplateSelectCallback = (template: TaskTemplate) => void;
 

@@ -3,7 +3,7 @@ import type { HoverParent } from 'obsidian';
 import type { DashboardColumn } from './core/types';
 import { resolveVaultImage } from './banner';
 import { t } from './i18n';
-import { showConfirmDialog } from './confirm-dialog';
+import { showConfirmDialog } from './components/confirm-dialog';
 import { MediaLightboxModal } from './media-lightbox-modal';
 import { renderPagination } from './library-section';
 import { FolderSuggestModal } from './folder-config-modal';
