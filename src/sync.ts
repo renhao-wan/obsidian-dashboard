@@ -394,30 +394,6 @@ export class SyncEngine {
 		await this.writeToDisk();
 	}
 
-	async updateWereadConfig(columnName: string, config: import('./types').WereadConfig): Promise<void> {
-		if (!this.data) return;
-
-		this.data = {
-			...this.data,
-			columns: this.data.columns.map(col =>
-				col.name === columnName ? { ...col, wereadConfig: config } : col
-			),
-		};
-		await this.writeToDisk();
-	}
-
-	async updateTickTickConfig(columnName: string, config: import('./types').TickTickConfig): Promise<void> {
-		if (!this.data) return;
-
-		this.data = {
-			...this.data,
-			columns: this.data.columns.map(col =>
-				col.name === columnName ? { ...col, ticktickConfig: config } : col
-			),
-		};
-		await this.writeToDisk();
-	}
-
 	/** Reorder sections by array index (index-based to avoid name collisions). */
 	async moveColumn(fromIndex: number, toIndex: number): Promise<void> {
 		if (!this.data) return;

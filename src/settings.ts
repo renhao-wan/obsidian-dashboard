@@ -1,11 +1,9 @@
-import { App, Notice, PluginSettingTab, Setting } from 'obsidian';
+import { App, PluginSettingTab, Setting } from 'obsidian';
 import type DashboardPlugin from './main';
 import { DEFAULT_SETTINGS, type DashboardSettings, type CountdownConfig } from './types';
 import { t, setLanguage, type Language } from './i18n';
 import { geocodeCity } from './weather-service';
 import { CountdownSettingsModal } from './countdown-modal';
-import { TickTickLoginModal } from './ticktick-login-modal';
-import { DEFAULT_TICKTICK_TZ, isValidTz } from './ticktick-tz';
 
 export type { DashboardSettings };
 
@@ -339,109 +337,6 @@ export class DashboardSettingTab extends PluginSettingTab {
 					}));
 		}
 
-		// --- Weread (WeChat Read) card ---
-		const wereadCard = containerEl.createDiv({ cls: 'dashboard-widget-settings-card' });
-		new Setting(wereadCard)
-			.setName(t('settings.wereadApiKey'))
-			.setDesc(t('settings.wereadApiKeyDesc'))
-			.addText(text => text
-				.setValue(this.plugin.settings.wereadApiKey)
-				.onChange(async (value) => {
-					this.plugin.settings = { ...this.plugin.settings, wereadApiKey: value.trim() };
-					await this.plugin.saveSettings();
-					this.plugin.refreshAllDashboards();
-				}));
-		new Setting(wereadCard)
-			.setName(t('settings.wereadGetKey'))
-			.setDesc(t('settings.wereadGetKeyDesc'))
-			.addButton(btn => btn
-				.setButtonText(t('settings.wereadGetKey'))
-				.onClick(() => window.open('https://weread.qq.com/r/weread-skills', '_blank')));
-		new Setting(wereadCard)
-			.setName(t('settings.wereadImportPath'))
-			.setDesc(t('settings.wereadImportPathDesc'))
-			.addText(text => text
-				.setPlaceholder('Weread/划线')
-				.setValue(this.plugin.settings.wereadImportPath)
-				.onChange(async (value) => {
-					this.plugin.settings = { ...this.plugin.settings, wereadImportPath: value.trim().replace(/^\/+|\/+$/g, '') };
-					await this.plugin.saveSettings();
-				}));
-
-		// --- TickTick card ---
-		const ticktickCard = containerEl.createDiv({ cls: 'dashboard-widget-settings-card' });
-		new Setting(ticktickCard)
-			.setName(t('settings.ticktickRegion'))
-			.setDesc(t('settings.ticktickRegionDesc'))
-			.addDropdown(d => d
-				.addOption('dida365', t('settings.ticktickRegionDida'))
-				.addOption('ticktick', t('settings.ticktickRegionTick'))
-				.setValue(this.plugin.settings.ticktickRegion)
-				.onChange(async (value) => {
-					this.plugin.settings = { ...this.plugin.settings, ticktickRegion: value as 'dida365' | 'ticktick' };
-					await this.plugin.saveSettings();
-					this.plugin.refreshAllDashboards();
-				}));
-		new Setting(ticktickCard)
-			.setName(t('settings.ticktickCookie'))
-			.setDesc(t('settings.ticktickCookieDesc'))
-			.addButton(btn => btn
-				.setButtonText(t('settings.ticktickGetCookie'))
-				.setCta()
-				.onClick(() => {
-					new TickTickLoginModal(
-						this.app,
-						this.plugin.settings.ticktickRegion,
-						this.plugin.settings.ticktickDeviceVersion,
-						async (token, csrf) => {
-							this.plugin.settings = { ...this.plugin.settings, ticktickCookie: token, ticktickCsrf: csrf };
-							await this.plugin.saveSettings();
-							this.plugin.refreshAllDashboards();
-							this.display();
-						},
-					).open();
-				}))
-			.addButton(btn => btn
-				.setButtonText(t('settings.ticktickClearCookie'))
-				.setDisabled(!this.plugin.settings.ticktickCookie)
-				.onClick(() => {
-					void (async () => {
-						this.plugin.settings = { ...this.plugin.settings, ticktickCookie: '', ticktickCsrf: '' };
-						await this.plugin.saveSettings();
-						this.plugin.refreshAllDashboards();
-						this.display();
-					})();
-				}));
-		new Setting(ticktickCard)
-			.setName(t('settings.ticktickCookieStatus'))
-			.setDesc(this.plugin.settings.ticktickCookie ? t('settings.ticktickCookieSet') : t('settings.ticktickCookieEmpty'));
-		new Setting(ticktickCard)
-			.setName(t('settings.ticktickDeviceVersion'))
-			.setDesc(t('settings.ticktickDeviceVersionDesc'))
-			.addText(text => text
-				.setValue(this.plugin.settings.ticktickDeviceVersion ?? '')
-				.onChange(async (value) => {
-					this.plugin.settings = { ...this.plugin.settings, ticktickDeviceVersion: value.trim() || undefined };
-					await this.plugin.saveSettings();
-					this.plugin.refreshAllDashboards();
-				}));
-		new Setting(ticktickCard)
-			.setName(t('settings.ticktickTimezone'))
-			.setDesc(t('settings.ticktickTimezoneDesc'))
-			.addText(text => text
-				.setPlaceholder(DEFAULT_TICKTICK_TZ)
-				.setValue(this.plugin.settings.ticktickTimezone)
-				.onChange(async (value) => {
-					const tz = value.trim() || DEFAULT_TICKTICK_TZ;
-					if (!isValidTz(tz)) {
-						new Notice(t('settings.ticktickTimezoneInvalid'));
-						this.display();
-						return;
-					}
-					this.plugin.settings = { ...this.plugin.settings, ticktickTimezone: tz };
-					await this.plugin.saveSettings();
-					this.plugin.refreshAllDashboards();
-				}));
 	}
 
 

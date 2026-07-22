@@ -6,8 +6,6 @@ import { renderLibrarySection } from './library-section';
 import { renderMediaSection, destroyMediaSection } from './media-section';
 import { renderCalendarSection } from './calendar-section';
 import { renderHeatmapSection } from './heatmap-section';
-import { renderWereadSection } from './weread-section';
-import { renderTickTickSection } from './ticktick-section';
 import { resolveVaultImage } from './banner';
 import { attachFileSuggest } from './file-suggest';
 import { showConfirmDialog } from './confirm-dialog';
@@ -1960,113 +1958,6 @@ export function renderSection(column: DashboardColumn, callbacks: RenderCallback
 		return el;
 	}
 
-	// Weread section: reading data from the official API.
-	if (sectionType === 'weread') {
-		const configBtn = headerActions.createEl('button', {
-			cls: 'dashboard-section-add-btn',
-			attr: { 'aria-label': t('weread.configure') },
-		});
-		setIcon(configBtn, 'settings');
-		configBtn.addEventListener('click', () => {
-			const event = new CustomEvent('dashboard-library-config', { detail: { columnName: column.name }, bubbles: true });
-			el.dispatchEvent(event);
-		});
-
-		// Refresh button — same icon-button style as the other header actions,
-		// positioned just left of delete.
-		const refreshBtn = headerActions.createEl('button', {
-			cls: 'dashboard-section-add-btn',
-			attr: { 'aria-label': t('weread.refresh') },
-		});
-		setIcon(refreshBtn, 'refresh-cw');
-		let reload: (() => void) | null = null;
-		refreshBtn.addEventListener('click', () => reload?.());
-
-		const deleteSectionBtn = headerActions.createEl('button', {
-			cls: 'dashboard-section-add-btn dashboard-section-delete-btn',
-			attr: { 'aria-label': t('renderer.deleteSection', { column: column.name }) },
-		});
-		setIcon(deleteSectionBtn, 'trash-2');
-		deleteSectionBtn.addEventListener('click', (e) => {
-			e.stopPropagation();
-			callbacks.onColumnDelete(column.name);
-		});
-
-		const apiKey = (settings?.wereadApiKey ?? '').trim();
-		const importPath = settings?.wereadImportPath ?? 'Weread/划线';
-		renderWereadSection(el, column, app, apiKey, importPath, (fn) => { reload = fn; });
-		return el;
-	}
-
-	// TickTick section: tasks/habits from the unofficial V2 API (cookie auth).
-	if (sectionType === 'ticktick') {
-		const ttView = column.ticktickConfig?.view === 'lists' ? 'lists' : 'today';
-
-		// View toggle: Today
-		const todayBtn = headerActions.createEl('button', {
-			cls: 'dashboard-section-add-btn' + (ttView === 'today' ? ' active' : ''),
-			attr: { 'aria-label': t('ticktick.viewToday') },
-		});
-		setIcon(todayBtn, 'calendar-check');
-		todayBtn.addEventListener('click', () => {
-			el.dispatchEvent(new CustomEvent('dashboard-ticktick-view', { detail: { columnName: column.name, view: 'today' }, bubbles: true }));
-		});
-
-		// View toggle: Lists
-		const listsBtn = headerActions.createEl('button', {
-			cls: 'dashboard-section-add-btn' + (ttView === 'lists' ? ' active' : ''),
-			attr: { 'aria-label': t('ticktick.viewLists') },
-		});
-		setIcon(listsBtn, 'list');
-		listsBtn.addEventListener('click', () => {
-			el.dispatchEvent(new CustomEvent('dashboard-ticktick-view', { detail: { columnName: column.name, view: 'lists' }, bubbles: true }));
-		});
-
-		// Project filter (only in lists view)
-		if (ttView === 'lists') {
-			const filterBtn = headerActions.createEl('button', {
-				cls: 'dashboard-section-add-btn',
-				attr: { 'aria-label': t('ticktick.filterProjects') },
-			});
-			setIcon(filterBtn, 'filter');
-			filterBtn.addEventListener('click', () => {
-				el.dispatchEvent(new CustomEvent('dashboard-ticktick-filter', { detail: { columnName: column.name }, bubbles: true }));
-			});
-		}
-
-		const refreshBtn = headerActions.createEl('button', {
-			cls: 'dashboard-section-add-btn',
-			attr: { 'aria-label': t('ticktick.refresh') },
-		});
-		setIcon(refreshBtn, 'refresh-cw');
-		let reload: (() => void) | null = null;
-		refreshBtn.addEventListener('click', () => reload?.());
-
-		const deleteSectionBtn = headerActions.createEl('button', {
-			cls: 'dashboard-section-add-btn dashboard-section-delete-btn',
-			attr: { 'aria-label': t('renderer.deleteSection', { column: column.name }) },
-		});
-		setIcon(deleteSectionBtn, 'trash-2');
-		deleteSectionBtn.addEventListener('click', (e) => {
-			e.stopPropagation();
-			callbacks.onColumnDelete(column.name);
-		});
-
-		const region = settings?.ticktickRegion === 'ticktick' ? 'ticktick' : 'dida365';
-		const cookie = (settings?.ticktickCookie ?? '').trim();
-		const csrf = (settings?.ticktickCsrf ?? '').trim();
-		const deviceVersion = settings?.ticktickDeviceVersion;
-		const tz = (settings?.ticktickTimezone ?? '').trim() || 'Asia/Shanghai';
-		renderTickTickSection(el, column, app, region, cookie, csrf, deviceVersion, tz, (fn) => { reload = fn; },
-			(projectId, width) => {
-				const cfg = column.ticktickConfig;
-				if (cfg) {
-					const newWidths = { ...(cfg.projectWidths ?? {}), [projectId]: width };
-					el.dispatchEvent(new CustomEvent('dashboard-ticktick-resize', { detail: { columnName: column.name, projectWidths: newWidths }, bubbles: true }));
-				}
-			});
-		return el;
-	}
 
 	const addCardBtn = headerActions.createEl('button', {
 		cls: 'dashboard-section-add-btn',

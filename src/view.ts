@@ -21,9 +21,6 @@ import { WeatherConfigModal } from './weather-config-modal';
 import { LibraryConfigModal } from './library-config-modal';
 import { FolderConfigModal } from './folder-config-modal';
 import { HeatmapConfigModal } from './heatmap-config-modal';
-import { WereadConfigModal } from './weread-config-modal';
-import { fetchWereadCategories } from './weread-service';
-import { fetchTickTickProjects } from './ticktick-config-modal';
 import { CalendarConfigModal } from './calendar-config-modal';
 import { TrackerConfigModal } from './tracker-config-modal';
 import { TemplatePickerModal } from './template-modal';
@@ -268,41 +265,8 @@ export class DashboardView extends ItemView implements HoverParent {
 				this.openCalendarConfigModal(columnName);
 			} else if (col?.sectionType === 'heatmap') {
 				this.openHeatmapConfigModal(columnName);
-			} else if (col?.sectionType === 'weread') {
-				this.openWereadConfigModal(columnName);
 			} else {
 				this.openLibraryConfigModal(columnName);
-			}
-		}) as EventListener);
-
-		// TickTick view toggle (today/lists) — dispatched from header buttons.
-		kanban.addEventListener('dashboard-ticktick-view', ((e: CustomEvent) => {
-			const { columnName, view } = e.detail as { columnName: string; view: 'today' | 'lists' };
-			const col = this.data?.columns.find(c => c.name === columnName);
-			if (col) {
-				const config = col.ticktickConfig ?? { view: 'today' as const };
-				this.suppressNextRender = true;
-				void this.sync.updateTickTickConfig(columnName, { ...config, view }).then(() => {
-					this.refreshSectionInPlace(columnName);
-				});
-			}
-		}) as EventListener);
-
-		// TickTick project filter (lists view).
-		kanban.addEventListener('dashboard-ticktick-filter', ((e: CustomEvent) => {
-			const { columnName } = e.detail as { columnName: string };
-			void this.openTickTickFilterModal(columnName);
-		}) as EventListener);
-
-		// TickTick project card resize (lists view).
-		kanban.addEventListener('dashboard-ticktick-resize', ((e: CustomEvent) => {
-			const { columnName, projectWidths } = e.detail as { columnName: string; projectWidths: Record<string, number> };
-			const col = this.data?.columns.find(c => c.name === columnName);
-			if (col?.ticktickConfig) {
-				this.suppressNextRender = true;
-				void this.sync.updateTickTickConfig(columnName, { ...col.ticktickConfig, projectWidths }).then(() => {
-					this.refreshSectionInPlace(columnName);
-				});
 			}
 		}) as EventListener);
 
@@ -1061,8 +1025,6 @@ export class DashboardView extends ItemView implements HoverParent {
 			this.openFolderConfigModal(name);
 		} else if (sectionType === 'heatmap') {
 			this.openHeatmapConfigModal(name);
-		} else if (sectionType === 'weread') {
-			this.openWereadConfigModal(name);
 		}
 	}
 
@@ -1156,21 +1118,6 @@ export class DashboardView extends ItemView implements HoverParent {
 		modal.open();
 	}
 
-	private openWereadConfigModal(colName: string): void {
-		const column = this.data?.columns.find(col => col.name === colName);
-		const existing = column?.wereadConfig ?? { widgets: [{ id: 'w1', view: 'shelf' as const }] };
-		void (async () => {
-			const categories = await fetchWereadCategories(this.plugin.settings.wereadApiKey);
-			const modal = new WereadConfigModal(
-				this.app,
-				existing,
-				categories,
-				(config) => { void this.sync.updateWereadConfig(colName, config); },
-			);
-			modal.open();
-		})();
-	}
-
 	private refreshSectionInPlace(columnName: string): void {
 		if (!this.data) return;
 		const kanban = (this.containerEl.children[1] as HTMLElement)?.querySelector<HTMLElement>('.dashboard-kanban');
@@ -1185,37 +1132,6 @@ export class DashboardView extends ItemView implements HoverParent {
 		for (const fn of this.dndCleanupFns) fn();
 		this.dndCleanupFns = [];
 		setupDragAndDrop(kanban, callbacks, this.dndCleanupFns);
-	}
-
-	private async openTickTickFilterModal(colName: string): Promise<void> {
-		const column = this.data?.columns.find(col => col.name === colName);
-		const config = column?.ticktickConfig ?? { view: 'lists' as const };
-		const region = this.plugin.settings.ticktickRegion === 'ticktick' ? 'ticktick' : 'dida365';
-		const projects = await fetchTickTickProjects(region, this.plugin.settings.ticktickCookie, this.plugin.settings.ticktickDeviceVersion);
-		const hidden = new Set(config.hiddenProjects ?? []);
-		const modal = new Modal(this.app);
-		modal.titleEl.setText(t('ticktick.filterProjects'));
-		for (const p of projects) {
-			new Setting(modal.contentEl)
-				.setName(p.name)
-				.addToggle(toggle => toggle
-					.setValue(!hidden.has(p.id))
-					.onChange(value => {
-						if (value) hidden.delete(p.id);
-						else hidden.add(p.id);
-					}));
-		}
-		new Setting(modal.contentEl).addButton(btn => btn
-			.setButtonText(t('common.save'))
-			.setCta()
-			.onClick(() => {
-				this.suppressNextRender = true;
-				void this.sync.updateTickTickConfig(colName, { ...config, hiddenProjects: hidden.size > 0 ? [...hidden] : undefined }).then(() => {
-					this.refreshSectionInPlace(colName);
-				});
-				modal.close();
-			}));
-		modal.open();
 	}
 
 	private openCalendarConfigModal(colName: string): void {

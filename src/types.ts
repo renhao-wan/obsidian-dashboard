@@ -19,20 +19,6 @@ export interface DashboardSettings {
 	pomodoroSoundEnabled: boolean;
 	widgetLunarEnabled: boolean;
 	widgetOrder: string[];
-	/** Weread (WeChat Read) official API key (wrk-...), shared account-wide. */
-	wereadApiKey: string;
-	/** Folder where weread highlights are imported as notes. */
-	wereadImportPath: string;
-	/** TickTick account region (dida365 = China, ticktick = international). */
-	ticktickRegion: 'dida365' | 'ticktick';
-	/** TickTick session token (the `t` cookie value), account-wide. */
-	ticktickCookie: string;
-	/** TickTick CSRF token (the `_csrf_token` cookie), required for writes. */
-	ticktickCsrf: string;
-	/** TickTick x-device version override (when the web client rotates, bump this). */
-	ticktickDeviceVersion?: string;
-	/** IANA timezone used to render TickTick dates (defaults to Asia/Shanghai). */
-	ticktickTimezone: string;
 	/** Skip the note popover: open notes directly in a tab on card click. */
 	disableNotePopover: boolean;
 	countdownEnabled: boolean;
@@ -63,12 +49,6 @@ export const DEFAULT_SETTINGS: DashboardSettings = {
 	pomodoroSoundEnabled: true,
 	widgetLunarEnabled: true,
 	widgetOrder: ['weather', 'lunar', 'pomodoro', 'reading', 'countdown'],
-	wereadApiKey: '',
-	wereadImportPath: 'Weread/划线',
-	ticktickRegion: 'dida365',
-	ticktickCookie: '',
-	ticktickCsrf: '',
-	ticktickTimezone: 'Asia/Shanghai',
 	disableNotePopover: false,
 	countdownEnabled: false,
 	countdowns: [] as CountdownConfig[],
@@ -247,32 +227,6 @@ export interface CountdownConfig {
 	reminderDays: number;
 }
 
-/** One widget within a weread section (a section stacks multiple, top-to-bottom). */
-export interface WereadWidget {
-	id: string;
-	view: 'shelf' | 'stats' | 'notes';
-	/** Shelf progress filter (multi-select): 'notStarted' | 'reading' | 'finished'. Empty = all. */
-	progressFilters?: string[];
-	/** Shelf category filter (multi-select, real top-level categories). Empty = all. */
-	categoryFilters?: string[];
-	title?: string;
-}
-
-/** Weread (WeChat Read) section config. The API key is account-wide (wereadApiKey). */
-export interface WereadConfig {
-	/** Ordered widgets rendered top-to-bottom. */
-	widgets: WereadWidget[];
-}
-
-/** TickTick section config. View toggles between 'today' (combined dashboard)
- * and 'lists' (project cards). Credentials are account-wide (DashboardSettings.ticktick*). */
-export interface TickTickConfig {
-	view: 'today' | 'lists';
-	/** Project IDs hidden in 'lists' view. */
-	hiddenProjects?: string[];
-	/** Per-project card width in 'lists' view (px), persisted on resize. */
-	projectWidths?: Record<string, number>;
-}
 
 export interface DashboardColumn {
 	name: string;
@@ -282,10 +236,6 @@ export interface DashboardColumn {
 	libraryConfig?: LibraryConfig;
 	/** Heatmap section config (sectionType 'heatmap'). */
 	heatmapConfig?: HeatmapConfig;
-	/** Weread section config (sectionType 'weread'). */
-	wereadConfig?: WereadConfig;
-	/** TickTick section config (sectionType 'ticktick'). */
-	ticktickConfig?: TickTickConfig;
 	/** User-set max height in px (drag-resize, desktop only). */
 	height?: number;
 }
