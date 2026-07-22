@@ -7,7 +7,7 @@ import { renderDashboard, destroyAllCharts, renderSidebarWidgets, renderSidebarW
 import { renderBanner, BannerEditModal, resolveVaultImage } from './banner';
 import { getRecentDocs, renderRecentDocs } from './recent';
 import { renderQuickActions, AddActionModal, DocSearchModal } from './quick-actions';
-import { setupDragAndDrop } from './dnd';
+import { setupDragAndDrop } from './utils/dnd';
 import { CardEditModal } from './card-edit-modal';
 import { NotePopoverModal } from './note-popover-modal';
 import { showConfirmDialog } from './confirm-dialog';

@@ -1,4 +1,4 @@
-import type { RenderCallbacks } from './core/types';
+import type { RenderCallbacks } from '../core/types';
 
 interface DnDState {
 	draggingCardId: string | null;

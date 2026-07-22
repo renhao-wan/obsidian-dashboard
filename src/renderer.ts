@@ -7,7 +7,7 @@ import { renderMediaSection, destroyMediaSection } from './media-section';
 import { renderCalendarSection } from './calendar-section';
 import { renderHeatmapSection } from './heatmap-section';
 import { resolveVaultImage } from './banner';
-import { attachFileSuggest } from './file-suggest';
+import { attachFileSuggest } from './utils/file-suggest';
 import { showConfirmDialog } from './confirm-dialog';
 import { attachNoteHover } from './hover-preview';
 import { fetchWeather, getCachedWeather, getWeatherEmoji, getWeatherDescription } from './services/weather';
