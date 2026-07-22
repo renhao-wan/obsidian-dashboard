@@ -1,10 +1,10 @@
 import { App, Modal, Notice, setIcon } from 'obsidian';
 import type { TFile } from 'obsidian';
-import { t } from './i18n';
-import { renderTextWithLinks } from './renderer';
-import { renderMonthGrid, renderWeekTimeGrid, mondayOf, taskTime, byTaskTime } from './calendar-grid';
-import { toIsoDate, type VaultTask } from './alltasks-scan';
-import { appendTaskToDailyNote } from './daily-notes';
+import { t } from '../i18n';
+import { renderTextWithLinks } from '../renderer';
+import { renderMonthGrid, renderWeekTimeGrid, mondayOf, taskTime, byTaskTime } from '../calendar-grid';
+import { toIsoDate, type VaultTask } from '../alltasks-scan';
+import { appendTaskToDailyNote } from '../daily-notes';
 
 interface CalendarModalCallbacks {
 	onToggle: (task: VaultTask, nextChecked: boolean) => Promise<void> | void;

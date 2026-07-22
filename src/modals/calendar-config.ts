@@ -1,7 +1,7 @@
 import { App, Modal } from 'obsidian';
-import type { LibraryConfig } from './core/types';
-import { t } from './i18n';
-import { FolderSuggestModal } from './folder-config-modal';
+import type { LibraryConfig } from '../core/types';
+import { t } from '../i18n';
+import { FolderSuggestModal } from './folder-config';
 
 /**
  * Configuration modal for the calendar section: only the excluded-folders list

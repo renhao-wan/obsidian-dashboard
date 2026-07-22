@@ -11,7 +11,7 @@ import {
 	type VaultTask,
 } from './alltasks-scan';
 import { renderMonthGrid, renderWeekGrid, mondayOf } from './calendar-grid';
-import { CalendarMonthModal, DayAgendaModal } from './calendar-modal';
+import { CalendarMonthModal, DayAgendaModal } from './modals/calendar';
 
 /**
  * Render the calendar section: a compact in-column month grid (each day cell

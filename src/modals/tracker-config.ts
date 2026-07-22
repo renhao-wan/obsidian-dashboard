@@ -1,7 +1,7 @@
 import { App, Modal } from 'obsidian';
-import type { TrackerConfig, TrackerStyle } from './core/types';
-import { suggestTrackerKeys } from './services/tracker';
-import { t } from './i18n';
+import type { TrackerConfig, TrackerStyle } from '../core/types';
+import { suggestTrackerKeys } from '../services/tracker';
+import { t } from '../i18n';
 
 export class TrackerConfigModal extends Modal {
 	private onSave: (title: string, config: TrackerConfig) => void;

@@ -1,5 +1,5 @@
 import { Modal, setIcon } from 'obsidian';
-import { t } from './i18n';
+import { t } from '../i18n';
 
 export type WidgetType = 'weather' | 'tracker';
 

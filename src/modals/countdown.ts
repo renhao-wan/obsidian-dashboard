@@ -1,6 +1,6 @@
 import { App, Modal } from 'obsidian';
-import type { CountdownConfig } from './core/types';
-import { t, getLanguage } from './i18n';
+import type { CountdownConfig } from '../core/types';
+import { t, getLanguage } from '../i18n';
 
 export class CountdownSettingsModal extends Modal {
 	private config: CountdownConfig;

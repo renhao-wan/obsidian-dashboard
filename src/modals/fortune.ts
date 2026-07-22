@@ -3,7 +3,7 @@ import {
 	type FortuneStick,
 	FORTUNE_CATEGORIES,
 	drawFortuneStick,
-} from './fortune-stick';
+} from '../fortune-stick';
 
 export class FortuneStickModal {
 	private stick: FortuneStick | null = null;

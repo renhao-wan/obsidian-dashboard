@@ -1,9 +1,9 @@
 import { Solar } from 'lunar-typescript';
-import { fetchHolidayData, getHolidayForDate, type HolidayInfo } from './services/holiday';
-import { getTodayAlmanac } from './utils/lunar';
-import { getLanguage } from './i18n';
+import { fetchHolidayData, getHolidayForDate, type HolidayInfo } from '../services/holiday';
+import { getTodayAlmanac } from '../utils/lunar';
+import { getLanguage } from '../i18n';
 import type { App } from 'obsidian';
-import { FortuneStickModal } from './fortune-stick-modal';
+import { FortuneStickModal } from './fortune';
 
 export interface LunarWidgetData {
 	lunarDate: string;
