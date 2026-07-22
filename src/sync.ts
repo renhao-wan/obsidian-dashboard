@@ -99,6 +99,10 @@ export class SyncEngine {
 
 		const newContent = generateDefaultMarkdown();
 		await adapter.write(this.filePath, newContent);
+
+		// 立即重新加载数据并通知视图刷新（不等待文件 watcher 的 debounce）
+		this.data = parse(newContent);
+		this.notifyCallbacks();
 		return true;
 	}
 

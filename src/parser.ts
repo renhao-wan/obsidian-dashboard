@@ -346,17 +346,23 @@ export function serialize(data: DashboardData, contentHash?: string): string {
 
 /**
  * 检测 dashboard.md 是否还是默认内容（未被用户修改）
- * 通过比较 contentHash 来精确判断
+ * 优先使用 contentHash 精确比较，旧文件回退到特征文本匹配
  */
 export function isDefaultContent(markdown: string): boolean {
 	const { frontmatter } = splitFrontmatter(markdown);
 	const storedHash = frontmatter.contentHash;
-	if (typeof storedHash !== 'string' || !storedHash) return false;
 
-	// 移除 contentHash 字段后计算 hash，与存储的 hash 比较
-	const normalized = markdown.replace(/contentHash:\s*\w+\n?/g, '');
-	const currentHash = getContentHash(normalized);
-	return currentHash === storedHash;
+	// 新文件：使用 hash 比较
+	if (typeof storedHash === 'string' && storedHash) {
+		const normalized = markdown.replace(/contentHash:\s*\w+\n?/g, '');
+		const currentHash = getContentHash(normalized);
+		return currentHash === storedHash;
+	}
+
+	// 旧文件（没有 contentHash）：使用特征文本匹配
+	const enMarker = 'Welcome to Obsidian Dashboard';
+	const zhMarker = '欢迎使用 Obsidian Dashboard';
+	return markdown.includes(enMarker) || markdown.includes(zhMarker);
 }
 
 export function generateDefaultMarkdown(): string {
