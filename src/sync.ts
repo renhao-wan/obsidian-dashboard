@@ -1,6 +1,6 @@
 import { App, TFile } from 'obsidian';
 import type { DashboardSettings, DashboardCard, DashboardData, TaskItem, DocNode, QuickAction, BannerData, CardType } from './types';
-import { parse, serialize, generateDefaultMarkdown } from './parser';
+import { parse, serialize, generateDefaultMarkdown, isDefaultContent } from './parser';
 import { t } from './i18n';
 import {
 	type TaskPath,
@@ -82,6 +82,22 @@ export class SyncEngine {
 
 	async refresh(): Promise<void> {
 		await this.load();
+	}
+
+	/**
+	 * 如果当前内容是默认内容，则重新生成当前语言版本
+	 * 用于语言切换时自动更新
+	 * @returns 是否进行了更新
+	 */
+	async updateDefaultContentIfDefault(): Promise<boolean> {
+		if (!this.file) return false;
+
+		const content = await this.app.vault.read(this.file);
+		if (!isDefaultContent(content)) return false;
+
+		const newContent = generateDefaultMarkdown();
+		await this.app.vault.modify(this.file, newContent);
+		return true;
 	}
 
 	private mapCardTasks(

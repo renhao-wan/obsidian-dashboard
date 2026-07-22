@@ -176,6 +176,13 @@ export class DashboardView extends ItemView implements HoverParent {
 		}
 	}
 
+	/**
+	 * 如果 dashboard 还是默认内容，则更新为当前语言版本
+	 */
+	async updateDefaultContentIfDefault(): Promise<void> {
+		await this.sync.updateDefaultContentIfDefault();
+	}
+
 	async addSection(): Promise<void> {
 		const name = await showPromptDialog(this.app, { title: t('renderer.sectionName') });
 		if (name) {

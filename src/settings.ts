@@ -36,6 +36,8 @@ export class DashboardSettingTab extends PluginSettingTab {
 					setLanguage(lang);
 					await this.plugin.saveSettings();
 					this.display();
+					// 更新默认内容（如果还是默认状态）
+					await this.plugin.updateDashboardDefaultContent();
 					this.plugin.refreshAllDashboards();
 				}));
 

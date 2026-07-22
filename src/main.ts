@@ -154,4 +154,17 @@ export default class DashboardPlugin extends Plugin {
 			}
 		}
 	}
+
+	/**
+	 * 更新所有打开的 dashboard 的默认内容
+	 * 用于语言切换时自动更新
+	 */
+	async updateDashboardDefaultContent(): Promise<void> {
+		const leaves = this.app.workspace.getLeavesOfType(DASHBOARD_VIEW_TYPE);
+		for (const leaf of leaves) {
+			if (leaf.view instanceof DashboardView) {
+				await leaf.view.updateDefaultContentIfDefault();
+			}
+		}
+	}
 }

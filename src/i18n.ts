@@ -83,7 +83,9 @@ const translations: Record<Language, Record<string, string>> = {
 			'settings.days90': '90 days',
 			'settings.days180': '180 days',
 			'settings.days365': '365 days',
-				
+			'settings.disableNotePopover': 'Open notes directly in a tab',
+			'settings.disableNotePopoverDesc': 'Skip the in-dashboard editor: clicking a document card opens the note in a tab. Off keeps the click-then-open popover.',
+
 		// Main
 		'main.openDashboard': 'Open dashboard',
 		'main.dashboard': 'Dashboard',
@@ -112,6 +114,9 @@ const translations: Record<Language, Record<string, string>> = {
 		'default.guide3': 'Click the bookmark button in Banner to collapse the banner',
 		'default.guide4': 'Enable more widgets in Settings',
 		'default.projectTitle': 'My First Project',
+		'default.libReading': 'Reading',
+		'default.libToRead': 'To Read',
+		'default.libDone': 'Done',
 
 		'renderer.addSection': '+ Add section',
 		'renderer.sectionName': 'Section name:',
@@ -735,7 +740,9 @@ const translations: Record<Language, Record<string, string>> = {
 			'settings.days90': '90 天',
 			'settings.days180': '180 天',
 			'settings.days365': '365 天',
-				
+			'settings.disableNotePopover': '直接在标签页打开笔记',
+			'settings.disableNotePopoverDesc': '跳过仪表盘内编辑器：点击文档卡片直接在标签页打开笔记。关闭则保留先弹窗再打开的行为。',
+
 		// Main
 		'main.openDashboard': '打开工作台',
 		'main.dashboard': '工作台',
@@ -764,6 +771,9 @@ const translations: Record<Language, Record<string, string>> = {
 		'default.guide3': '点击 Banner 区的书签按钮收起 Banner',
 		'default.guide4': '在设置中开启更多小组件',
 		'default.projectTitle': '我的第一个项目',
+		'default.libReading': '阅读中',
+		'default.libToRead': '待阅读',
+		'default.libDone': '已完成',
 
 		'renderer.addSection': '+ 添加分区',
 		'renderer.sectionName': '分区名称：',

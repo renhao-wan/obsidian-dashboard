@@ -311,6 +311,16 @@ export function serialize(data: DashboardData): string {
 	return lines.join('\n');
 }
 
+/**
+ * 检测 dashboard.md 是否还是默认内容（未被用户修改）
+ * 通过匹配特征文本来判断
+ */
+export function isDefaultContent(markdown: string): boolean {
+	const enMarker = 'Welcome to Obsidian Dashboard';
+	const zhMarker = '欢迎使用 Obsidian Dashboard';
+	return markdown.includes(enMarker) || markdown.includes(zhMarker);
+}
+
 export function generateDefaultMarkdown(): string {
 	const today = new Date();
 	const dateStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
@@ -495,7 +505,7 @@ export function generateDefaultMarkdown(): string {
 				cards: [
 					{
 						id: 'demo-lib-reading',
-						title: 'Reading',
+						title: t('default.libReading'),
 						type: 'project',
 						column: 'Library',
 						body: '',
@@ -518,7 +528,7 @@ export function generateDefaultMarkdown(): string {
 					},
 					{
 						id: 'demo-lib-toread',
-						title: 'To Read',
+						title: t('default.libToRead'),
 						type: 'project',
 						column: 'Library',
 						body: '',
@@ -541,7 +551,7 @@ export function generateDefaultMarkdown(): string {
 					},
 					{
 						id: 'demo-lib-done',
-						title: 'Done',
+						title: t('default.libDone'),
 						type: 'project',
 						column: 'Library',
 						body: '',
