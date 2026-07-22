@@ -1,7 +1,8 @@
 import { App, TFile } from 'obsidian';
-import type { DashboardSettings, DashboardCard, DashboardData, TaskItem, DocNode, QuickAction, BannerData, CardType } from './core/types';
+import type { DashboardSettings, DashboardCard, DashboardData, TaskItem, DocNode, QuickAction, BannerData, CardType } from '../core/types';
 import { parse, serialize, generateDefaultMarkdown, isDefaultContent } from './parser';
-import { t } from './i18n';
+import { Storage } from './storage';
+import { t } from '../i18n';
 import {
 	type TaskPath,
 	updateTaskAt,
@@ -13,7 +14,7 @@ import {
 	promoteToTopLevel,
 	recalcChecked,
 	archiveCompleted,
-} from './task-tree';
+} from '../task-tree';
 import {
 	type DocPath,
 	updateDocAt,
@@ -21,7 +22,7 @@ import {
 	insertDocSibling,
 	appendDocChild,
 	demoteDocToChild,
-} from './doc-tree';
+} from '../doc-tree';
 
 type DataCallback = (data: DashboardData) => void;
 
@@ -392,7 +393,7 @@ export class SyncEngine {
 		await this.writeToDisk();
 	}
 
-	async updateLibraryConfig(columnName: string, config: import('./core/types').LibraryConfig): Promise<void> {
+	async updateLibraryConfig(columnName: string, config: import('../core/types').LibraryConfig): Promise<void> {
 		if (!this.data) return;
 
 		this.data = {
@@ -404,7 +405,7 @@ export class SyncEngine {
 		await this.writeToDisk();
 	}
 
-	async updateHeatmapConfig(columnName: string, config: import('./core/types').HeatmapConfig): Promise<void> {
+	async updateHeatmapConfig(columnName: string, config: import('../core/types').HeatmapConfig): Promise<void> {
 		if (!this.data) return;
 
 		this.data = {
@@ -694,7 +695,7 @@ export class SyncEngine {
 		await this.updateCard(cardId, { width });
 	}
 
-	async updateCardSize(cardId: string, size: import('./core/types').CardSize): Promise<void> {
+	async updateCardSize(cardId: string, size: import('../core/types').CardSize): Promise<void> {
 		await this.updateCard(cardId, { size });
 	}
 

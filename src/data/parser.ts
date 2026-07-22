@@ -12,9 +12,9 @@ import type {
 	TrackerConfig,
 	LibraryConfig,
 	HeatmapConfig,
-} from './core/types';
+} from '../core/types';
 import { parse as parseYaml } from 'yaml';
-import { t } from './i18n';
+import { t } from '../i18n';
 
 const KNOWN_METADATA_KEYS = new Set(['id', 'link', 'progress', 'due', 'streak', 'type', 'color', 'cover', 'width', 'size', 'lat', 'lon', 'city', 'track', 'days', 'cols', 'rows', 'gcol', 'grow']);
 
@@ -826,7 +826,7 @@ function str(v: unknown): string {
 }
 
 function parseLibraryConfig(raw: Record<string, unknown>): LibraryConfig {
-	const filters: import('./core/types').PropertyFilter[] = [];
+	const filters: import('../core/types').PropertyFilter[] = [];
 	const rawFilters = raw.filters;
 	if (Array.isArray(rawFilters)) {
 		for (const item of rawFilters) {
@@ -843,7 +843,7 @@ function parseLibraryConfig(raw: Record<string, unknown>): LibraryConfig {
 
 	return {
 		filters,
-		viewMode: (['grid', 'list', 'table', 'kanban'].includes(str(raw.viewMode ?? '')) ? raw.viewMode : 'grid') as import('./core/types').LibraryViewMode,
+		viewMode: (['grid', 'list', 'table', 'kanban'].includes(str(raw.viewMode ?? '')) ? raw.viewMode : 'grid') as import('../core/types').LibraryViewMode,
 		sortBy: str(raw.sortBy ?? 'modified'),
 		sortDesc: raw.sortDesc !== false,
 		kanbanGroupBy: raw.kanbanGroupBy ? str(raw.kanbanGroupBy) : undefined,
@@ -853,7 +853,7 @@ function parseLibraryConfig(raw: Record<string, unknown>): LibraryConfig {
 		folders: Array.isArray(raw.folders) ? raw.folders.map((v: unknown) => String(v)) : (typeof raw.folder === 'string' ? [raw.folder] : undefined),
 		folderFilter: Array.isArray(raw.folderFilter) ? raw.folderFilter.map((v: unknown) => String(v)) : undefined,
 		excludeFolders: Array.isArray(raw.excludeFolders) ? raw.excludeFolders.map((v: unknown) => String(v)) : undefined,
-		taskGroupBy: ['date', 'priority', 'none'].includes(str(raw.taskGroupBy ?? '')) ? (raw.taskGroupBy as import('./core/types').LibraryConfig['taskGroupBy']) : undefined,
+		taskGroupBy: ['date', 'priority', 'none'].includes(str(raw.taskGroupBy ?? '')) ? (raw.taskGroupBy as import('../core/types').LibraryConfig['taskGroupBy']) : undefined,
 			quickDateFilter: raw.quickDateFilter && typeof raw.quickDateFilter === 'object' ? {
 				property: (raw.quickDateFilter as Record<string, unknown>).property === 'modified' ? 'modified' as const : 'created' as const,
 			start: str((raw.quickDateFilter as Record<string, unknown>).start ?? ''),

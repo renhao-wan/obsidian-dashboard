@@ -2,7 +2,7 @@ import { Events, HoverParent, HoverPopover, ItemView, Modal, moment, Notice, set
 import type DashboardPlugin from './core/main';
 import type { AppWithCommands } from './obsidian-internal';
 import type { DashboardData, DashboardCard, QuickAction, BannerData, LibraryConfig } from './core/types';
-import { SyncEngine } from './sync';
+import { SyncEngine } from './data/sync';
 import { renderDashboard, destroyAllCharts, renderSidebarWidgets, renderSidebarWeekCalendar, refreshSidebarWeekCalendar, renderSidebarPomodoro, renderSidebarReading, refreshScanningSections, refreshMediaSections, renderSection } from './renderer';
 import { renderBanner, BannerEditModal, resolveVaultImage } from './banner';
 import { getRecentDocs, renderRecentDocs } from './recent';
