@@ -32,7 +32,7 @@ export interface DashboardSettings {
 }
 
 export const DEFAULT_SETTINGS: DashboardSettings = {
-	dashboardFile: 'dashboard',
+	dashboardFile: '.dashboard/dashboard',
 	recentDocCount: 5,
 	language: 'en',
 	stylePreset: 'earth',
@@ -55,8 +55,8 @@ export const DEFAULT_SETTINGS: DashboardSettings = {
 	readingEnabled: false,
 	readingSoundEnabled: true,
 	taskTemplates: [],
-	memoSavePath: '',
-	taskArchivePath: '归档/已完成.md',
+	memoSavePath: '.dashboard/memo',
+	taskArchivePath: '.dashboard/archive',
 };
 
 export interface QuoteItem {

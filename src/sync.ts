@@ -31,6 +31,7 @@ export class SyncEngine {
 	private app: App;
 	private settings: DashboardSettings;
 	private file: TFile | null = null;
+	private filePath: string = '';
 	private data: DashboardData | null = null;
 	private debounceTimer: number | null = null;
 	private readonly debounceMs = 300;
@@ -90,13 +91,14 @@ export class SyncEngine {
 	 * @returns 是否进行了更新
 	 */
 	async updateDefaultContentIfDefault(): Promise<boolean> {
-		if (!this.file) return false;
+		if (!this.filePath) return false;
 
-		const content = await this.app.vault.read(this.file);
+		const adapter = this.app.vault.adapter;
+		const content = await adapter.read(this.filePath);
 		if (!isDefaultContent(content)) return false;
 
 		const newContent = generateDefaultMarkdown();
-		await this.app.vault.modify(this.file, newContent);
+		await adapter.write(this.filePath, newContent);
 		return true;
 	}
 
@@ -731,23 +733,35 @@ export class SyncEngine {
 	}
 
 	private async findOrCreateFile(): Promise<void> {
-		const rawPath = this.settings.dashboardFile.trim();
-		const path = rawPath.endsWith('.md') ? rawPath : `${rawPath}.md`;
-		const existing = this.app.vault.getFileByPath(path);
-		if (existing) {
-			this.file = existing;
-			return;
+		const rawPath = this.settings.dashboardFile.trim().replace(/^\.\//, '');
+		this.filePath = rawPath.endsWith('.md') ? rawPath : `${rawPath}.md`;
+		const adapter = this.app.vault.adapter;
+
+		// Ensure parent directory exists (for hidden directories like .dashboard/)
+		const dir = this.filePath.substring(0, this.filePath.lastIndexOf('/'));
+		if (dir) {
+			const parts = dir.split('/').map(p => p.trim()).filter(Boolean);
+			let current = '';
+			for (const part of parts) {
+				current = current ? `${current}/${part}` : part;
+				if (!(await adapter.exists(current))) {
+					await adapter.mkdir(current);
+				}
+			}
 		}
 
-		const content = generateDefaultMarkdown();
-		this.file = await this.app.vault.create(path, content);
+		// Create file if it doesn't exist
+		if (!(await adapter.exists(this.filePath))) {
+			const content = generateDefaultMarkdown();
+			await adapter.write(this.filePath, content);
+		}
 	}
 
 	private deferredWriteTimer: number | null = null;
 	private renameEventRef: ReturnType<typeof this.app.vault.on> | null = null;
 
 	private registerFileWatcher(): void {
-		const filePath = this.file?.path;
+		const filePath = this.filePath;
 		this.eventRef = this.app.vault.on('modify', (file) => {
 			if (file instanceof TFile && file.path === filePath) {
 				this.onFileModify();
@@ -821,9 +835,9 @@ export class SyncEngine {
 	}
 
 	private async load(): Promise<void> {
-		if (!this.file) return;
+		if (!this.filePath) return;
 
-		const content = await this.app.vault.read(this.file);
+		const content = await this.app.vault.adapter.read(this.filePath);
 		const newData = parse(content);
 
 		// Skip the re-render when the on-disk data is logically equivalent to what
@@ -838,14 +852,14 @@ export class SyncEngine {
 	}
 
 	private async writeToDisk(): Promise<void> {
-		if (!this.data || !this.file) return;
+		if (!this.data || !this.filePath) return;
 
 		const content = serialize(this.data);
+		const adapter = this.app.vault.adapter;
 
-		const fileRef = this.file;
 		this.writeQueue = this.writeQueue.then(async () => {
 			try {
-				const current = await this.app.vault.read(fileRef);
+				const current = await adapter.read(this.filePath);
 
 				// Safety: skip write if new content is drastically smaller
 				if (current.length > 0 && content.length < current.length * 0.3) {
@@ -856,7 +870,7 @@ export class SyncEngine {
 				// Backup current file before overwriting
 				await this.createBackup(current);
 
-				await this.app.vault.modify(fileRef, content);
+				await adapter.write(this.filePath, content);
 			} catch (err) {
 				console.error('Dashboard sync write failed:', err);
 			}

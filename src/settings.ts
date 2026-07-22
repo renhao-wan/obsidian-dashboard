@@ -1,4 +1,4 @@
-import { App, PluginSettingTab, Setting } from 'obsidian';
+import { App, Notice, PluginSettingTab, Setting } from 'obsidian';
 import type DashboardPlugin from './main';
 import { DEFAULT_SETTINGS, type DashboardSettings, type CountdownConfig } from './types';
 import { t, setLanguage, type Language } from './i18n';
@@ -90,12 +90,12 @@ export class DashboardSettingTab extends PluginSettingTab {
 			.setName(t('settings.dashboardFile'))
 			.setDesc(t('settings.dashboardFileDesc'))
 			.addText(text => text
-				.setPlaceholder('Dashboard or path/to/dashboard')
+				.setPlaceholder('.dashboard/dashboard')
 				.setValue(this.plugin.settings.dashboardFile)
 				.onChange(async (value) => {
 					this.plugin.settings = {
 						...this.plugin.settings,
-						dashboardFile: value.trim() || DEFAULT_SETTINGS.dashboardFile,
+						dashboardFile: value.trim().replace(/^\.\//, '') || DEFAULT_SETTINGS.dashboardFile,
 					};
 					await this.plugin.saveSettings();
 				}));
@@ -104,12 +104,12 @@ export class DashboardSettingTab extends PluginSettingTab {
 			.setName(t('settings.memoSavePath'))
 			.setDesc(t('settings.memoSavePathDesc'))
 			.addText(text => text
-				.setPlaceholder('Memos')
+				.setPlaceholder('.dashboard/memo')
 				.setValue(this.plugin.settings.memoSavePath)
 				.onChange(async (value) => {
 					this.plugin.settings = {
 						...this.plugin.settings,
-						memoSavePath: value.trim(),
+						memoSavePath: value.trim().replace(/^\.\//, ''),
 					};
 					await this.plugin.saveSettings();
 				}));
@@ -118,12 +118,12 @@ export class DashboardSettingTab extends PluginSettingTab {
 			.setName(t('settings.taskArchivePath'))
 			.setDesc(t('settings.taskArchivePathDesc'))
 			.addText(text => text
-				.setPlaceholder('Archive/Done.md')
+				.setPlaceholder('.dashboard/archive')
 				.setValue(this.plugin.settings.taskArchivePath)
 				.onChange(async (value) => {
 					this.plugin.settings = {
 						...this.plugin.settings,
-						taskArchivePath: value.trim(),
+						taskArchivePath: value.trim().replace(/^\.\//, ''),
 					};
 					await this.plugin.saveSettings();
 				}));
@@ -141,6 +141,8 @@ export class DashboardSettingTab extends PluginSettingTab {
 		this.renderWidgetSettings(containerEl);
 
 		this.renderLunarSettings(containerEl);
+
+		this.renderResetSection(containerEl);
 
 		containerEl.createDiv({ cls: 'dashboard-settings-footer', text: "crafted by Pandora's Digital Garden" });
 	}
@@ -510,5 +512,27 @@ export class DashboardSettingTab extends PluginSettingTab {
 
 		inputEl.ownerDocument.body.appendChild(next);
 		return next;
+	}
+
+	private renderResetSection(containerEl: HTMLElement): void {
+		new Setting(containerEl).setName(t('settings.resetToDefaults')).setHeading();
+
+		const resetCard = containerEl.createDiv({ cls: 'dashboard-widget-settings-card' });
+		new Setting(resetCard)
+			.setName(t('settings.resetToDefaults'))
+			.setDesc(t('settings.resetToDefaultsDesc'))
+			.addButton(btn => btn
+				.setButtonText(t('settings.resetToDefaults'))
+				.setWarning()
+				.onClick(async () => {
+					const confirmed = confirm(t('settings.resetConfirm'));
+					if (!confirmed) return;
+
+					this.plugin.settings = { ...DEFAULT_SETTINGS };
+					await this.plugin.saveSettings();
+					new Notice(t('settings.resetDone'));
+					this.display();
+					this.plugin.refreshAllDashboards();
+				}));
 	}
 }

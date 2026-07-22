@@ -871,7 +871,8 @@ export class DashboardView extends ItemView implements HoverParent {
 				await this.ensureFolder(folder);
 			}
 
-			await this.app.vault.create(fullPath, content);
+			// Use adapter for hidden directories (vault.create may not work with . prefix)
+			await this.app.vault.adapter.write(fullPath, content);
 			new Notice(t('notice.memoSaved', { path: fullPath }), 4000);
 		} catch (err) {
 			console.error('[Dashboard] saveMemoAsNote failed:', err);
@@ -922,7 +923,8 @@ export class DashboardView extends ItemView implements HoverParent {
 				const raw = await this.app.vault.read(existing);
 				await this.app.vault.modify(existing, prependAfterFrontmatter(raw, block));
 			} else {
-				await this.app.vault.create(path, `${block}\n`);
+				// Use adapter for hidden directories
+				await this.app.vault.adapter.write(path, `${block}\n`);
 			}
 			new Notice(t('notice.tasksSavedToDaily', { path }), 4000);
 		} catch (err) {
@@ -979,7 +981,8 @@ export class DashboardView extends ItemView implements HoverParent {
 				const sep = raw.endsWith('\n') ? '' : '\n';
 				await this.app.vault.modify(existing, `${raw}${sep}${appendText}`);
 			} else {
-				await this.app.vault.create(fullPath, appendText);
+				// Use adapter for hidden directories
+				await this.app.vault.adapter.write(fullPath, appendText);
 			}
 
 			await this.sync.archiveTasks(columnName);

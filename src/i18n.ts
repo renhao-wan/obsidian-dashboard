@@ -29,11 +29,11 @@ const translations: Record<Language, Record<string, string>> = {
 
 		// Settings
 		'settings.dashboardFile': 'Dashboard file',
-		'settings.dashboardFileDesc': 'Full path to the dashboard file (e.g. dashboard or notes/dashboard). Omit .md extension.',
+		'settings.dashboardFileDesc': 'Full path to the dashboard file (default: .dashboard/dashboard). Omit .md extension. Use . prefix to hide from file explorer.',
 		'settings.memoSavePath': 'Memo note save path',
-		'settings.memoSavePathDesc': 'Folder where memo cards are saved as notes (e.g. memos or notes/memos). Leave empty for vault root.',
+		'settings.memoSavePathDesc': 'Folder where memo cards are saved as notes (default: .dashboard/memo). Use . prefix to hide from file explorer.',
 		'settings.taskArchivePath': 'Task archive file path',
-		'settings.taskArchivePathDesc': 'File where completed tasks are appended (e.g. Archive/Done.md). Folders are created as needed.',
+		'settings.taskArchivePathDesc': 'File where completed tasks are appended (default: .dashboard/archive). Folders are created as needed.',
 		'settings.theme': 'Theme',
 		'settings.themeDesc': 'Dashboard color theme',
 		'settings.themeAuto': 'Auto',
@@ -85,6 +85,10 @@ const translations: Record<Language, Record<string, string>> = {
 			'settings.days365': '365 days',
 			'settings.disableNotePopover': 'Open notes directly in a tab',
 			'settings.disableNotePopoverDesc': 'Skip the in-dashboard editor: clicking a document card opens the note in a tab. Off keeps the click-then-open popover.',
+			'settings.resetToDefaults': 'Reset to defaults',
+			'settings.resetToDefaultsDesc': 'Reset all settings to their default values. This will not delete your dashboard data.',
+			'settings.resetConfirm': 'Are you sure you want to reset all settings to defaults?',
+			'settings.resetDone': 'Settings have been reset to defaults',
 
 		// Main
 		'main.openDashboard': 'Open dashboard',
@@ -692,11 +696,11 @@ const translations: Record<Language, Record<string, string>> = {
 
 		// Settings
 		'settings.dashboardFile': '仪表盘文件',
-		'settings.dashboardFileDesc': '仪表盘 Markdown 文件路径（如 dashboard 或 notes/dashboard，无需 .md 后缀）',
+		'settings.dashboardFileDesc': '仪表盘 Markdown 文件路径（默认：.dashboard/dashboard，无需 .md 后缀）。使用 . 前缀可隐藏目录',
 		'settings.memoSavePath': '备忘录笔记保存路径',
-		'settings.memoSavePathDesc': '备忘录卡片保存为笔记的文件夹（如 memos 或 notes/memos），留空则保存到仓库根目录',
+		'settings.memoSavePathDesc': '备忘录卡片保存为笔记的文件夹（默认：.dashboard/memo）。使用 . 前缀可隐藏目录',
 		'settings.taskArchivePath': '待办归档文件路径',
-		'settings.taskArchivePathDesc': '已完成事项追加保存的文件（如 归档/已完成.md），所需文件夹会自动创建',
+		'settings.taskArchivePathDesc': '已完成事项追加保存的文件（默认：.dashboard/archive），所需文件夹会自动创建',
 		'settings.theme': '主题',
 		'settings.themeDesc': '仪表盘颜色主题',
 		'settings.themeAuto': '自动',
@@ -748,6 +752,10 @@ const translations: Record<Language, Record<string, string>> = {
 			'settings.days365': '365 天',
 			'settings.disableNotePopover': '直接在标签页打开笔记',
 			'settings.disableNotePopoverDesc': '跳过仪表盘内编辑器：点击文档卡片直接在标签页打开笔记。关闭则保留先弹窗再打开的行为。',
+			'settings.resetToDefaults': '重置为默认值',
+			'settings.resetToDefaultsDesc': '将所有设置重置为默认值，不会删除仪表盘数据',
+			'settings.resetConfirm': '确定要将所有设置重置为默认值吗？',
+			'settings.resetDone': '设置已重置为默认值',
 
 		// Main
 		'main.openDashboard': '打开工作台',
