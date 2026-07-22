@@ -1,10 +1,10 @@
 import { App, Platform, setIcon } from 'obsidian';
 import type { DashboardData, DashboardColumn, DashboardCard, RenderCallbacks, TaskItem, DocNode, DashboardSettings, CardSize } from '../core/types';
 import { t } from '../i18n';
-import { renderLibrarySection } from '../library-section';
-import { renderMediaSection, destroyMediaSection } from '../media-section';
-import { renderCalendarSection } from '../calendar-section';
-import { renderHeatmapSection } from '../heatmap-section';
+import { renderLibrarySection } from '../sections/library';
+import { renderMediaSection, destroyMediaSection } from '../sections/media';
+import { renderCalendarSection } from '../sections/calendar';
+import { renderHeatmapSection } from '../sections/heatmap';
 import { resolveVaultImage } from '../banner';
 import {
 	activeHoverParent,

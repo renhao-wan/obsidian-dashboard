@@ -2,7 +2,7 @@ import { App } from 'obsidian';
 import type { HoverParent } from 'obsidian';
 import type { DashboardData, DashboardSettings, RenderCallbacks } from '../core/types';
 import { t } from '../i18n';
-import { destroyMediaSection } from '../media-section';
+import { destroyMediaSection } from '../sections/media';
 import {
 	destroyAllCharts,
 	setActiveHoverParent,

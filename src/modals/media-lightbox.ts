@@ -1,7 +1,7 @@
 import { App, Modal, setIcon } from 'obsidian';
 import type { TFile } from 'obsidian';
 import { resolveVaultImage } from '../banner';
-import { releaseVideoMedia } from '../media-section';
+import { releaseVideoMedia } from '../sections/media';
 
 /**
  * Full-screen lightbox for browsing a list of image or video files.

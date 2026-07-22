@@ -1,12 +1,12 @@
 import { App, Notice, Platform, TFile, setIcon } from 'obsidian';
 import type { HoverParent } from 'obsidian';
-import type { DashboardColumn } from './core/types';
-import { resolveVaultImage } from './banner';
-import { t } from './i18n';
-import { showConfirmDialog } from './components/confirm-dialog';
-import { MediaLightboxModal } from './modals/media-lightbox';
-import { renderPagination } from './library-section';
-import { FolderSuggestModal } from './modals/folder-config';
+import type { DashboardColumn } from '../core/types';
+import { resolveVaultImage } from '../banner';
+import { t } from '../i18n';
+import { showConfirmDialog } from '../components/confirm-dialog';
+import { MediaLightboxModal } from '../modals/media-lightbox';
+import { renderPagination } from './library-views';
+import { FolderSuggestModal } from '../modals/folder-config';
 
 /** Image file extensions shown in an images section (excludes pdf). */
 export const IMAGE_EXTS = new Set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp', 'bmp']);
