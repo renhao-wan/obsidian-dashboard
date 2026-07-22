@@ -1,6 +1,6 @@
 import { Modal, setIcon } from 'obsidian';
-import type DashboardPlugin from './main';
-import type { TaskTemplate } from './types';
+import type DashboardPlugin from './core/main';
+import type { TaskTemplate } from './core/types';
 import { t } from './i18n';
 import { showConfirmDialog } from './confirm-dialog';
 

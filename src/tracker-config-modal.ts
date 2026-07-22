@@ -1,5 +1,5 @@
 import { App, Modal } from 'obsidian';
-import type { TrackerConfig, TrackerStyle } from './types';
+import type { TrackerConfig, TrackerStyle } from './core/types';
 import { suggestTrackerKeys } from './tracker-service';
 import { t } from './i18n';
 

@@ -1,6 +1,6 @@
 import { App, Modal, setIcon } from 'obsidian';
-import type { QuickAction } from './types';
-import { PRESET_ACTIONS } from './types';
+import type { QuickAction } from './core/types';
+import { PRESET_ACTIONS } from './core/types';
 import { t } from './i18n';
 import type { AppWithCommands } from './obsidian-internal';
 

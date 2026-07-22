@@ -1,7 +1,7 @@
 import { Events, HoverParent, HoverPopover, ItemView, Modal, moment, Notice, setIcon, Setting, WorkspaceLeaf, TFile } from 'obsidian';
-import type DashboardPlugin from './main';
+import type DashboardPlugin from './core/main';
 import type { AppWithCommands } from './obsidian-internal';
-import type { DashboardData, DashboardCard, QuickAction, BannerData, LibraryConfig } from './types';
+import type { DashboardData, DashboardCard, QuickAction, BannerData, LibraryConfig } from './core/types';
 import { SyncEngine } from './sync';
 import { renderDashboard, destroyAllCharts, renderSidebarWidgets, renderSidebarWeekCalendar, refreshSidebarWeekCalendar, renderSidebarPomodoro, renderSidebarReading, refreshScanningSections, refreshMediaSections, renderSection } from './renderer';
 import { renderBanner, BannerEditModal, resolveVaultImage } from './banner';
@@ -788,7 +788,7 @@ export class DashboardView extends ItemView implements HoverParent {
 			onProjectCoverChange: (card: DashboardCard, imagePath: string) => this.sync.updateProjectCover(card.id, imagePath),
 				onCardTitleEdit: (cardId: string, newTitle: string) => this.sync.updateCard(cardId, { title: newTitle }),
 				onCardWidthChange: (cardId: string, width: number) => this.sync.updateCardWidth(cardId, width),
-					onCardSizeChange: (cardId: string, size: string) => this.sync.updateCardSize(cardId, size as import('./types').CardSize),
+					onCardSizeChange: (cardId: string, size: string) => this.sync.updateCardSize(cardId, size as import('./core/types').CardSize),
 				onCardGridChange: (cardId: string, gridCols: number, gridRows: number) => this.sync.updateCardGrid(cardId, gridCols, gridRows),
 				onCardGridMove: (cardId: string, gridCol: number, gridRow: number) => this.sync.updateCardGridMove(cardId, gridCol, gridRow),
 				onFileDrop: (cardId: string, filePath: string) => this.handleFileDrop(cardId, filePath),

@@ -1,5 +1,5 @@
 import { App } from 'obsidian';
-import type { DashboardColumn, TrackerDataPoint } from './types';
+import type { DashboardColumn, TrackerDataPoint } from './core/types';
 import { t, getLanguage } from './i18n';
 import { readTrackerDataForRange, computeStreak, pastYearRange, thisYearRange } from './tracker-service';
 

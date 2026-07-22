@@ -1,5 +1,5 @@
 import { App, TFile } from 'obsidian';
-import type { DashboardSettings, DashboardCard, DashboardData, TaskItem, DocNode, QuickAction, BannerData, CardType } from './types';
+import type { DashboardSettings, DashboardCard, DashboardData, TaskItem, DocNode, QuickAction, BannerData, CardType } from './core/types';
 import { parse, serialize, generateDefaultMarkdown, isDefaultContent } from './parser';
 import { t } from './i18n';
 import {
@@ -392,7 +392,7 @@ export class SyncEngine {
 		await this.writeToDisk();
 	}
 
-	async updateLibraryConfig(columnName: string, config: import('./types').LibraryConfig): Promise<void> {
+	async updateLibraryConfig(columnName: string, config: import('./core/types').LibraryConfig): Promise<void> {
 		if (!this.data) return;
 
 		this.data = {
@@ -404,7 +404,7 @@ export class SyncEngine {
 		await this.writeToDisk();
 	}
 
-	async updateHeatmapConfig(columnName: string, config: import('./types').HeatmapConfig): Promise<void> {
+	async updateHeatmapConfig(columnName: string, config: import('./core/types').HeatmapConfig): Promise<void> {
 		if (!this.data) return;
 
 		this.data = {
@@ -694,7 +694,7 @@ export class SyncEngine {
 		await this.updateCard(cardId, { width });
 	}
 
-	async updateCardSize(cardId: string, size: import('./types').CardSize): Promise<void> {
+	async updateCardSize(cardId: string, size: import('./core/types').CardSize): Promise<void> {
 		await this.updateCard(cardId, { size });
 	}
 

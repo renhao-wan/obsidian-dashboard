@@ -1,5 +1,5 @@
 import { App, Modal, setIcon } from 'obsidian';
-import type { HeatmapConfig } from './types';
+import type { HeatmapConfig } from './core/types';
 import { t } from './i18n';
 import { suggestTrackerKeys } from './tracker-service';
 import { FolderSuggestModal } from './folder-config-modal';

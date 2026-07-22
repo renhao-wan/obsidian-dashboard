@@ -1,5 +1,5 @@
 import { App, Modal, setIcon } from 'obsidian';
-import type { LibraryConfig } from './types';
+import type { LibraryConfig } from './core/types';
 import { extractFrontmatterProperties } from './library-section';
 import { t } from './i18n';
 

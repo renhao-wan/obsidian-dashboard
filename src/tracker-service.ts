@@ -1,5 +1,5 @@
 import { App } from 'obsidian';
-import type { HeatmapPeriod, TrackerDataPoint } from './types';
+import type { HeatmapPeriod, TrackerDataPoint } from './core/types';
 
 export function readTrackerDataForRange(
 	app: App,

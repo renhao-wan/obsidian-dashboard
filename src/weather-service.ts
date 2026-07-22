@@ -1,5 +1,5 @@
 import { requestUrl } from 'obsidian';
-import type { WeatherConfig, WeatherData } from './types';
+import type { WeatherConfig, WeatherData } from './core/types';
 import { getLanguage } from './i18n';
 
 // ---------- API response shapes ----------

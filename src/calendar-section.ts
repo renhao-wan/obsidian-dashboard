@@ -1,6 +1,6 @@
 import { App, Notice, setIcon, TFile } from 'obsidian';
 import type { HoverParent } from 'obsidian';
-import type { DashboardColumn } from './types';
+import type { DashboardColumn } from './core/types';
 import { t } from './i18n';
 import {
 	collectVaultTasks,

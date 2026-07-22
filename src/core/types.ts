@@ -1,4 +1,4 @@
-import type { Language } from './i18n';
+import type { Language } from '../i18n';
 import type { TFile } from 'obsidian';
 
 export interface DashboardSettings {

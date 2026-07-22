@@ -1,6 +1,6 @@
 import { App, Platform, setIcon } from 'obsidian';
 import type { HoverParent, TFile } from 'obsidian';
-import type { DashboardData, DashboardColumn, DashboardCard, RenderCallbacks, TaskItem, DocNode, DashboardSettings, CardSize, TrackerStyle } from './types';
+import type { DashboardData, DashboardColumn, DashboardCard, RenderCallbacks, TaskItem, DocNode, DashboardSettings, CardSize, TrackerStyle } from './core/types';
 import { t, getLanguage } from './i18n';
 import { renderLibrarySection } from './library-section';
 import { renderMediaSection, destroyMediaSection } from './media-section';
@@ -173,7 +173,7 @@ export function refreshSidebarWeekCalendar(root: HTMLElement): boolean {
 
 export function renderSidebarWidgets(
 	container: HTMLElement,
-	settings: import('./types').DashboardSettings,
+	settings: import('./core/types').DashboardSettings,
 	app: App,
 	pomodoroService?: PomodoroService,
 	readingService?: ReadingService,
@@ -309,7 +309,7 @@ function setupWidgetDnD(
 	});
 }
 
-function renderSidebarWeather(container: HTMLElement, settings: import('./types').DashboardSettings, app: App): void {
+function renderSidebarWeather(container: HTMLElement, settings: import('./core/types').DashboardSettings, app: App): void {
 	const widget = container.createDiv({ cls: 'dashboard-sidebar-widget dashboard-sidebar-weather' });
 	const cityName = settings.widgetWeatherCity || '';
 
@@ -337,7 +337,7 @@ function renderSidebarWeather(container: HTMLElement, settings: import('./types'
 	});
 }
 
-function renderSidebarWeatherContent(el: HTMLElement, data: import('./types').WeatherData, cityName: string): void {
+function renderSidebarWeatherContent(el: HTMLElement, data: import('./core/types').WeatherData, cityName: string): void {
 	const top = el.createDiv({ cls: 'dashboard-sidebar-weather-top' });
 	top.createDiv({ cls: 'dashboard-sidebar-weather-icon', text: getWeatherEmoji(data.weatherCode) });
 	const tempWrap = top.createDiv({ cls: 'dashboard-sidebar-weather-temp-wrap' });
@@ -372,7 +372,7 @@ function renderSidebarWeatherContent(el: HTMLElement, data: import('./types').We
 export function renderSidebarPomodoro(
 	container: HTMLElement,
 	service: PomodoroService,
-	settings: import('./types').DashboardSettings,
+	settings: import('./core/types').DashboardSettings,
 ): void {
 	const widget = container.createDiv({ cls: 'dashboard-sidebar-widget dashboard-sidebar-pomodoro' });
 
@@ -594,7 +594,7 @@ function createActivitySelector(
 
 export function renderSidebarCountdown(
 	container: HTMLElement,
-	cd: import('./types').CountdownConfig,
+	cd: import('./core/types').CountdownConfig,
 	app: App,
 ): void {
 	const widget = container.createDiv({ cls: 'dashboard-sidebar-widget dashboard-sidebar-countdown' });
@@ -609,7 +609,7 @@ export function renderSidebarCountdown(
 	settingsBtn.addEventListener('click', (e) => {
 		e.stopPropagation();
 		const modal = new CountdownSettingsModal(app, cd, (updated) => {
-			const plugin = (app as unknown as { plugins: { plugins: Record<string, { settings?: import('./types').DashboardSettings; saveSettings?: () => Promise<void>; refreshAllDashboards?: () => void }> } }).plugins?.plugins?.['obsidian-dashboard'];
+			const plugin = (app as unknown as { plugins: { plugins: Record<string, { settings?: import('./core/types').DashboardSettings; saveSettings?: () => Promise<void>; refreshAllDashboards?: () => void }> } }).plugins?.plugins?.['obsidian-dashboard'];
 			if (plugin?.settings) {
 				plugin.settings = {
 					...plugin.settings,
@@ -3304,7 +3304,7 @@ function renderWeatherBody(container: HTMLElement, card: DashboardCard, app: App
 	}
 }
 
-function renderWeatherContent(el: HTMLElement, data: import('./types').WeatherData, cityName: string): void {
+function renderWeatherContent(el: HTMLElement, data: import('./core/types').WeatherData, cityName: string): void {
 	const current = el.createDiv({ cls: 'dashboard-weather-current' });
 	const tempWrap = current.createDiv({ cls: 'dashboard-weather-temp-wrap' });
 	tempWrap.createDiv({ cls: 'dashboard-weather-temp', text: `${Math.round(data.temperature)}\u00B0` });
@@ -3330,7 +3330,7 @@ function renderWeatherContent(el: HTMLElement, data: import('./types').WeatherDa
 	}
 }
 
-function renderTrackerBody(container: HTMLElement, card: DashboardCard, app: App, settings?: import('./types').DashboardSettings): void {
+function renderTrackerBody(container: HTMLElement, card: DashboardCard, app: App, settings?: import('./core/types').DashboardSettings): void {
 	if (!card.trackerConfig) return;
 
 	const config = card.trackerConfig;
@@ -3405,7 +3405,7 @@ function renderTrackerBody(container: HTMLElement, card: DashboardCard, app: App
 	}
 }
 
-function renderTrackerLineChart(el: HTMLElement, data: import('./types').TrackerDataPoint[], size: CardSize, accentColor: string, cardId: string): void {
+function renderTrackerLineChart(el: HTMLElement, data: import('./core/types').TrackerDataPoint[], size: CardSize, accentColor: string, cardId: string): void {
 	const chartWrap = el.createDiv({ cls: 'dashboard-tracker-chart' });
 	const canvasEl = chartWrap.createEl('canvas', { cls: 'dashboard-chart-canvas' });
 	const ctx = canvasEl.getContext('2d');
@@ -3441,7 +3441,7 @@ function renderTrackerLineChart(el: HTMLElement, data: import('./types').Tracker
 	chartInstances.set(cardId, chart);
 }
 
-function renderTrackerBarChart(el: HTMLElement, data: import('./types').TrackerDataPoint[], size: CardSize, accentColor: string, cardId: string): void {
+function renderTrackerBarChart(el: HTMLElement, data: import('./core/types').TrackerDataPoint[], size: CardSize, accentColor: string, cardId: string): void {
 	const chartWrap = el.createDiv({ cls: 'dashboard-tracker-chart' });
 	const canvasEl = chartWrap.createEl('canvas', { cls: 'dashboard-chart-canvas' });
 	const ctx = canvasEl.getContext('2d');
@@ -3480,7 +3480,7 @@ function renderTrackerBarChart(el: HTMLElement, data: import('./types').TrackerD
 	chartInstances.set(cardId, chart);
 }
 
-function renderTrackerHeatmap(el: HTMLElement, data: import('./types').TrackerDataPoint[], minVal: number, maxVal: number, size: CardSize, accentColor: string): void {
+function renderTrackerHeatmap(el: HTMLElement, data: import('./core/types').TrackerDataPoint[], minVal: number, maxVal: number, size: CardSize, accentColor: string): void {
 	const heatmap = el.createDiv({ cls: 'dashboard-tracker-heatmap' });
 
 	const range = maxVal - minVal || 1;
@@ -3494,8 +3494,8 @@ function renderTrackerHeatmap(el: HTMLElement, data: import('./types').TrackerDa
 	const mondayOffset = startDayOfWeek === 0 ? 6 : startDayOfWeek - 1; // days from Monday
 
 	// Build week columns
-	const weeks: (import('./types').TrackerDataPoint | null)[][] = [];
-	let currentWeek: (import('./types').TrackerDataPoint | null)[] = [];
+	const weeks: (import('./core/types').TrackerDataPoint | null)[][] = [];
+	let currentWeek: (import('./core/types').TrackerDataPoint | null)[] = [];
 
 	// Pad first week with nulls to align to Monday
 	for (let i = 0; i < mondayOffset; i++) {
