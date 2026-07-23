@@ -211,9 +211,20 @@ export class DashboardSettingTab extends PluginSettingTab {
 		}
 
 		// --- Pomodoro ---
-		new Setting(group)
-			.setName(t('settings.pomodoroEnabled'))
-			.setDesc(t('settings.pomodoroEnabledDesc'))
+		const pomodoroDetails = group.createEl('details');
+		pomodoroDetails.className = 'dashboard-settings-details';
+		if (this.plugin.settings.pomodoroEnabled) {
+			pomodoroDetails.setAttribute('open', '');
+		}
+
+		const pomodoroSummary = pomodoroDetails.createEl('summary');
+		pomodoroSummary.className = 'dashboard-settings-summary';
+
+		const pomodoroToggleContainer = pomodoroSummary.createDiv({ cls: 'dashboard-settings-summary-toggle' });
+		const pomodoroToggleLabel = pomodoroToggleContainer.createSpan({ text: t('settings.pomodoroEnabled') });
+		pomodoroToggleLabel.className = 'dashboard-settings-summary-label';
+
+		const pomodoroToggle = new Setting(pomodoroToggleContainer)
 			.addToggle(toggle => toggle
 				.setValue(this.plugin.settings.pomodoroEnabled)
 				.onChange(async (value) => {
@@ -225,9 +236,12 @@ export class DashboardSettingTab extends PluginSettingTab {
 					this.plugin.refreshAllDashboards();
 					this.display();
 				}));
+		pomodoroToggle.settingEl.className = 'dashboard-settings-summary-toggle-setting';
 
 		if (this.plugin.settings.pomodoroEnabled) {
-			const workSetting = new Setting(group)
+			const pomodoroContent = pomodoroDetails.createDiv({ cls: 'dashboard-settings-details-content' });
+
+			const workSetting = new Setting(pomodoroContent)
 				.setName(t('settings.pomodoroWork') + '  ' + this.plugin.settings.pomodoroWorkMinutes + ' min')
 				.addSlider(slider => slider
 					.setLimits(15, 60, 5)
@@ -242,7 +256,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 						workSetting.nameEl.setText(t('settings.pomodoroWork') + '  ' + value + ' min');
 					}));
 
-			const shortSetting = new Setting(group)
+			const shortSetting = new Setting(pomodoroContent)
 				.setName(t('settings.pomodoroShortBreak') + '  ' + this.plugin.settings.pomodoroShortBreakMinutes + ' min')
 				.addSlider(slider => slider
 					.setLimits(1, 15, 1)
@@ -257,7 +271,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 						shortSetting.nameEl.setText(t('settings.pomodoroShortBreak') + '  ' + value + ' min');
 					}));
 
-			const longSetting = new Setting(group)
+			const longSetting = new Setting(pomodoroContent)
 				.setName(t('settings.pomodoroLongBreak') + '  ' + this.plugin.settings.pomodoroLongBreakMinutes + ' min')
 				.addSlider(slider => slider
 					.setLimits(5, 30, 5)
@@ -272,7 +286,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 						longSetting.nameEl.setText(t('settings.pomodoroLongBreak') + '  ' + value + ' min');
 					}));
 
-			const intervalSetting = new Setting(group)
+			const intervalSetting = new Setting(pomodoroContent)
 				.setName(t('settings.pomodoroInterval') + '  ' + this.plugin.settings.pomodoroLongBreakInterval)
 				.addSlider(slider => slider
 					.setLimits(2, 6, 1)
@@ -287,7 +301,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 						intervalSetting.nameEl.setText(t('settings.pomodoroInterval') + '  ' + value);
 					}));
 
-			new Setting(group)
+			new Setting(pomodoroContent)
 				.setName(t('settings.pomodoroAutoStart'))
 				.setDesc(t('settings.pomodoroAutoStartDesc'))
 				.addToggle(toggle => toggle
@@ -300,7 +314,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 						await this.plugin.saveSettings();
 					}));
 
-			new Setting(group)
+			new Setting(pomodoroContent)
 				.setName(t('settings.pomodoroSound'))
 				.addToggle(toggle => toggle
 					.setValue(this.plugin.settings.pomodoroSoundEnabled)

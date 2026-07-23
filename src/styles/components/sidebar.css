@@ -2635,3 +2635,48 @@
 	margin-bottom: 0;
 }
 
+/* 折叠面板样式 */
+.dashboard-settings-details {
+	margin-bottom: 8px;
+}
+
+.dashboard-settings-details:last-child {
+	margin-bottom: 0;
+}
+
+.dashboard-settings-summary {
+	cursor: pointer;
+	padding: 8px 0;
+	user-select: none;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.dashboard-settings-summary-toggle {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.dashboard-settings-summary-label {
+	font-size: 0.95em;
+	font-weight: 500;
+	color: var(--text-normal);
+}
+
+.dashboard-settings-summary-toggle-setting {
+	margin: 0;
+	padding: 0;
+}
+
+.dashboard-settings-summary-toggle-setting .setting-item-control {
+	border: none;
+	padding: 0;
+}
+
+.dashboard-settings-details-content {
+	padding-top: 8px;
+}
+
