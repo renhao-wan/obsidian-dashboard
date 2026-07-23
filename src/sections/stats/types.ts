@@ -1,7 +1,5 @@
 export interface FileTypeConfig {
-  enabled: boolean;
   extensions: string[];
-  excludePatterns: string[];
 }
 
 export interface StatsConfig {
@@ -13,7 +11,6 @@ export interface StatsConfig {
 }
 
 export interface PerformanceConfig {
-  useWebWorkers: boolean;
   cacheEnabled: boolean;
   cacheTTL: number;
   maxConcurrentScans: number;

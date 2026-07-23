@@ -107,8 +107,11 @@ src/
 ├── sections/      # 业务区域
 ├── modals/        # 模态框
 ├── components/    # 通用组件
+├── styles/        # 模块化 CSS 源码（主题变量 + 组件样式）
 └── utils/         # 工具函数
 ```
+
+> **Note:** 根目录的 `styles.css` 是构建产物，由 `build-css.mjs` 脚本从 `src/styles/` 目录自动生成，无需手动编辑。
 
 ## Compatibility
 

@@ -120,9 +120,7 @@ export class DashboardView extends ItemView implements HoverParent {
 		this.readingService = new ReadingService(this.plugin);
 		await this.readingService.loadSessions();
 		// Initialize stats section
-		if (this.plugin.settings.stats.enabled) {
-			this.statsSection = new StatsSection(this.app, this.plugin.settings);
-		}
+		this.statsSection = new StatsSection(this.app, this.plugin.settings);
 		void loadHolidayData(this.app).then(data => {
 			this.holidayData = data;
 			const cur = this.sync.getData();
@@ -148,11 +146,7 @@ export class DashboardView extends ItemView implements HoverParent {
 		this.sync.updateSettings(this.plugin.settings);
 		// Recreate StatsSection when settings change
 		this.statsSection?.destroy();
-		if (this.plugin.settings.stats.enabled) {
-			this.statsSection = new StatsSection(this.app, this.plugin.settings);
-		} else {
-			this.statsSection = null;
-		}
+		this.statsSection = new StatsSection(this.app, this.plugin.settings);
 		const data = this.sync.getData();
 		if (data) this.render(data);
 	}
@@ -305,6 +299,10 @@ export class DashboardView extends ItemView implements HoverParent {
 
 	private doDebouncedSections(structure: boolean): void {
 		if (!this.data) return;
+		// Invalidate stats cache when files change
+		if (this.statsSection) {
+			this.statsSection.invalidateCache();
+		}
 		const hasScanning = this.data.columns.some(c => { const s = c.sectionType; return s === 'library' || s === 'calendar' || s === 'folder'; });
 		const hasMedia = this.data.columns.some(c => { const s = c.sectionType; return s === 'images' || s === 'videos'; });
 		if (!hasScanning && !(structure && hasMedia)) return;

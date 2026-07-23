@@ -783,3 +783,109 @@
 	scrollbar-color: color-mix(in srgb, var(--db-accent) 18%, transparent) transparent;
 }
 
+/* ===== Extensions Modal ===== */
+
+.dashboard-extensions-presets {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+	gap: 8px;
+	margin-bottom: 16px;
+}
+
+.dashboard-extension-checkbox {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 6px 8px;
+	background: var(--background-secondary);
+	border-radius: 4px;
+	font-size: 0.9em;
+}
+
+.dashboard-extension-checkbox input[type="checkbox"] {
+	margin: 0;
+}
+
+.dashboard-extensions-custom {
+	margin-bottom: 16px;
+}
+
+.dashboard-extensions-custom-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin-bottom: 8px;
+}
+
+.dashboard-extension-item {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 4px 8px;
+	background: var(--interactive-accent);
+	color: var(--text-on-accent);
+	border-radius: 4px;
+	font-size: 0.85em;
+}
+
+.dashboard-extension-remove {
+	background: none;
+	border: none;
+	color: var(--text-on-accent);
+	cursor: pointer;
+	padding: 0;
+	margin-left: 4px;
+	opacity: 0.7;
+	font-size: 1.1em;
+}
+
+.dashboard-extension-remove:hover {
+	opacity: 1;
+}
+
+.dashboard-extension-add-row {
+	display: flex;
+	gap: 8px;
+}
+
+.dashboard-extension-input {
+	flex: 1;
+	padding: 6px 8px;
+	background: var(--background-modifier-form-field);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 4px;
+	color: var(--text-normal);
+	font-size: 0.9em;
+}
+
+.dashboard-extension-input:focus {
+	border-color: var(--interactive-accent);
+}
+
+.dashboard-extension-add-btn {
+	padding: 6px 12px;
+	background: var(--interactive-accent);
+	color: var(--text-on-accent);
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 0.9em;
+}
+
+.dashboard-extension-add-btn:hover {
+	background: var(--interactive-accent-hover);
+}
+
+.dashboard-extension-buttons {
+	display: flex;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-top: 16px;
+}
+
+.dashboard-extension-buttons button {
+	padding: 8px 16px;
+	border-radius: 4px;
+	cursor: pointer;
+}
+

@@ -28,9 +28,7 @@ export class StatsSection {
   private buildStatsSettings(coreSettings: CoreStatsSettings): StatsRuntimeConfig {
     return {
       fileType: {
-        enabled: coreSettings.fileType.enabled,
         extensions: coreSettings.fileType.extensions,
-        excludePatterns: coreSettings.fileType.excludePatterns,
       },
       stats: {
         fileCount: true,
@@ -40,7 +38,6 @@ export class StatsSection {
         heatmap: true,
       },
       performance: {
-        useWebWorkers: coreSettings.performance.useWebWorkers,
         cacheEnabled: coreSettings.performance.cacheEnabled,
         cacheTTL: coreSettings.performance.cacheTTL,
         maxConcurrentScans: 4,
@@ -71,6 +68,13 @@ export class StatsSection {
   }
 
   destroy(): void {
+    this.cache.invalidate();
+  }
+
+  /**
+   * Invalidate cache when files change
+   */
+  invalidateCache(): void {
     this.cache.invalidate();
   }
 
@@ -117,22 +121,24 @@ export class StatsSection {
     files: FileMetadata[];
     contentData: Array<{ path: string; content: string }>;
   }> {
-    // Check cache first
+    // Scan files first (always needed for rendering)
+    const files = this.scanner.scan();
+
+    // Check cache for stats
     if (this.statsSettings.performance.cacheEnabled) {
       const cached = this.cache.get();
       if (cached) {
-        const files = this.scanner.scan();
+        // Cache hit - only load file contents for content analysis
         const contentData = await this.loadFileContents(files);
         return { stats: cached.data, files, contentData };
       }
     }
 
-    // Scan files and analyze
-    const files = this.scanner.scan();
+    // Cache miss - analyze and cache
     const stats = this.analyzer.analyze(files);
     const contentData = await this.loadFileContents(files);
 
-    // Update cache with a hash based on stats data
+    // Update cache
     if (this.statsSettings.performance.cacheEnabled) {
       const hash = this.calculateStatsHash(stats);
       this.cache.set(stats, hash);

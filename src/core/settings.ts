@@ -186,75 +186,15 @@ export class DashboardSettingTab extends PluginSettingTab {
 		const group = containerEl.createDiv({ cls: 'settings-group' });
 		new Setting(group).setName(t('stats.title')).setHeading();
 
-		const statsEnabled = this.plugin.settings.stats.enabled;
 		const statsBlock = group.createDiv({ cls: 'dashboard-settings-block' });
-		if (!statsEnabled) statsBlock.addClass('is-disabled');
 
-		new Setting(statsBlock)
-			.setName(t('stats.settings.enable'))
-			.setDesc(t('stats.settings.enableDesc'))
-			.addToggle(toggle => toggle
-				.setValue(statsEnabled)
-				.onChange(async (value) => {
-					this.plugin.settings = {
-						...this.plugin.settings,
-						stats: { ...this.plugin.settings.stats, enabled: value },
-					};
-					await this.plugin.saveSettings();
-					this.plugin.refreshAllDashboards();
-					this.display();
-				}));
-
-		new Setting(statsBlock)
-			.setName(t('stats.settings.fileExtensions'))
-			.setDesc(t('stats.settings.fileExtensionsDesc'))
-			.addText(text => text
-				.setPlaceholder('.md, .txt, .org')
-				.setValue(this.plugin.settings.stats.fileType.extensions.join(', '))
-				.setDisabled(!statsEnabled)
-				.onChange(async (value) => {
-					this.plugin.settings = {
-						...this.plugin.settings,
-						stats: {
-							...this.plugin.settings.stats,
-							fileType: {
-								...this.plugin.settings.stats.fileType,
-								extensions: value.split(',').map(s => s.trim()).filter(Boolean),
-							},
-						},
-					};
-					await this.plugin.saveSettings();
-					this.plugin.refreshAllDashboards();
-				}));
-
-		new Setting(statsBlock)
-			.setName(t('stats.settings.excludePatterns'))
-			.setDesc(t('stats.settings.excludePatternsDesc'))
-			.addText(text => text
-				.setPlaceholder('node_modules, .git, .obsidian')
-				.setValue(this.plugin.settings.stats.fileType.excludePatterns.join(', '))
-				.setDisabled(!statsEnabled)
-				.onChange(async (value) => {
-					this.plugin.settings = {
-						...this.plugin.settings,
-						stats: {
-							...this.plugin.settings.stats,
-							fileType: {
-								...this.plugin.settings.stats.fileType,
-								excludePatterns: value.split(',').map(s => s.trim()).filter(Boolean),
-							},
-						},
-					};
-					await this.plugin.saveSettings();
-					this.plugin.refreshAllDashboards();
-				}));
+		this.renderExtensionsSetting(statsBlock);
 
 		new Setting(statsBlock)
 			.setName(t('stats.settings.cacheEnabled'))
 			.setDesc(t('stats.settings.cacheEnabledDesc'))
 			.addToggle(toggle => toggle
 				.setValue(this.plugin.settings.stats.performance.cacheEnabled)
-				.setDisabled(!statsEnabled)
 				.onChange(async (value) => {
 					this.plugin.settings = {
 						...this.plugin.settings,
@@ -268,7 +208,176 @@ export class DashboardSettingTab extends PluginSettingTab {
 					};
 					await this.plugin.saveSettings();
 					this.plugin.refreshAllDashboards();
+					this.display();
 				}));
+
+		if (this.plugin.settings.stats.performance.cacheEnabled) {
+			new Setting(statsBlock)
+				.setName(t('stats.settings.cacheTTL'))
+				.setDesc(t('stats.settings.cacheTTLDesc'))
+				.addDropdown(dropdown => {
+					const options: Record<string, string> = {
+						'60000': t('stats.settings.cacheTTL1min'),
+						'300000': t('stats.settings.cacheTTL5min'),
+						'600000': t('stats.settings.cacheTTL10min'),
+						'1800000': t('stats.settings.cacheTTL30min'),
+					};
+					dropdown
+						.addOptions(options)
+						.setValue(String(this.plugin.settings.stats.performance.cacheTTL))
+						.onChange(async (value) => {
+							this.plugin.settings = {
+								...this.plugin.settings,
+								stats: {
+									...this.plugin.settings.stats,
+									performance: {
+										...this.plugin.settings.stats.performance,
+										cacheTTL: Number(value),
+									},
+								},
+							};
+							await this.plugin.saveSettings();
+						});
+				});
+		}
+	}
+
+	private renderExtensionsSetting(containerEl: HTMLElement): void {
+		const currentExtensions = this.plugin.settings.stats.fileType.extensions;
+
+		new Setting(containerEl)
+			.setName(t('stats.settings.fileExtensions'))
+			.setDesc(currentExtensions.join(', ') || t('stats.settings.fileExtensionsDesc'))
+			.addButton(btn => btn
+				.setIcon('settings')
+				.setTooltip(t('stats.settings.configureExtensions') || '配置扩展名')
+				.onClick(() => {
+					this.openExtensionsModal(currentExtensions);
+				}));
+	}
+
+	private openExtensionsModal(currentExtensions: string[]): void {
+		const { Modal } = require('obsidian');
+
+		class ExtensionsModal extends Modal {
+			private extensions: string[];
+			private onSave: (extensions: string[]) => void;
+
+			constructor(app: App, extensions: string[], onSave: (extensions: string[]) => void) {
+				super(app);
+				this.extensions = [...extensions];
+				this.onSave = onSave;
+			}
+
+			onOpen(): void {
+				const { contentEl } = this;
+				contentEl.empty();
+
+				contentEl.createEl('h2', { text: t('stats.settings.fileExtensions') });
+
+				// Preset checkboxes
+				const presets = ['.md', '.txt', '.org', '.canvas', '.csv', '.json', '.xml', '.yaml', '.yml', '.html', '.css', '.js', '.ts'];
+				const presetsContainer = contentEl.createDiv({ cls: 'dashboard-extensions-presets' });
+
+				for (const ext of presets) {
+					const checkboxEl = presetsContainer.createDiv({ cls: 'dashboard-extension-checkbox' });
+					const checkbox = checkboxEl.createEl('input', { type: 'checkbox' });
+					checkbox.checked = this.extensions.includes(ext);
+					checkbox.addEventListener('change', () => {
+						if (checkbox.checked) {
+							if (!this.extensions.includes(ext)) {
+								this.extensions.push(ext);
+							}
+						} else {
+							const index = this.extensions.indexOf(ext);
+							if (index > -1) {
+								this.extensions.splice(index, 1);
+							}
+						}
+						updateCustomList();
+					});
+					checkboxEl.createSpan({ text: ext });
+				}
+
+				// Custom extensions
+				contentEl.createEl('h3', { text: t('stats.settings.customExtensions') || '自定义扩展名' });
+				const customContainer = contentEl.createDiv({ cls: 'dashboard-extensions-custom' });
+				const customList = customContainer.createDiv({ cls: 'dashboard-extensions-custom-list' });
+
+				const updateCustomList = (): void => {
+					customList.empty();
+					const customExts = this.extensions.filter(ext => !presets.includes(ext));
+					for (const ext of customExts) {
+						const item = customList.createDiv({ cls: 'dashboard-extension-item' });
+						item.createSpan({ text: ext });
+						const removeBtn = item.createEl('button', { text: '×', cls: 'dashboard-extension-remove' });
+						removeBtn.addEventListener('click', () => {
+							const index = this.extensions.indexOf(ext);
+							if (index > -1) {
+								this.extensions.splice(index, 1);
+							}
+							updateCustomList();
+						});
+					}
+				};
+
+				updateCustomList();
+
+				// Add custom extension
+				const addRow = customContainer.createDiv({ cls: 'dashboard-extension-add-row' });
+				const input = addRow.createEl('input', { cls: 'dashboard-extension-input' });
+				input.placeholder = '.ext';
+				const addBtn = addRow.createEl('button', { text: '+', cls: 'dashboard-extension-add-btn' });
+				addBtn.addEventListener('click', () => {
+					let value = input.value.trim();
+					if (value && !value.startsWith('.')) {
+						value = '.' + value;
+					}
+					if (value && !this.extensions.includes(value)) {
+						this.extensions.push(value);
+						updateCustomList();
+						input.value = '';
+					}
+				});
+				input.addEventListener('keydown', (e: KeyboardEvent) => {
+					if (e.key === 'Enter') {
+						addBtn.click();
+					}
+				});
+
+				// Buttons
+				const btnRow = contentEl.createDiv({ cls: 'dashboard-extension-buttons' });
+				const cancelBtn = btnRow.createEl('button', { text: t('common.cancel') || '取消' });
+				cancelBtn.addEventListener('click', () => this.close());
+
+				const saveBtn = btnRow.createEl('button', { text: t('common.save') || '保存', cls: 'mod-cta' });
+				saveBtn.addEventListener('click', () => {
+					this.onSave(this.extensions);
+					this.close();
+				});
+			}
+
+			onClose(): void {
+				const { contentEl } = this;
+				contentEl.empty();
+			}
+		}
+
+		new ExtensionsModal(this.app, currentExtensions, async (extensions) => {
+			this.plugin.settings = {
+				...this.plugin.settings,
+				stats: {
+					...this.plugin.settings.stats,
+					fileType: {
+						...this.plugin.settings.stats.fileType,
+						extensions,
+					},
+				},
+			};
+			await this.plugin.saveSettings();
+			this.plugin.refreshAllDashboards();
+			this.display();
+		}).open();
 	}
 
 	private renderWidgetSettings(containerEl: HTMLElement): void {

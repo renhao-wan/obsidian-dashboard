@@ -1,34 +1,16 @@
 /**
  * File utilities for stats module
  */
-import type { FileTypeConfig } from '../../sections/stats/types';
 
 /**
- * Check if a file should be included based on extension and exclude patterns
+ * Check if a file should be included based on extension
  */
 export function shouldIncludeFile(
   filePath: string,
-  config: FileTypeConfig
+  extensions: string[]
 ): boolean {
-  // If file type filtering is disabled, include all files
-  if (!config.enabled) {
-    return true;
-  }
-
-  // Check if file extension is enabled
   const extension = getFileExtension(filePath);
-  if (!config.extensions.includes(extension)) {
-    return false;
-  }
-
-  // Check if file matches exclude patterns
-  for (const pattern of config.excludePatterns) {
-    if (filePath.includes(pattern)) {
-      return false;
-    }
-  }
-
-  return true;
+  return extensions.includes(extension);
 }
 
 /**

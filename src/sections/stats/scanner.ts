@@ -16,7 +16,7 @@ export class StatsScanner {
     const allFiles = this.app.vault.getFiles();
 
     for (const file of allFiles) {
-      if (shouldIncludeFile(file.path, this.settings.fileType)) {
+      if (shouldIncludeFile(file.path, this.settings.fileType.extensions)) {
         files.push(this.getFileMetadata(file));
       }
     }
@@ -52,7 +52,7 @@ export class StatsScanner {
     const allFiles = this.app.vault.getFiles();
 
     for (const file of allFiles) {
-      if (!shouldIncludeFile(file.path, this.settings.fileType)) {
+      if (!shouldIncludeFile(file.path, this.settings.fileType.extensions)) {
         continue;
       }
 

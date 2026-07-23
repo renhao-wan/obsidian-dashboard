@@ -11,54 +11,31 @@ import {
   groupFilesByDate,
   groupFilesByExtension,
 } from '../../../src/utils/stats/file-utils';
-import type { FileTypeConfig } from '../../../src/sections/stats/types';
 
 describe('file-utils', () => {
   describe('shouldIncludeFile', () => {
     it('should include file with enabled extension', () => {
-      const config: FileTypeConfig = {
-        enabled: true,
-        extensions: ['.md', '.txt'],
-        excludePatterns: [],
-      };
-      expect(shouldIncludeFile('test.md', config)).toBe(true);
+      expect(shouldIncludeFile('test.md', ['.md', '.txt'])).toBe(true);
     });
 
     it('should exclude file with disabled extension', () => {
-      const config: FileTypeConfig = {
-        enabled: true,
-        extensions: ['.md'],
-        excludePatterns: [],
-      };
-      expect(shouldIncludeFile('test.txt', config)).toBe(false);
+      expect(shouldIncludeFile('test.txt', ['.md'])).toBe(false);
     });
 
-    it('should exclude file matching pattern', () => {
-      const config: FileTypeConfig = {
-        enabled: true,
-        extensions: ['.md'],
-        excludePatterns: ['node_modules'],
-      };
-      expect(shouldIncludeFile('node_modules/test.md', config)).toBe(false);
+    it('should include file with matching extension', () => {
+      expect(shouldIncludeFile('docs/notes.md', ['.md'])).toBe(true);
     });
 
-    it('should include file not matching exclude patterns', () => {
-      const config: FileTypeConfig = {
-        enabled: true,
-        extensions: ['.md'],
-        excludePatterns: ['node_modules', '.git'],
-      };
-      expect(shouldIncludeFile('docs/notes.md', config)).toBe(true);
+    it('should handle multiple extensions', () => {
+      expect(shouldIncludeFile('test.md', ['.md', '.txt', '.org'])).toBe(true);
+      expect(shouldIncludeFile('test.txt', ['.md', '.txt', '.org'])).toBe(true);
+      expect(shouldIncludeFile('test.org', ['.md', '.txt', '.org'])).toBe(true);
+      expect(shouldIncludeFile('test.pdf', ['.md', '.txt', '.org'])).toBe(false);
     });
 
     it('should handle case-insensitive extensions', () => {
-      const config: FileTypeConfig = {
-        enabled: true,
-        extensions: ['.md'],
-        excludePatterns: [],
-      };
       // getFileExtension lowercases the result
-      expect(shouldIncludeFile('test.MD', config)).toBe(true);
+      expect(shouldIncludeFile('test.MD', ['.md'])).toBe(true);
     });
   });
 
