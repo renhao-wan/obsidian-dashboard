@@ -78,6 +78,8 @@ export const en: Record<string, string> = {
 		'settings.days365': '365 days',
 		'settings.disableNotePopover': 'Open notes directly in a tab',
 		'settings.disableNotePopoverDesc': 'Skip the in-dashboard editor: clicking a document card opens the note in a tab. Off keeps the click-then-open popover.',
+		'settings.sidebarAlwaysExpanded': 'Keep sidebar expanded',
+		'settings.sidebarAlwaysExpandedDesc': 'Sidebar stays open and does not auto-collapse when clicking outside. Click the sidebar edge strip to toggle manually.',
 		'settings.resetToDefaults': 'Reset to defaults',
 		'settings.resetToDefaultsDesc': 'Reset all settings to their default values. This will not delete your dashboard data.',
 		'settings.resetConfirm': 'Are you sure you want to reset all settings to defaults?',
@@ -300,6 +302,10 @@ export const en: Record<string, string> = {
 	'quickActions.icon': 'Icon',
 	'quickActions.confirmAdd': 'Add',
 	'quickActions.back': 'Back',
+
+	// Preset Actions
+	'preset.newJournal': 'New Journal',
+	'preset.newNote': 'New Note',
 
 	// Recent
 	'recent.title': 'Recently Edited',

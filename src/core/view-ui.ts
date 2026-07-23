@@ -233,8 +233,6 @@ export function openMobileDrawer(
 					})();
 				},
 				() => onOpenAddAction(),
-				undefined,
-				undefined,
 				data.quickActionOrder,
 				(order) => { void sync.reorderQuickActions(order); },
 				(key) => {
@@ -426,21 +424,6 @@ export function renderSidebar(
 			});
 		},
 		() => onOpenAddAction(),
-		state.sidebarPinned,
-		() => {
-			state.sidebarPinned = !state.sidebarPinned;
-			app.saveLocalStorage('obsidian-dashboard-sidebar-pinned', String(state.sidebarPinned));
-			if (state.sidebarPinned) {
-				sidebar.addClass('dashboard-sidebar--pinned');
-				sidebar.removeClass('dashboard-sidebar--expanded');
-				sidebar.removeClass('dashboard-sidebar--collapsed');
-				state.sidebarExpanded = false;
-			} else {
-				sidebar.removeClass('dashboard-sidebar--pinned');
-				sidebar.addClass('dashboard-sidebar--collapsed');
-				state.sidebarExpanded = false;
-			}
-		},
 		data.quickActionOrder,
 		(order) => { void sync.reorderQuickActions(order); },
 		(key) => {
@@ -463,22 +446,34 @@ export function setupSidebarBehavior(
 	sidebar: HTMLElement,
 	root: HTMLElement,
 	state: UIState,
+	sidebarAlwaysExpanded = false,
 ): void {
 	sidebar.createDiv({ cls: 'dashboard-sidebar-slim-indicator' });
 
 	sidebar.addEventListener('mousedown', (e: MouseEvent) => {
 		if (state.sidebarPinned) return;
+		// Only handle clicks on the sidebar itself or the slim indicator, not on child elements
+		const target = e.target as HTMLElement;
+		if (!target.hasClass('dashboard-sidebar') && !target.hasClass('dashboard-sidebar-slim-indicator')) return;
+
 		if (sidebar.hasClass('dashboard-sidebar--collapsed')) {
 			e.preventDefault();
 			e.stopPropagation();
 			sidebar.removeClass('dashboard-sidebar--collapsed');
 			sidebar.addClass('dashboard-sidebar--expanded');
 			state.sidebarExpanded = true;
+		} else if (sidebarAlwaysExpanded && sidebar.hasClass('dashboard-sidebar--expanded')) {
+			e.preventDefault();
+			e.stopPropagation();
+			sidebar.removeClass('dashboard-sidebar--expanded');
+			sidebar.addClass('dashboard-sidebar--collapsed');
+			state.sidebarExpanded = false;
 		}
 	}, true);
 
 	const outsideHandler = (e: MouseEvent) => {
 		if (state.sidebarPinned) return;
+		if (sidebarAlwaysExpanded) return;
 		if (!state.sidebarExpanded) return;
 		if (sidebar.contains(e.target as Node)) return;
 		sidebar.removeClass('dashboard-sidebar--expanded');

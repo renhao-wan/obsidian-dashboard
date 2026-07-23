@@ -178,12 +178,14 @@
 	display: flex;
 	flex-direction: column;
 	flex-shrink: 0;
+	padding-top: 12px;
 }
 
 .dashboard-quick-actions .dashboard-qa-list {
 	overflow-x: clip;
 	overflow-y: auto;
 	margin-bottom: 0;
+	padding-top: 4px;
 }
 
 .dashboard-qa-list::-webkit-scrollbar {

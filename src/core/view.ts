@@ -35,6 +35,8 @@ import {
 	openLibraryConfigModal,
 	navigateToPath as navToPath,
 	addColumnWithType,
+	openAddActionModal,
+	openEditActionModal,
 } from './view-modals';
 import type { TimerState } from './view-timers';
 import {
@@ -197,19 +199,22 @@ export class DashboardView extends ItemView implements HoverParent {
 		const mainLayout = container.createDiv({ cls: 'dashboard-main' });
 		const sidebar = mainLayout.createDiv({ cls: 'dashboard-sidebar' });
 		if (this.uiState.sidebarPinned) sidebar.addClass('dashboard-sidebar--pinned');
-		else if (this.uiState.sidebarExpanded) sidebar.addClass('dashboard-sidebar--expanded');
+		else if (this.uiState.sidebarExpanded || this.plugin.settings.sidebarAlwaysExpanded) {
+			sidebar.addClass('dashboard-sidebar--expanded');
+			this.uiState.sidebarExpanded = true;
+		}
 		else sidebar.addClass('dashboard-sidebar--collapsed');
 
 		if (this.data) {
 			renderSidebar(sidebar, container, this.data, { app: this.app, plugin: this.plugin, sync: this.sync }, this.uiState,
 				this.pomodoroService, this.readingService, this.holidayData,
 				(path) => void navToPath(this.app, path),
-				() => { /* openAddAction handled via callbacks */ },
-				() => { /* openEditAction handled via callbacks */ },
+				() => openAddActionModal(this.app, this.sync),
+				(action) => openEditActionModal(this.app, this.data, this.sync, action),
 				() => { if (this.data) this.render(this.data); },
 			);
 		}
-		setupSidebarBehavior(sidebar, container, this.uiState);
+		setupSidebarBehavior(sidebar, container, this.uiState, this.plugin.settings.sidebarAlwaysExpanded);
 
 		const kanban = mainLayout.createDiv({ cls: 'dashboard-kanban-wrapper' });
 		const callbacks = this.buildCallbacks();

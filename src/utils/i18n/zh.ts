@@ -78,6 +78,8 @@ export const zh: Record<string, string> = {
 		'settings.days365': '365 天',
 		'settings.disableNotePopover': '直接在标签页打开笔记',
 		'settings.disableNotePopoverDesc': '跳过仪表盘内编辑器：点击文档卡片直接在标签页打开笔记。关闭则保留先弹窗再打开的行为。',
+		'settings.sidebarAlwaysExpanded': '保持侧边栏展开',
+		'settings.sidebarAlwaysExpandedDesc': '侧边栏始终保持展开状态，点击外部不会自动收起。可通过点击侧边栏边缘手动切换。',
 		'settings.resetToDefaults': '重置为默认值',
 		'settings.resetToDefaultsDesc': '将所有设置重置为默认值，不会删除仪表盘数据',
 		'settings.resetConfirm': '确定要将所有设置重置为默认值吗？',
@@ -300,6 +302,10 @@ export const zh: Record<string, string> = {
 	'quickActions.icon': '图标',
 	'quickActions.confirmAdd': '添加',
 	'quickActions.back': '返回',
+
+	// Preset Actions
+	'preset.newJournal': '新建日记',
+	'preset.newNote': '新建笔记',
 
 	// Recent
 	'recent.title': '最近编辑',

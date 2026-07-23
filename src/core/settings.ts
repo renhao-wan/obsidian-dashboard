@@ -161,6 +161,17 @@ export class DashboardSettingTab extends PluginSettingTab {
 					this.plugin.settings = { ...this.plugin.settings, disableNotePopover: value };
 					await this.plugin.saveSettings();
 				}));
+
+		new Setting(group)
+			.setName(t('settings.sidebarAlwaysExpanded'))
+			.setDesc(t('settings.sidebarAlwaysExpandedDesc'))
+			.addToggle(toggle => toggle
+				.setValue(this.plugin.settings.sidebarAlwaysExpanded)
+				.onChange(async (value) => {
+					this.plugin.settings = { ...this.plugin.settings, sidebarAlwaysExpanded: value };
+					await this.plugin.saveSettings();
+					this.plugin.refreshAllDashboards();
+				}));
 	}
 
 	private renderOtherSettings(containerEl: HTMLElement): void {

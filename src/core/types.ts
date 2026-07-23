@@ -21,6 +21,8 @@ export interface DashboardSettings {
 	widgetOrder: string[];
 	/** Skip the note popover: open notes directly in a tab on card click. */
 	disableNotePopover: boolean;
+	/** Keep sidebar always expanded instead of auto-collapsing on outside click. */
+	sidebarAlwaysExpanded: boolean;
 	countdownEnabled: boolean;
 	/** Multiple countdowns managed in settings; rendered in the sidebar. */
 	countdowns: CountdownConfig[];
@@ -50,6 +52,7 @@ export const DEFAULT_SETTINGS: DashboardSettings = {
 	widgetLunarEnabled: true,
 	widgetOrder: ['weather', 'lunar', 'pomodoro', 'reading', 'countdown'],
 	disableNotePopover: false,
+	sidebarAlwaysExpanded: false,
 	countdownEnabled: false,
 	countdowns: [] as CountdownConfig[],
 	readingEnabled: false,
@@ -81,8 +84,8 @@ export interface QuickAction {
 }
 
 export const PRESET_ACTIONS: QuickAction[] = [
-	{ name: 'New Journal', icon: 'calendar-plus', type: 'command', target: 'daily-notes' },
-	{ name: 'New Note', icon: 'plus-circle', type: 'command', target: 'file-explorer:new-file' },
+	{ name: 'preset.newJournal', icon: 'calendar-plus', type: 'command', target: 'daily-notes' },
+	{ name: 'preset.newNote', icon: 'plus-circle', type: 'command', target: 'file-explorer:new-file' },
 ];
 
 export interface ColumnDef {

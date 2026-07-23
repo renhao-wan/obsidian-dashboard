@@ -2512,45 +2512,7 @@
 	opacity: 1;
 }
 
-/* --- Pin button in quick actions header --- */
-.dashboard-qa-pin-btn {
-	background: none !important;
-	border: none !important;
-	box-shadow: none !important;
-	color: var(--db-text-faint);
-	cursor: pointer;
-	padding: 2px 4px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	opacity: 0;
-	transition: opacity 0.2s ease, color 0.15s ease;
-	line-height: 1;
-	outline: none;
-}
-
-.dashboard-qa-pin-btn svg {
-	width: 14px;
-	height: 14px;
-}
-
-.dashboard-qa-header:hover .dashboard-qa-btn-group .dashboard-qa-pin-btn {
-	opacity: 0.5;
-}
-
-.dashboard-qa-pin-btn:hover {
-	opacity: 1 !important;
-	color: var(--db-accent);
-}
-
-.dashboard-qa-pin-btn--active {
-	opacity: 0.4;
-	color: var(--db-accent);
-}
-
-.dashboard-sidebar--collapsed .dashboard-qa-pin-btn {
-	display: none;
-}
+/* Pin button removed */
 
 .dashboard-section {
 	background: var(--db-bg-sidebar);

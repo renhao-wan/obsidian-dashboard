@@ -67,8 +67,6 @@ export function renderQuickActions(
 	onExecute: (action: QuickAction) => void,
 	_onRemove: (index: number) => void,
 	onAdd: () => void,
-	initialPinned?: boolean,
-	onTogglePin?: () => void,
 	order?: string[],
 	onReorder?: (order: string[]) => void,
 	onRemoveByKey?: (key: string) => void,
@@ -82,32 +80,17 @@ export function renderQuickActions(
 
 	const btnGroup = header.createDiv({ cls: 'dashboard-qa-btn-group' });
 
-	// Pin button (left of add button)
-	if (onTogglePin) {
-		let pinned = initialPinned ?? false;
-		const pinBtn = btnGroup.createEl('button', {
-			cls: 'dashboard-qa-pin-btn',
-			attr: { 'aria-label': 'Toggle pin' },
-		});
-		const updatePinIcon = () => {
-			setIcon(pinBtn, pinned ? 'pin' : 'pin-off');
-			pinBtn.toggleClass('dashboard-qa-pin-btn--active', pinned);
-		};
-		updatePinIcon();
-		pinBtn.addEventListener('click', (e) => {
-			e.stopPropagation();
-			onTogglePin();
-			pinned = !pinned;
-			updatePinIcon();
-		});
-	}
+	// Pin button removed
 
 	const addBtn = btnGroup.createEl('button', {
 		cls: 'dashboard-qa-add-btn',
 		attr: { 'aria-label': t('quickActions.addAction') },
 	});
 	setIcon(addBtn, 'plus');
-	addBtn.addEventListener('click', onAdd);
+	addBtn.addEventListener('click', (e) => {
+		e.stopPropagation();
+		onAdd();
+	});
 
 	const list = section.createDiv({ cls: 'dashboard-qa-list' });
 
@@ -183,8 +166,9 @@ export function renderQuickActions(
 
 		const iconEl = item.createSpan({ cls: 'dashboard-qa-icon' });
 		setIcon(iconEl, action.icon);
-		item.createSpan({ text: action.name, cls: 'dashboard-qa-name' });
-		item.setAttribute('title', action.name);
+		const displayName = isPreset ? t(action.name) : action.name;
+		item.createSpan({ text: displayName, cls: 'dashboard-qa-name' });
+		item.setAttribute('title', displayName);
 
 		// Remove button (on all items)
 		const removeHandler = onRemoveByKey ?? ((k: string) => {
@@ -195,7 +179,7 @@ export function renderQuickActions(
 		});
 		const removeBtn = item.createEl('button', {
 			cls: 'dashboard-qa-remove',
-			attr: { 'aria-label': t('common.remove', { name: action.name }) },
+			attr: { 'aria-label': t('common.remove', { name: displayName }) },
 		});
 		setIcon(removeBtn, 'x');
 		removeBtn.addEventListener('click', (e) => {
