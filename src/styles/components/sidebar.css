@@ -2635,34 +2635,3 @@
 	margin-bottom: 0;
 }
 
-/* Widget 设置卡片样式优化 */
-.dashboard-widget-settings-card {
-	padding: 0;
-	margin-bottom: 0;
-}
-
-.dashboard-widget-settings-card > .setting-item {
-	margin-bottom: 8px;
-}
-
-.dashboard-widget-settings-card > .setting-item:last-child {
-	margin-bottom: 0;
-}
-
-/* 折叠面板样式 */
-.dashboard-settings-summary {
-	cursor: pointer;
-	padding: 8px 0;
-	font-size: 0.9em;
-	color: var(--text-muted);
-	user-select: none;
-}
-
-.dashboard-settings-summary:hover {
-	color: var(--text-normal);
-}
-
-.dashboard-settings-advanced {
-	padding-top: 8px;
-}
-

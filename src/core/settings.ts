@@ -175,9 +175,8 @@ export class DashboardSettingTab extends PluginSettingTab {
 		const group = containerEl.createDiv({ cls: 'settings-group' });
 		new Setting(group).setName(t('settings.widgetTheme')).setHeading();
 
-		// --- Weather card ---
-		const weatherCard = group.createDiv({ cls: 'dashboard-widget-settings-card' });
-		new Setting(weatherCard)
+		// --- Weather ---
+		new Setting(group)
 			.setName(t('settings.widgetWeatherEnabled'))
 			.setDesc(t('settings.widgetWeatherEnabledDesc'))
 			.addToggle(toggle => toggle
@@ -193,7 +192,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 				}));
 
 		if (this.plugin.settings.widgetWeatherEnabled) {
-			new Setting(weatherCard)
+			new Setting(group)
 				.setName(t('settings.widgetWeatherCity'))
 				.setDesc(t('settings.widgetWeatherCityDesc'))
 				.addText(text => {
@@ -211,9 +210,8 @@ export class DashboardSettingTab extends PluginSettingTab {
 				});
 		}
 
-		// --- Pomodoro card ---
-		const pomodoroCard = group.createDiv({ cls: 'dashboard-widget-settings-card' });
-		new Setting(pomodoroCard)
+		// --- Pomodoro ---
+		new Setting(group)
 			.setName(t('settings.pomodoroEnabled'))
 			.setDesc(t('settings.pomodoroEnabledDesc'))
 			.addToggle(toggle => toggle
@@ -229,15 +227,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 				}));
 
 		if (this.plugin.settings.pomodoroEnabled) {
-			// 折叠面板
-			const details = pomodoroCard.createEl('details');
-			const summary = details.createEl('summary');
-			summary.textContent = t('settings.pomodoroAdvanced');
-			summary.className = 'dashboard-settings-summary';
-
-			const advancedSettings = details.createDiv({ cls: 'dashboard-settings-advanced' });
-
-			const workSetting = new Setting(advancedSettings)
+			const workSetting = new Setting(group)
 				.setName(t('settings.pomodoroWork') + '  ' + this.plugin.settings.pomodoroWorkMinutes + ' min')
 				.addSlider(slider => slider
 					.setLimits(15, 60, 5)
@@ -252,7 +242,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 						workSetting.nameEl.setText(t('settings.pomodoroWork') + '  ' + value + ' min');
 					}));
 
-			const shortSetting = new Setting(advancedSettings)
+			const shortSetting = new Setting(group)
 				.setName(t('settings.pomodoroShortBreak') + '  ' + this.plugin.settings.pomodoroShortBreakMinutes + ' min')
 				.addSlider(slider => slider
 					.setLimits(1, 15, 1)
@@ -267,7 +257,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 						shortSetting.nameEl.setText(t('settings.pomodoroShortBreak') + '  ' + value + ' min');
 					}));
 
-			const longSetting = new Setting(advancedSettings)
+			const longSetting = new Setting(group)
 				.setName(t('settings.pomodoroLongBreak') + '  ' + this.plugin.settings.pomodoroLongBreakMinutes + ' min')
 				.addSlider(slider => slider
 					.setLimits(5, 30, 5)
@@ -282,7 +272,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 						longSetting.nameEl.setText(t('settings.pomodoroLongBreak') + '  ' + value + ' min');
 					}));
 
-			const intervalSetting = new Setting(advancedSettings)
+			const intervalSetting = new Setting(group)
 				.setName(t('settings.pomodoroInterval') + '  ' + this.plugin.settings.pomodoroLongBreakInterval)
 				.addSlider(slider => slider
 					.setLimits(2, 6, 1)
@@ -297,7 +287,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 						intervalSetting.nameEl.setText(t('settings.pomodoroInterval') + '  ' + value);
 					}));
 
-			new Setting(advancedSettings)
+			new Setting(group)
 				.setName(t('settings.pomodoroAutoStart'))
 				.setDesc(t('settings.pomodoroAutoStartDesc'))
 				.addToggle(toggle => toggle
@@ -310,7 +300,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 						await this.plugin.saveSettings();
 					}));
 
-			new Setting(advancedSettings)
+			new Setting(group)
 				.setName(t('settings.pomodoroSound'))
 				.addToggle(toggle => toggle
 					.setValue(this.plugin.settings.pomodoroSoundEnabled)
@@ -323,9 +313,8 @@ export class DashboardSettingTab extends PluginSettingTab {
 					}));
 		}
 
-		// --- Countdown card ---
-		const countdownCard = group.createDiv({ cls: 'dashboard-widget-settings-card' });
-		new Setting(countdownCard)
+		// --- Countdown ---
+		new Setting(group)
 			.setName(t('settings.countdownEnabled'))
 			.setDesc(t('settings.countdownEnabledDesc'))
 			.addToggle(toggle => toggle
@@ -341,12 +330,11 @@ export class DashboardSettingTab extends PluginSettingTab {
 				}));
 
 		if (this.plugin.settings.countdownEnabled) {
-			this.renderCountdownList(countdownCard);
+			this.renderCountdownList(group);
 		}
 
-		// --- Reading card ---
-		const readingCard = group.createDiv({ cls: 'dashboard-widget-settings-card' });
-		new Setting(readingCard)
+		// --- Reading ---
+		new Setting(group)
 			.setName(t('settings.readingEnabled'))
 			.setDesc(t('settings.readingEnabledDesc'))
 			.addToggle(toggle => toggle
@@ -361,7 +349,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 				}));
 
 		if (this.plugin.settings.readingEnabled) {
-			new Setting(readingCard)
+			new Setting(group)
 				.setName(t('settings.readingSound'))
 				.addToggle(toggle => toggle
 					.setValue(this.plugin.settings.readingSoundEnabled)
@@ -373,7 +361,6 @@ export class DashboardSettingTab extends PluginSettingTab {
 						await this.plugin.saveSettings();
 					}));
 		}
-
 	}
 
 
@@ -439,8 +426,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 	}
 
 	private renderLunarSettings(containerEl: HTMLElement): void {
-		const lunarCard = containerEl.createDiv({ cls: 'dashboard-widget-settings-card' });
-		new Setting(lunarCard)
+		new Setting(containerEl)
 			.setName(t('settings.widgetLunarEnabled'))
 			.setDesc(t('settings.widgetLunarEnabledDesc'))
 			.addToggle(toggle => toggle
@@ -546,8 +532,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 	}
 
 	private renderResetSection(containerEl: HTMLElement): void {
-		const resetCard = containerEl.createDiv({ cls: 'dashboard-widget-settings-card' });
-		new Setting(resetCard)
+		new Setting(containerEl)
 			.setName(t('settings.resetToDefaults'))
 			.setDesc(t('settings.resetToDefaultsDesc'))
 			.addButton(btn => btn
