@@ -210,6 +210,55 @@ export class DashboardSettingTab extends PluginSettingTab {
 				});
 		}
 
+		// --- Countdown ---
+		new Setting(group)
+			.setName(t('settings.countdownEnabled'))
+			.setDesc(t('settings.countdownEnabledDesc'))
+			.addToggle(toggle => toggle
+				.setValue(this.plugin.settings.countdownEnabled)
+				.onChange(async (value) => {
+					this.plugin.settings = {
+						...this.plugin.settings,
+						countdownEnabled: value,
+					};
+					await this.plugin.saveSettings();
+					this.plugin.refreshAllDashboards();
+					this.display();
+				}));
+
+		if (this.plugin.settings.countdownEnabled) {
+			this.renderCountdownList(group);
+		}
+
+		// --- Reading ---
+		new Setting(group)
+			.setName(t('settings.readingEnabled'))
+			.setDesc(t('settings.readingEnabledDesc'))
+			.addToggle(toggle => toggle
+				.setValue(this.plugin.settings.readingEnabled)
+				.onChange(async (value) => {
+					this.plugin.settings = {
+						...this.plugin.settings,
+						readingEnabled: value,
+					};
+					await this.plugin.saveSettings();
+					this.plugin.refreshAllDashboards();
+				}));
+
+		if (this.plugin.settings.readingEnabled) {
+			new Setting(group)
+				.setName(t('settings.readingSound'))
+				.addToggle(toggle => toggle
+					.setValue(this.plugin.settings.readingSoundEnabled)
+					.onChange(async (value) => {
+						this.plugin.settings = {
+							...this.plugin.settings,
+							readingSoundEnabled: value,
+						};
+						await this.plugin.saveSettings();
+					}));
+		}
+
 		// --- Pomodoro ---
 		const pomodoroPanel = group.createDiv({ cls: 'dashboard-settings-panel' });
 		if (this.plugin.settings.pomodoroEnabled) {
@@ -349,55 +398,6 @@ export class DashboardSettingTab extends PluginSettingTab {
 						this.plugin.settings = {
 							...this.plugin.settings,
 							pomodoroSoundEnabled: value,
-						};
-						await this.plugin.saveSettings();
-					}));
-		}
-
-		// --- Countdown ---
-		new Setting(group)
-			.setName(t('settings.countdownEnabled'))
-			.setDesc(t('settings.countdownEnabledDesc'))
-			.addToggle(toggle => toggle
-				.setValue(this.plugin.settings.countdownEnabled)
-				.onChange(async (value) => {
-					this.plugin.settings = {
-						...this.plugin.settings,
-						countdownEnabled: value,
-					};
-					await this.plugin.saveSettings();
-					this.plugin.refreshAllDashboards();
-					this.display();
-				}));
-
-		if (this.plugin.settings.countdownEnabled) {
-			this.renderCountdownList(group);
-		}
-
-		// --- Reading ---
-		new Setting(group)
-			.setName(t('settings.readingEnabled'))
-			.setDesc(t('settings.readingEnabledDesc'))
-			.addToggle(toggle => toggle
-				.setValue(this.plugin.settings.readingEnabled)
-				.onChange(async (value) => {
-					this.plugin.settings = {
-						...this.plugin.settings,
-						readingEnabled: value,
-					};
-					await this.plugin.saveSettings();
-					this.plugin.refreshAllDashboards();
-				}));
-
-		if (this.plugin.settings.readingEnabled) {
-			new Setting(group)
-				.setName(t('settings.readingSound'))
-				.addToggle(toggle => toggle
-					.setValue(this.plugin.settings.readingSoundEnabled)
-					.onChange(async (value) => {
-						this.plugin.settings = {
-							...this.plugin.settings,
-							readingSoundEnabled: value,
 						};
 						await this.plugin.saveSettings();
 					}));
