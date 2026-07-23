@@ -221,14 +221,9 @@ export class DashboardView extends ItemView implements HoverParent {
 
 		const kanban = mainLayout.createDiv({ cls: 'dashboard-kanban-wrapper' });
 		const callbacks = this.buildCallbacks();
-		renderDashboard(kanban, data, callbacks, this.app, this.plugin.settings, this);
+		renderDashboard(kanban, data, callbacks, this.app, this.plugin.settings, this, this.statsSection ?? undefined);
 		setupDragAndDrop(kanban, callbacks, this.uiState.dndCleanupFns);
 
-		// Render stats section if enabled
-		if (this.statsSection) {
-			const statsContainer = kanban.createDiv({ cls: 'dashboard-stats-section' });
-			this.statsSection.render(statsContainer);
-		}
 		kanban.addEventListener('dashboard-library-config', ((e: CustomEvent) => {
 			const { columnName } = e.detail as { columnName: string };
 			const col = this.data?.columns.find(c => c.name === columnName);

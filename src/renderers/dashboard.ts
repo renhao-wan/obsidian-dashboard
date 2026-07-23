@@ -1,10 +1,10 @@
 import { App } from 'obsidian';
 import type { HoverParent } from 'obsidian';
 import type { DashboardData, DashboardSettings, RenderCallbacks } from '../core/types';
+import type { StatsSection } from '../sections/stats';
 import { t } from '../utils/i18n';
 import { destroyMediaSection } from '../sections/media';
 import {
-	destroyAllCharts,
 	setActiveHoverParent,
 	setActiveNoteOpener,
 } from './utils';
@@ -34,6 +34,7 @@ export function renderDashboard(
 	app: App,
 	settings?: DashboardSettings,
 	hoverParent: HoverParent | null = null,
+	statsSection?: StatsSection,
 ): void {
 	setActiveHoverParent(hoverParent);
 	setActiveNoteOpener(callbacks.onOpenNoteInPopover ?? null);
@@ -52,6 +53,12 @@ export function renderDashboard(
 	addColBtn.addEventListener('click', () => {
 		callbacks.onRequestAddSection();
 	});
+
+	// Render stats section if enabled
+	if (statsSection) {
+		const statsContainer = container.createDiv({ cls: 'dashboard-stats-section' });
+		statsSection.render(statsContainer);
+	}
 }
 
 /**
