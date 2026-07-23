@@ -2622,7 +2622,6 @@
 	font-size: 1.1em;
 	font-weight: 600;
 	color: var(--text-normal);
-	border-bottom: 1px solid var(--background-modifier-border);
 	padding-bottom: 12px;
 	margin-bottom: 12px;
 }
