@@ -224,6 +224,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 						},
 					};
 					await this.plugin.saveSettings();
+					this.plugin.refreshAllDashboards();
 				}));
 
 		new Setting(statsBlock)
@@ -245,6 +246,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 						},
 					};
 					await this.plugin.saveSettings();
+					this.plugin.refreshAllDashboards();
 				}));
 
 		new Setting(statsBlock)
@@ -265,6 +267,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 						},
 					};
 					await this.plugin.saveSettings();
+					this.plugin.refreshAllDashboards();
 				}));
 	}
 

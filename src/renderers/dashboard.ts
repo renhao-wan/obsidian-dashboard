@@ -57,7 +57,9 @@ export function renderDashboard(
 	// Render stats section if enabled
 	if (statsSection) {
 		const statsContainer = container.createDiv({ cls: 'dashboard-stats-section' });
-		statsSection.render(statsContainer);
+		statsSection.render(statsContainer).catch(err => {
+			console.error('Stats render failed:', err);
+		});
 	}
 }
 

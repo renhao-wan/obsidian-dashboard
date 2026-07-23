@@ -146,6 +146,13 @@ export class DashboardView extends ItemView implements HoverParent {
 
 	async refresh(): Promise<void> {
 		this.sync.updateSettings(this.plugin.settings);
+		// Recreate StatsSection when settings change
+		this.statsSection?.destroy();
+		if (this.plugin.settings.stats.enabled) {
+			this.statsSection = new StatsSection(this.app, this.plugin.settings);
+		} else {
+			this.statsSection = null;
+		}
 		const data = this.sync.getData();
 		if (data) this.render(data);
 	}
