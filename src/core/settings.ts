@@ -211,19 +211,35 @@ export class DashboardSettingTab extends PluginSettingTab {
 		}
 
 		// --- Pomodoro ---
-		const pomodoroDetails = group.createEl('details');
-		pomodoroDetails.className = 'dashboard-settings-details';
+		const pomodoroPanel = group.createDiv({ cls: 'dashboard-settings-panel' });
 		if (this.plugin.settings.pomodoroEnabled) {
-			pomodoroDetails.setAttribute('open', '');
+			pomodoroPanel.addClass('is-expanded');
 		}
 
-		const pomodoroSummary = pomodoroDetails.createEl('summary');
-		pomodoroSummary.className = 'dashboard-settings-summary';
+		const pomodoroHeader = pomodoroPanel.createDiv({ cls: 'dashboard-settings-panel-header' });
+		const pomodoroHeaderLeft = pomodoroHeader.createDiv({ cls: 'dashboard-settings-panel-header-left' });
 
-		const pomodoroToggleContainer = pomodoroSummary.createDiv({ cls: 'dashboard-settings-summary-toggle' });
-		const pomodoroToggleLabel = pomodoroToggleContainer.createSpan({ text: t('settings.pomodoroEnabled') });
-		pomodoroToggleLabel.className = 'dashboard-settings-summary-label';
+		// 箭头图标
+		const arrow = pomodoroHeaderLeft.createSvg('svg', {
+			attr: {
+				width: '16',
+				height: '16',
+				viewBox: '0 0 24 24',
+				fill: 'none',
+				stroke: 'currentColor',
+				'stroke-width': '2',
+				'stroke-linecap': 'round',
+				'stroke-linejoin': 'round',
+			},
+		});
+		arrow.createSvg('path', { attr: { d: 'M9 18l6-6-6-6' } });
+		arrow.setAttribute('class', 'dashboard-settings-panel-arrow');
 
+		const pomodoroTitle = pomodoroHeaderLeft.createSpan({ text: t('settings.pomodoroEnabled') });
+		pomodoroTitle.className = 'dashboard-settings-panel-title';
+
+		// 切换开关
+		const pomodoroToggleContainer = pomodoroHeader.createDiv({ cls: 'dashboard-settings-panel-toggle' });
 		const pomodoroToggle = new Setting(pomodoroToggleContainer)
 			.addToggle(toggle => toggle
 				.setValue(this.plugin.settings.pomodoroEnabled)
@@ -236,12 +252,23 @@ export class DashboardSettingTab extends PluginSettingTab {
 					this.plugin.refreshAllDashboards();
 					this.display();
 				}));
-		pomodoroToggle.settingEl.className = 'dashboard-settings-summary-toggle-setting';
+		pomodoroToggle.settingEl.className = 'dashboard-settings-panel-toggle-setting';
+
+		// 点击标题区域展开/折叠
+		pomodoroHeader.addEventListener('click', (e) => {
+			// 如果点击的是切换开关，不处理
+			if (e.target instanceof HTMLElement && e.target.closest('.dashboard-settings-panel-toggle')) {
+				return;
+			}
+			pomodoroPanel.toggleClass('is-expanded', !pomodoroPanel.hasClass('is-expanded'));
+		});
+
+		// 内容区域
+		const pomodoroContent = pomodoroPanel.createDiv({ cls: 'dashboard-settings-panel-content' });
+		const pomodoroContentInner = pomodoroContent.createDiv({ cls: 'dashboard-settings-panel-content-inner' });
 
 		if (this.plugin.settings.pomodoroEnabled) {
-			const pomodoroContent = pomodoroDetails.createDiv({ cls: 'dashboard-settings-details-content' });
-
-			const workSetting = new Setting(pomodoroContent)
+			const workSetting = new Setting(pomodoroContentInner)
 				.setName(t('settings.pomodoroWork') + '  ' + this.plugin.settings.pomodoroWorkMinutes + ' min')
 				.addSlider(slider => slider
 					.setLimits(15, 60, 5)
@@ -256,7 +283,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 						workSetting.nameEl.setText(t('settings.pomodoroWork') + '  ' + value + ' min');
 					}));
 
-			const shortSetting = new Setting(pomodoroContent)
+			const shortSetting = new Setting(pomodoroContentInner)
 				.setName(t('settings.pomodoroShortBreak') + '  ' + this.plugin.settings.pomodoroShortBreakMinutes + ' min')
 				.addSlider(slider => slider
 					.setLimits(1, 15, 1)
@@ -271,7 +298,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 						shortSetting.nameEl.setText(t('settings.pomodoroShortBreak') + '  ' + value + ' min');
 					}));
 
-			const longSetting = new Setting(pomodoroContent)
+			const longSetting = new Setting(pomodoroContentInner)
 				.setName(t('settings.pomodoroLongBreak') + '  ' + this.plugin.settings.pomodoroLongBreakMinutes + ' min')
 				.addSlider(slider => slider
 					.setLimits(5, 30, 5)
@@ -286,7 +313,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 						longSetting.nameEl.setText(t('settings.pomodoroLongBreak') + '  ' + value + ' min');
 					}));
 
-			const intervalSetting = new Setting(pomodoroContent)
+			const intervalSetting = new Setting(pomodoroContentInner)
 				.setName(t('settings.pomodoroInterval') + '  ' + this.plugin.settings.pomodoroLongBreakInterval)
 				.addSlider(slider => slider
 					.setLimits(2, 6, 1)
@@ -301,7 +328,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 						intervalSetting.nameEl.setText(t('settings.pomodoroInterval') + '  ' + value);
 					}));
 
-			new Setting(pomodoroContent)
+			new Setting(pomodoroContentInner)
 				.setName(t('settings.pomodoroAutoStart'))
 				.setDesc(t('settings.pomodoroAutoStartDesc'))
 				.addToggle(toggle => toggle
@@ -314,7 +341,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 						await this.plugin.saveSettings();
 					}));
 
-			new Setting(pomodoroContent)
+			new Setting(pomodoroContentInner)
 				.setName(t('settings.pomodoroSound'))
 				.addToggle(toggle => toggle
 					.setValue(this.plugin.settings.pomodoroSoundEnabled)

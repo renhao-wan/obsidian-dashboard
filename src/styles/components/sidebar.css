@@ -2636,18 +2636,18 @@
 }
 
 /* 折叠面板样式 */
-.dashboard-settings-details {
+.dashboard-settings-panel {
 	margin-bottom: 8px;
 	border: 1px solid var(--background-modifier-border);
 	border-radius: 8px;
 	overflow: hidden;
 }
 
-.dashboard-settings-details:last-child {
+.dashboard-settings-panel:last-child {
 	margin-bottom: 0;
 }
 
-.dashboard-settings-summary {
+.dashboard-settings-panel-header {
 	cursor: pointer;
 	padding: 12px 16px;
 	user-select: none;
@@ -2658,46 +2658,54 @@
 	transition: background 0.2s ease;
 }
 
-.dashboard-settings-summary:hover {
+.dashboard-settings-panel-header:hover {
 	background: var(--background-modifier-hover);
 }
 
-.dashboard-settings-summary-toggle {
+.dashboard-settings-panel-header-left {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
-	width: 100%;
+	gap: 8px;
 }
 
-.dashboard-settings-summary-label {
+.dashboard-settings-panel-arrow {
+	width: 16px;
+	height: 16px;
+	transition: transform 0.2s ease;
+	color: var(--text-muted);
+}
+
+.dashboard-settings-panel.is-expanded .dashboard-settings-panel-arrow {
+	transform: rotate(90deg);
+}
+
+.dashboard-settings-panel-title {
 	font-size: 0.95em;
 	font-weight: 500;
 	color: var(--text-normal);
 }
 
-.dashboard-settings-summary-toggle-setting {
+.dashboard-settings-panel-toggle {
 	margin: 0;
 	padding: 0;
 }
 
-.dashboard-settings-summary-toggle-setting .setting-item-control {
+.dashboard-settings-panel-toggle .setting-item-control {
 	border: none;
 	padding: 0;
 }
 
-.dashboard-settings-details-content {
-	padding: 8px 16px 16px;
-	animation: fadeIn 0.2s ease;
+.dashboard-settings-panel-content {
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.3s ease;
 }
 
-@keyframes fadeIn {
-	from {
-		opacity: 0;
-		transform: translateY(-8px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
+.dashboard-settings-panel.is-expanded .dashboard-settings-panel-content {
+	max-height: 500px;
+}
+
+.dashboard-settings-panel-content-inner {
+	padding: 8px 16px 16px;
 }
 
