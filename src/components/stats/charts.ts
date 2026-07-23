@@ -6,6 +6,7 @@
 import type { FileTypeStats, FolderStats } from '../../sections/stats/types';
 import { formatFileSize } from '../../utils/stats/file-utils';
 import { calculatePercentage } from '../../utils/stats/math-utils';
+import { t } from '../../utils/i18n';
 
 /**
  * Render a pie chart using CSS conic-gradient
@@ -17,6 +18,11 @@ export function renderPieChart(
 ): void {
   const wrapper = container.createDiv({ cls: 'stats-chart-wrapper' });
   wrapper.createEl('h3', { text: title, cls: 'stats-chart-title' });
+
+  if (data.length === 0) {
+    wrapper.createDiv({ text: t('stats.noData'), cls: 'stats-chart-empty' });
+    return;
+  }
 
   const chartContainer = wrapper.createDiv({ cls: 'stats-pie-chart' });
   const total = data.reduce((sum, item) => sum + item.count, 0);
@@ -56,6 +62,11 @@ export function renderBarChart(
   const wrapper = container.createDiv({ cls: 'stats-chart-wrapper' });
   wrapper.createEl('h3', { text: title, cls: 'stats-chart-title' });
 
+  if (data.length === 0) {
+    wrapper.createDiv({ text: t('stats.noData'), cls: 'stats-chart-empty' });
+    return;
+  }
+
   const chartContainer = wrapper.createDiv({ cls: 'stats-bar-chart' });
   const maxValue = Math.max(...data.slice(0, maxItems).map(item => item.count));
 
@@ -72,7 +83,7 @@ export function renderBarChart(
     bar.style.backgroundColor = getChartColor(index);
 
     const value = barWrapper.createDiv({ cls: 'stats-bar-value' });
-    value.textContent = `${item.count} files`;
+    value.textContent = t('stats.fileCount', { count: item.count });
   });
 }
 

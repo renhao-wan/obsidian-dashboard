@@ -1,0 +1,137 @@
+/* ===== Stats Charts ===== */
+
+.stats-chart-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	padding: 16px;
+	background: var(--db-bg-card);
+	border-radius: 12px;
+	border: 1px solid var(--db-border-card);
+	backdrop-filter: var(--db-backdrop-blur);
+	-webkit-backdrop-filter: var(--db-backdrop-blur);
+}
+
+.stats-chart-title {
+	font-size: 0.9em;
+	font-weight: 600;
+	color: var(--db-text-heading);
+	margin: 0;
+	padding: 0;
+}
+
+.stats-chart-empty {
+	padding: 24px 0;
+	text-align: center;
+	color: var(--db-text-muted);
+	font-size: 0.85em;
+}
+
+/* Pie Chart */
+.stats-pie-chart {
+	width: 120px;
+	height: 120px;
+	border-radius: 50%;
+	background: var(--db-bg-btn);
+	align-self: center;
+	flex-shrink: 0;
+}
+
+/* Legend */
+.stats-chart-legend {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.stats-legend-item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 0.8em;
+	color: var(--db-text-secondary);
+}
+
+.stats-legend-color {
+	width: 10px;
+	height: 10px;
+	border-radius: 2px;
+	flex-shrink: 0;
+}
+
+/* Bar Chart */
+.stats-bar-chart {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.stats-bar-wrapper {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.stats-bar-label {
+	font-size: 0.8em;
+	color: var(--db-text-secondary);
+	width: 80px;
+	flex-shrink: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.stats-bar-container {
+	flex: 1;
+	height: 16px;
+	background: var(--db-bg-btn);
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.stats-bar {
+	height: 100%;
+	border-radius: 8px;
+	transition: width 0.4s ease;
+	min-width: 2px;
+}
+
+.stats-bar-value {
+	font-size: 0.75em;
+	color: var(--db-text-muted);
+	width: 60px;
+	flex-shrink: 0;
+	text-align: right;
+}
+
+/* Stat Card */
+.stats-card {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	padding: 16px;
+	background: var(--db-bg-card);
+	border-radius: 12px;
+	border: 1px solid var(--db-border-card);
+	backdrop-filter: var(--db-backdrop-blur);
+	-webkit-backdrop-filter: var(--db-backdrop-blur);
+}
+
+.stats-card-title {
+	font-size: 0.8em;
+	color: var(--db-text-muted);
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+.stats-card-value {
+	font-size: 1.6em;
+	font-weight: 700;
+	color: var(--db-text-heading);
+}
+
+.stats-card-subtitle {
+	font-size: 0.8em;
+	color: var(--db-text-secondary);
+}

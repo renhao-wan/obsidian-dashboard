@@ -685,4 +685,5 @@ export const zh: Record<string, string> = {
 	'stats.fileTypes': '文件类型',
 	'stats.topFolders': '热门文件夹',
 	'stats.fileCount': '{count} 个文件',
+	'stats.noData': '暂无数据',
 };

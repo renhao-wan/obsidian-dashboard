@@ -686,4 +686,5 @@ export const en: Record<string, string> = {
 	'stats.fileTypes': 'File Types',
 	'stats.topFolders': 'Top Folders',
 	'stats.fileCount': '{count} files',
+	'stats.noData': 'No data available',
 };
