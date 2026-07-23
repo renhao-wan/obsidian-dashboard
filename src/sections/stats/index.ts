@@ -56,6 +56,10 @@ export class StatsSection {
     renderOverview(container, stats, this.statsSettings);
   }
 
+  destroy(): void {
+    this.cache.invalidate();
+  }
+
   private async getStats(): Promise<OverviewStats> {
     // Check cache first
     if (this.statsSettings.performance.cacheEnabled) {
@@ -84,7 +88,10 @@ export function renderStatsSection(
   column: DashboardColumn,
   app: App,
   settings: DashboardSettings
-): void {
+): () => void {
   const statsSection = new StatsSection(app, settings);
   statsSection.render(el);
+  return () => {
+    statsSection.destroy();
+  };
 }
