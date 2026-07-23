@@ -34,3 +34,13 @@ export function sortBy<T>(array: T[], keyFn: (item: T) => number, desc = false):
   });
 }
 
+/**
+ * Calculate percentage with optional decimal places
+ */
+export function calculatePercentage(value: number, total: number, decimals: number = 1): number {
+  if (total === 0) return 0;
+  const percentage = (value / total) * 100;
+  const factor = Math.pow(10, decimals);
+  return Math.round(percentage * factor) / factor;
+}
+

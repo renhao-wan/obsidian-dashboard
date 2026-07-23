@@ -3,194 +3,111 @@
  * Provides reusable chart rendering utilities for statistics visualization
  */
 
-export interface ChartDataPoint {
-  label: string;
-  value: number;
-  color?: string;
-}
+import type { FileTypeStats, FolderStats } from '../../sections/stats/types';
+import { formatFileSize } from '../../utils/stats/file-utils';
+import { calculatePercentage } from '../../utils/stats/math-utils';
 
-export interface BarChartOptions {
-  width?: number;
-  height?: number;
-  showValues?: boolean;
-  showLabels?: boolean;
-  orientation?: 'horizontal' | 'vertical';
-}
+/**
+ * Render a pie chart using CSS conic-gradient
+ */
+export function renderPieChart(
+  container: HTMLElement,
+  data: FileTypeStats[],
+  title: string
+): void {
+  const wrapper = container.createDiv({ cls: 'stats-chart-wrapper' });
+  wrapper.createEl('h3', { text: title, cls: 'stats-chart-title' });
 
-export interface PieChartOptions {
-  size?: number;
-  showLegend?: boolean;
-  showPercentages?: boolean;
+  const chartContainer = wrapper.createDiv({ cls: 'stats-pie-chart' });
+  const total = data.reduce((sum, item) => sum + item.count, 0);
+
+  // Create simple pie chart using CSS
+  let cumulativePercentage = 0;
+  const gradientParts: string[] = [];
+
+  data.forEach((item, index) => {
+    const percentage = calculatePercentage(item.count, total);
+    const color = getChartColor(index);
+    gradientParts.push(`${color} ${cumulativePercentage}% ${cumulativePercentage + percentage}%`);
+    cumulativePercentage += percentage;
+  });
+
+  chartContainer.style.background = `conic-gradient(${gradientParts.join(', ')})`;
+
+  // Create legend
+  const legend = wrapper.createDiv({ cls: 'stats-chart-legend' });
+  data.forEach((item, index) => {
+    const legendItem = legend.createDiv({ cls: 'stats-legend-item' });
+    const colorBox = legendItem.createDiv({ cls: 'stats-legend-color' });
+    colorBox.style.backgroundColor = getChartColor(index);
+    legendItem.createSpan({ text: `${item.extension}: ${item.count} (${formatFileSize(item.totalSize)})` });
+  });
 }
 
 /**
- * Render a simple bar chart using HTML/CSS
+ * Render a horizontal bar chart for folder distribution
  */
 export function renderBarChart(
   container: HTMLElement,
-  data: ChartDataPoint[],
-  options: BarChartOptions = {}
+  data: FolderStats[],
+  title: string,
+  maxItems: number = 10
 ): void {
-  const {
-    width = 300,
-    height = 200,
-    showValues = true,
-    showLabels = true,
-    orientation = 'vertical',
-  } = options;
+  const wrapper = container.createDiv({ cls: 'stats-chart-wrapper' });
+  wrapper.createEl('h3', { text: title, cls: 'stats-chart-title' });
 
-  const chartContainer = container.createDiv({ cls: 'dashboard-stats-bar-chart' });
-  chartContainer.style.width = `${width}px`;
-  chartContainer.style.height = `${height}px`;
+  const chartContainer = wrapper.createDiv({ cls: 'stats-bar-chart' });
+  const maxValue = Math.max(...data.slice(0, maxItems).map(item => item.count));
 
-  const maxValue = Math.max(...data.map(d => d.value), 1);
+  data.slice(0, maxItems).forEach((item, index) => {
+    const barWrapper = chartContainer.createDiv({ cls: 'stats-bar-wrapper' });
+    const label = barWrapper.createDiv({ cls: 'stats-bar-label' });
+    label.textContent = item.path || 'Root';
+    label.title = item.path || 'Root';
 
-  if (orientation === 'vertical') {
-    renderVerticalBarChart(chartContainer, data, maxValue, height, showValues, showLabels);
-  } else {
-    renderHorizontalBarChart(chartContainer, data, maxValue, width, showValues, showLabels);
-  }
+    const barContainer = barWrapper.createDiv({ cls: 'stats-bar-container' });
+    const bar = barContainer.createDiv({ cls: 'stats-bar' });
+    const percentage = calculatePercentage(item.count, maxValue);
+    bar.style.width = `${percentage}%`;
+    bar.style.backgroundColor = getChartColor(index);
+
+    const value = barWrapper.createDiv({ cls: 'stats-bar-value' });
+    value.textContent = `${item.count} files`;
+  });
 }
 
-function renderVerticalBarChart(
+/**
+ * Render a statistics card with title, value, and optional subtitle
+ */
+export function renderStatCard(
   container: HTMLElement,
-  data: ChartDataPoint[],
-  maxValue: number,
-  height: number,
-  showValues: boolean,
-  showLabels: boolean
+  title: string,
+  value: string | number,
+  subtitle?: string
 ): void {
-  const barsContainer = container.createDiv({ cls: 'dashboard-stats-bars-vertical' });
-
-  for (const point of data) {
-    const barWrapper = barsContainer.createDiv({ cls: 'dashboard-stats-bar-wrapper' });
-    const barHeight = (point.value / maxValue) * (height - 40);
-    const bar = barWrapper.createDiv({ cls: 'dashboard-stats-bar' });
-    bar.style.height = `${barHeight}px`;
-    bar.style.backgroundColor = point.color || 'var(--db-accent)';
-
-    if (showValues) {
-      barWrapper.createDiv({ cls: 'dashboard-stats-bar-value', text: point.value.toString() });
-    }
-
-    if (showLabels) {
-      barWrapper.createDiv({ cls: 'dashboard-stats-bar-label', text: point.label });
-    }
-  }
-}
-
-function renderHorizontalBarChart(
-  container: HTMLElement,
-  data: ChartDataPoint[],
-  maxValue: number,
-  width: number,
-  showValues: boolean,
-  showLabels: boolean
-): void {
-  const barsContainer = container.createDiv({ cls: 'dashboard-stats-bars-horizontal' });
-
-  for (const point of data) {
-    const barWrapper = barsContainer.createDiv({ cls: 'dashboard-stats-hbar-wrapper' });
-
-    if (showLabels) {
-      barWrapper.createDiv({ cls: 'dashboard-stats-hbar-label', text: point.label });
-    }
-
-    const barContainer = barWrapper.createDiv({ cls: 'dashboard-stats-hbar-container' });
-    const barWidth = (point.value / maxValue) * (width - 100);
-    const bar = barContainer.createDiv({ cls: 'dashboard-stats-hbar' });
-    bar.style.width = `${barWidth}px`;
-    bar.style.backgroundColor = point.color || 'var(--db-accent)';
-
-    if (showValues) {
-      barWrapper.createDiv({ cls: 'dashboard-stats-hbar-value', text: point.value.toString() });
-    }
+  const card = container.createDiv({ cls: 'stats-card' });
+  card.createDiv({ text: title, cls: 'stats-card-title' });
+  card.createDiv({ text: String(value), cls: 'stats-card-value' });
+  if (subtitle) {
+    card.createDiv({ text: subtitle, cls: 'stats-card-subtitle' });
   }
 }
 
 /**
- * Render a simple donut/pie chart using SVG
+ * Get a chart color by index (cycles through predefined colors)
  */
-export function renderDonutChart(
-  container: HTMLElement,
-  data: ChartDataPoint[],
-  options: PieChartOptions = {}
-): void {
-  const {
-    size = 200,
-    showLegend = true,
-    showPercentages = true,
-  } = options;
-
-  const total = data.reduce((sum, d) => sum + d.value, 0);
-  if (total === 0) return;
-
-  const chartContainer = container.createDiv({ cls: 'dashboard-stats-donut-chart' });
-
-  // Create SVG
-  const svg = chartContainer.createSvg('svg', {
-    attr: {
-      width: size.toString(),
-      height: size.toString(),
-      viewBox: `0 0 ${size} ${size}`,
-    },
-  });
-
-  const center = size / 2;
-  const radius = size / 2 - 10;
-  let currentAngle = -Math.PI / 2;
-
-  const defaultColors = [
-    'var(--db-accent)',
-    'var(--db-accent-secondary, #6366f1)',
-    'var(--db-accent-tertiary, #8b5cf6)',
-    'var(--db-success, #22c55e)',
-    'var(--db-warning, #f59e0b)',
-    'var(--db-danger, #ef4444)',
+function getChartColor(index: number): string {
+  const colors: string[] = [
+    '#3498db',
+    '#2ecc71',
+    '#e74c3c',
+    '#f39c12',
+    '#9b59b6',
+    '#1abc9c',
+    '#e67e22',
+    '#34495e',
+    '#16a085',
+    '#c0392b',
   ];
-
-  data.forEach((point, index) => {
-    const sliceAngle = (point.value / total) * 2 * Math.PI;
-    const x1 = center + radius * Math.cos(currentAngle);
-    const y1 = center + radius * Math.sin(currentAngle);
-    const x2 = center + radius * Math.cos(currentAngle + sliceAngle);
-    const y2 = center + radius * Math.sin(currentAngle + sliceAngle);
-
-    const largeArcFlag = sliceAngle > Math.PI ? 1 : 0;
-
-    const path = svg.createSvg('path', {
-      attr: {
-        d: `M ${center} ${center} L ${x1} ${y1} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${x2} ${y2} Z`,
-        fill: point.color || defaultColors[index % defaultColors.length] || '#6366f1',
-      },
-    });
-
-    currentAngle += sliceAngle;
-  });
-
-  // Add center circle for donut effect
-  svg.createSvg('circle', {
-    attr: {
-      cx: center.toString(),
-      cy: center.toString(),
-      r: (radius * 0.6).toString(),
-      fill: 'var(--db-bg-card, rgba(255, 255, 255, 0.06))',
-    },
-  });
-
-  // Add legend
-  if (showLegend) {
-    const legend = chartContainer.createDiv({ cls: 'dashboard-stats-chart-legend' });
-    data.forEach((point, index) => {
-      const legendItem = legend.createDiv({ cls: 'dashboard-stats-legend-item' });
-      const colorBox = legendItem.createDiv({ cls: 'dashboard-stats-legend-color' });
-      colorBox.style.backgroundColor = point.color || defaultColors[index % defaultColors.length] || '#6366f1';
-      legendItem.createSpan({ cls: 'dashboard-stats-legend-label', text: point.label });
-
-      if (showPercentages) {
-        const percentage = ((point.value / total) * 100).toFixed(1);
-        legendItem.createSpan({ cls: 'dashboard-stats-legend-value', text: `${percentage}%` });
-      }
-    });
-  }
+  return colors[index % colors.length] ?? '#3498db';
 }
