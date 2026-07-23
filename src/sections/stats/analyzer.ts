@@ -1,12 +1,13 @@
 import type { FileMetadata, OverviewStats, FileTypeStats, FolderStats } from './types';
-import { groupBy, sumBy, sortBy, isToday, isThisWeek } from '../../utils/stats/math-utils';
+import { groupBy, sumBy, sortBy } from '../../utils/stats/math-utils';
+import { isCreatedToday, isCreatedThisWeek } from '../../utils/stats/file-utils';
 
 export class StatsAnalyzer {
   analyze(files: FileMetadata[]): OverviewStats {
     const totalFiles = files.length;
     const totalSize = sumBy(files, f => f.size);
-    const todayCreated = files.filter(f => isToday(f.created)).length;
-    const weekCreated = files.filter(f => isThisWeek(f.created)).length;
+    const todayCreated = files.filter(f => isCreatedToday(f.created)).length;
+    const weekCreated = files.filter(f => isCreatedThisWeek(f.created)).length;
 
     const fileTypeStats = this.calculateFileTypeStats(files);
     const folderStats = this.calculateFolderStats(files);
