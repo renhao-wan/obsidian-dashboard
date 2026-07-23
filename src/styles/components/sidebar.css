@@ -2637,21 +2637,15 @@
 
 /* Widget 设置卡片样式优化 */
 .dashboard-widget-settings-card {
-	padding: 8px 0;
-	margin-bottom: 4px;
-	border-bottom: 1px solid var(--background-modifier-border);
-}
-
-.dashboard-widget-settings-card:last-child {
+	padding: 0;
 	margin-bottom: 0;
-	border-bottom: none;
 }
 
-.dashboard-widget-settings-card > .setting-item:first-child {
-	padding-top: 0;
+.dashboard-widget-settings-card > .setting-item {
+	margin-bottom: 8px;
 }
 
 .dashboard-widget-settings-card > .setting-item:last-child {
-	padding-bottom: 0;
+	margin-bottom: 0;
 }
 
