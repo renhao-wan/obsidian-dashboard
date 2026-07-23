@@ -157,6 +157,40 @@
 	color: var(--db-text-secondary);
 }
 
+.stats-card-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	border-radius: 8px;
+	background: var(--db-accent-bg);
+	color: var(--db-accent);
+	margin-bottom: 4px;
+}
+
+.stats-card-icon svg {
+	width: 18px;
+	height: 18px;
+}
+
+.stats-chart-title {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.stats-chart-title-icon {
+	display: flex;
+	align-items: center;
+	color: var(--db-accent);
+}
+
+.stats-chart-title-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
 /* ===== Dashboard Stats Overview ===== */
 
 .dashboard-stats-overview {

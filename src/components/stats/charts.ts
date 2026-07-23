@@ -3,6 +3,7 @@
  * Provides reusable chart rendering utilities for statistics visualization
  */
 
+import { setIcon } from 'obsidian';
 import type { FileTypeStats, FolderStats } from '../../sections/stats/types';
 import { formatFileSize } from '../../utils/stats/file-utils';
 import { calculatePercentage } from '../../utils/stats/math-utils';
@@ -14,10 +15,18 @@ import { t } from '../../utils/i18n';
 export function renderPieChart(
   container: HTMLElement,
   data: FileTypeStats[],
-  title: string
+  title: string,
+  icon?: string
 ): void {
   const wrapper = container.createDiv({ cls: 'stats-chart-wrapper' });
-  wrapper.createEl('h3', { text: title, cls: 'stats-chart-title' });
+  const titleEl = wrapper.createEl('h3', { cls: 'stats-chart-title' });
+
+  if (icon) {
+    const iconEl = titleEl.createSpan({ cls: 'stats-chart-title-icon' });
+    setIcon(iconEl, icon);
+  }
+
+  titleEl.createSpan({ text: title });
 
   if (data.length === 0) {
     wrapper.createDiv({ text: t('stats.noData'), cls: 'stats-chart-empty' });
@@ -57,10 +66,18 @@ export function renderBarChart(
   container: HTMLElement,
   data: FolderStats[],
   title: string,
-  maxItems: number = 10
+  maxItems: number = 10,
+  icon?: string
 ): void {
   const wrapper = container.createDiv({ cls: 'stats-chart-wrapper' });
-  wrapper.createEl('h3', { text: title, cls: 'stats-chart-title' });
+  const titleEl = wrapper.createEl('h3', { cls: 'stats-chart-title' });
+
+  if (icon) {
+    const iconEl = titleEl.createSpan({ cls: 'stats-chart-title-icon' });
+    setIcon(iconEl, icon);
+  }
+
+  titleEl.createSpan({ text: title });
 
   if (data.length === 0) {
     wrapper.createDiv({ text: t('stats.noData'), cls: 'stats-chart-empty' });
@@ -94,9 +111,16 @@ export function renderStatCard(
   container: HTMLElement,
   title: string,
   value: string | number,
-  subtitle?: string
+  subtitle?: string,
+  icon?: string
 ): void {
   const card = container.createDiv({ cls: 'stats-card' });
+
+  if (icon) {
+    const iconEl = card.createDiv({ cls: 'stats-card-icon' });
+    setIcon(iconEl, icon);
+  }
+
   card.createDiv({ text: title, cls: 'stats-card-title' });
   card.createDiv({ text: String(value), cls: 'stats-card-value' });
   if (subtitle) {
