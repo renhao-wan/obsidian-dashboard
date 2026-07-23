@@ -167,13 +167,15 @@ export class DashboardSettingTab extends PluginSettingTab {
 		const group = containerEl.createDiv({ cls: 'settings-group' });
 		new Setting(group).setName(t('settings.otherSettings')).setHeading();
 
-		this.renderLunarSettings(group);
 		this.renderResetSection(group);
 	}
 
 	private renderWidgetSettings(containerEl: HTMLElement): void {
 		const group = containerEl.createDiv({ cls: 'settings-group' });
 		new Setting(group).setName(t('settings.widgetTheme')).setHeading();
+
+		// --- Lunar ---
+		this.renderLunarSettings(group);
 
 		// --- Weather ---
 		new Setting(group)
@@ -260,38 +262,15 @@ export class DashboardSettingTab extends PluginSettingTab {
 		}
 
 		// --- Pomodoro ---
-		const pomodoroPanel = group.createDiv({ cls: 'dashboard-settings-panel' });
-		if (this.plugin.settings.pomodoroEnabled) {
-			pomodoroPanel.addClass('is-expanded');
-		}
+		const pomodoroEnabled = this.plugin.settings.pomodoroEnabled;
+		const pomodoroBlock = group.createDiv({ cls: 'dashboard-settings-block' });
+		if (!pomodoroEnabled) pomodoroBlock.addClass('is-disabled');
 
-		const pomodoroHeader = pomodoroPanel.createDiv({ cls: 'dashboard-settings-panel-header' });
-		const pomodoroHeaderLeft = pomodoroHeader.createDiv({ cls: 'dashboard-settings-panel-header-left' });
-
-		// 箭头图标
-		const arrow = pomodoroHeaderLeft.createSvg('svg', {
-			attr: {
-				width: '16',
-				height: '16',
-				viewBox: '0 0 24 24',
-				fill: 'none',
-				stroke: 'currentColor',
-				'stroke-width': '2',
-				'stroke-linecap': 'round',
-				'stroke-linejoin': 'round',
-			},
-		});
-		arrow.createSvg('path', { attr: { d: 'M9 18l6-6-6-6' } });
-		arrow.setAttribute('class', 'dashboard-settings-panel-arrow');
-
-		const pomodoroTitle = pomodoroHeaderLeft.createSpan({ text: t('settings.pomodoroEnabled') });
-		pomodoroTitle.className = 'dashboard-settings-panel-title';
-
-		// 切换开关
-		const pomodoroToggleContainer = pomodoroHeader.createDiv({ cls: 'dashboard-settings-panel-toggle' });
-		const pomodoroToggle = new Setting(pomodoroToggleContainer)
+		new Setting(pomodoroBlock)
+			.setName(t('settings.pomodoroEnabled'))
+			.setDesc(t('settings.pomodoroEnabledDesc'))
 			.addToggle(toggle => toggle
-				.setValue(this.plugin.settings.pomodoroEnabled)
+				.setValue(pomodoroEnabled)
 				.onChange(async (value) => {
 					this.plugin.settings = {
 						...this.plugin.settings,
@@ -301,142 +280,97 @@ export class DashboardSettingTab extends PluginSettingTab {
 					this.plugin.refreshAllDashboards();
 					this.display();
 				}));
-		pomodoroToggle.settingEl.className = 'dashboard-settings-panel-toggle-setting';
 
-		// 点击标题区域展开/折叠
-		pomodoroHeader.addEventListener('click', (e) => {
-			// 如果点击的是切换开关，不处理
-			if (e.target instanceof HTMLElement && e.target.closest('.dashboard-settings-panel-toggle')) {
-				return;
-			}
+		const workSetting = new Setting(pomodoroBlock)
+			.setName(t('settings.pomodoroWork') + '  ' + this.plugin.settings.pomodoroWorkMinutes + ' min')
+			.addSlider(slider => slider
+				.setLimits(15, 60, 5)
+				.setValue(this.plugin.settings.pomodoroWorkMinutes)
+				.setDynamicTooltip()
+				.setDisabled(!pomodoroEnabled)
+				.onChange(async (value) => {
+					this.plugin.settings = {
+						...this.plugin.settings,
+						pomodoroWorkMinutes: value,
+					};
+					await this.plugin.saveSettings();
+					workSetting.nameEl.setText(t('settings.pomodoroWork') + '  ' + value + ' min');
+				}));
 
-			// 找到滚动容器
-			// Obsidian 设置界面的滚动容器是 .modal-scroll-content 或 .vertical-tab-content
-			const scrollContainer = containerEl.closest('.modal-scroll-content') ||
-									containerEl.closest('.vertical-tab-content') ||
-									containerEl.closest('[class*="scroll"]') ||
-									document.querySelector('.modal-scroll-content') ||
-									document.querySelector('.vertical-tab-content');
+		const shortSetting = new Setting(pomodoroBlock)
+			.setName(t('settings.pomodoroShortBreak') + '  ' + this.plugin.settings.pomodoroShortBreakMinutes + ' min')
+			.addSlider(slider => slider
+				.setLimits(1, 15, 1)
+				.setValue(this.plugin.settings.pomodoroShortBreakMinutes)
+				.setDynamicTooltip()
+				.setDisabled(!pomodoroEnabled)
+				.onChange(async (value) => {
+					this.plugin.settings = {
+						...this.plugin.settings,
+						pomodoroShortBreakMinutes: value,
+					};
+					await this.plugin.saveSettings();
+					shortSetting.nameEl.setText(t('settings.pomodoroShortBreak') + '  ' + value + ' min');
+				}));
 
-			// 保存当前滚动位置和面板位置
-			const scrollTop = scrollContainer ? scrollContainer.scrollTop : window.scrollY;
-			const panelRect = pomodoroPanel.getBoundingClientRect();
-			const panelTop = panelRect.top;
+		const longSetting = new Setting(pomodoroBlock)
+			.setName(t('settings.pomodoroLongBreak') + '  ' + this.plugin.settings.pomodoroLongBreakMinutes + ' min')
+			.addSlider(slider => slider
+				.setLimits(5, 30, 5)
+				.setValue(this.plugin.settings.pomodoroLongBreakMinutes)
+				.setDynamicTooltip()
+				.setDisabled(!pomodoroEnabled)
+				.onChange(async (value) => {
+					this.plugin.settings = {
+						...this.plugin.settings,
+						pomodoroLongBreakMinutes: value,
+					};
+					await this.plugin.saveSettings();
+					longSetting.nameEl.setText(t('settings.pomodoroLongBreak') + '  ' + value + ' min');
+				}));
 
-			// 切换展开状态
-			pomodoroPanel.toggleClass('is-expanded', !pomodoroPanel.hasClass('is-expanded'));
+		const intervalSetting = new Setting(pomodoroBlock)
+			.setName(t('settings.pomodoroInterval') + '  ' + this.plugin.settings.pomodoroLongBreakInterval)
+			.addSlider(slider => slider
+				.setLimits(2, 6, 1)
+				.setValue(this.plugin.settings.pomodoroLongBreakInterval)
+				.setDynamicTooltip()
+				.setDisabled(!pomodoroEnabled)
+				.onChange(async (value) => {
+					this.plugin.settings = {
+						...this.plugin.settings,
+						pomodoroLongBreakInterval: value,
+					};
+					await this.plugin.saveSettings();
+					intervalSetting.nameEl.setText(t('settings.pomodoroInterval') + '  ' + value);
+				}));
 
-			// 恢复滚动位置
-			// 使用 setTimeout 确保在 DOM 更新后恢复滚动位置
-			setTimeout(() => {
-				if (scrollContainer) {
-					// 计算面板的新位置
-					const newPanelRect = pomodoroPanel.getBoundingClientRect();
-					const newPanelTop = newPanelRect.top;
-					// 计算需要滚动的距离
-					const scrollDelta = newPanelTop - panelTop;
-					// 恢复滚动位置
-					scrollContainer.scrollTop = scrollTop + scrollDelta;
-				} else {
-					// 如果没有找到滚动容器，使用 window.scrollTo
-					const newPanelRect = pomodoroPanel.getBoundingClientRect();
-					const newPanelTop = newPanelRect.top;
-					const scrollDelta = newPanelTop - panelTop;
-					window.scrollTo(0, scrollTop + scrollDelta);
-				}
-			}, 0);
-		});
+		new Setting(pomodoroBlock)
+			.setName(t('settings.pomodoroAutoStart'))
+			.setDesc(t('settings.pomodoroAutoStartDesc'))
+			.addToggle(toggle => toggle
+				.setValue(this.plugin.settings.pomodoroAutoStartBreak)
+				.setDisabled(!pomodoroEnabled)
+				.onChange(async (value) => {
+					this.plugin.settings = {
+						...this.plugin.settings,
+						pomodoroAutoStartBreak: value,
+					};
+					await this.plugin.saveSettings();
+				}));
 
-		// 内容区域
-		const pomodoroContent = pomodoroPanel.createDiv({ cls: 'dashboard-settings-panel-content' });
-		const pomodoroContentInner = pomodoroContent.createDiv({ cls: 'dashboard-settings-panel-content-inner' });
-
-		if (this.plugin.settings.pomodoroEnabled) {
-			const workSetting = new Setting(pomodoroContentInner)
-				.setName(t('settings.pomodoroWork') + '  ' + this.plugin.settings.pomodoroWorkMinutes + ' min')
-				.addSlider(slider => slider
-					.setLimits(15, 60, 5)
-					.setValue(this.plugin.settings.pomodoroWorkMinutes)
-					.setDynamicTooltip()
-					.onChange(async (value) => {
-						this.plugin.settings = {
-							...this.plugin.settings,
-							pomodoroWorkMinutes: value,
-						};
-						await this.plugin.saveSettings();
-						workSetting.nameEl.setText(t('settings.pomodoroWork') + '  ' + value + ' min');
-					}));
-
-			const shortSetting = new Setting(pomodoroContentInner)
-				.setName(t('settings.pomodoroShortBreak') + '  ' + this.plugin.settings.pomodoroShortBreakMinutes + ' min')
-				.addSlider(slider => slider
-					.setLimits(1, 15, 1)
-					.setValue(this.plugin.settings.pomodoroShortBreakMinutes)
-					.setDynamicTooltip()
-					.onChange(async (value) => {
-						this.plugin.settings = {
-							...this.plugin.settings,
-							pomodoroShortBreakMinutes: value,
-						};
-						await this.plugin.saveSettings();
-						shortSetting.nameEl.setText(t('settings.pomodoroShortBreak') + '  ' + value + ' min');
-					}));
-
-			const longSetting = new Setting(pomodoroContentInner)
-				.setName(t('settings.pomodoroLongBreak') + '  ' + this.plugin.settings.pomodoroLongBreakMinutes + ' min')
-				.addSlider(slider => slider
-					.setLimits(5, 30, 5)
-					.setValue(this.plugin.settings.pomodoroLongBreakMinutes)
-					.setDynamicTooltip()
-					.onChange(async (value) => {
-						this.plugin.settings = {
-							...this.plugin.settings,
-							pomodoroLongBreakMinutes: value,
-						};
-						await this.plugin.saveSettings();
-						longSetting.nameEl.setText(t('settings.pomodoroLongBreak') + '  ' + value + ' min');
-					}));
-
-			const intervalSetting = new Setting(pomodoroContentInner)
-				.setName(t('settings.pomodoroInterval') + '  ' + this.plugin.settings.pomodoroLongBreakInterval)
-				.addSlider(slider => slider
-					.setLimits(2, 6, 1)
-					.setValue(this.plugin.settings.pomodoroLongBreakInterval)
-					.setDynamicTooltip()
-					.onChange(async (value) => {
-						this.plugin.settings = {
-							...this.plugin.settings,
-							pomodoroLongBreakInterval: value,
-						};
-						await this.plugin.saveSettings();
-						intervalSetting.nameEl.setText(t('settings.pomodoroInterval') + '  ' + value);
-					}));
-
-			new Setting(pomodoroContentInner)
-				.setName(t('settings.pomodoroAutoStart'))
-				.setDesc(t('settings.pomodoroAutoStartDesc'))
-				.addToggle(toggle => toggle
-					.setValue(this.plugin.settings.pomodoroAutoStartBreak)
-					.onChange(async (value) => {
-						this.plugin.settings = {
-							...this.plugin.settings,
-							pomodoroAutoStartBreak: value,
-						};
-						await this.plugin.saveSettings();
-					}));
-
-			new Setting(pomodoroContentInner)
-				.setName(t('settings.pomodoroSound'))
-				.addToggle(toggle => toggle
-					.setValue(this.plugin.settings.pomodoroSoundEnabled)
-					.onChange(async (value) => {
-						this.plugin.settings = {
-							...this.plugin.settings,
-							pomodoroSoundEnabled: value,
-						};
-						await this.plugin.saveSettings();
-					}));
-		}
+		new Setting(pomodoroBlock)
+			.setName(t('settings.pomodoroSound'))
+			.addToggle(toggle => toggle
+				.setValue(this.plugin.settings.pomodoroSoundEnabled)
+				.setDisabled(!pomodoroEnabled)
+				.onChange(async (value) => {
+					this.plugin.settings = {
+						...this.plugin.settings,
+						pomodoroSoundEnabled: value,
+					};
+					await this.plugin.saveSettings();
+				}));
 	}
 
 

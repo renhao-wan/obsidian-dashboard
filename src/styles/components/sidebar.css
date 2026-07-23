@@ -2635,80 +2635,27 @@
 	margin-bottom: 0;
 }
 
-/* 折叠面板样式 */
-.dashboard-settings-panel {
-	margin-bottom: 8px;
-	border: 1px solid var(--background-modifier-border);
+/* 配置块 */
+.dashboard-settings-block {
+	background: var(--background-secondary);
 	border-radius: 8px;
-	overflow: hidden;
-	overflow-anchor: none;
+	padding: 4px 0;
+	margin-bottom: 8px;
 }
 
-.dashboard-settings-panel:last-child {
+.dashboard-settings-block:last-child {
 	margin-bottom: 0;
 }
 
-.dashboard-settings-panel-header {
-	cursor: pointer;
-	padding: 12px 16px;
-	user-select: none;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	background: var(--background-secondary);
-	transition: background 0.2s ease;
+.dashboard-settings-block .setting-item {
+	padding-left: 12px;
+	padding-right: 12px;
 }
 
-.dashboard-settings-panel-header:hover {
-	background: var(--background-modifier-hover);
+/* 禁用状态的配置块 */
+.dashboard-settings-block.is-disabled .setting-item:not(:first-child) {
+	opacity: 0.45;
+	pointer-events: none;
 }
 
-.dashboard-settings-panel-header-left {
-	display: flex;
-	align-items: center;
-	gap: 8px;
-}
-
-.dashboard-settings-panel-arrow {
-	width: 16px;
-	height: 16px;
-	transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-	color: var(--text-muted);
-}
-
-.dashboard-settings-panel.is-expanded .dashboard-settings-panel-arrow {
-	transform: rotate(90deg);
-}
-
-.dashboard-settings-panel-title {
-	font-size: 0.95em;
-	font-weight: 500;
-	color: var(--text-normal);
-}
-
-.dashboard-settings-panel-toggle {
-	margin: 0;
-	padding: 0;
-}
-
-.dashboard-settings-panel-toggle .setting-item-control {
-	border: none;
-	padding: 0;
-}
-
-.dashboard-settings-panel-content {
-	max-height: 0;
-	overflow: hidden;
-	transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-	overflow-anchor: none;
-}
-
-.dashboard-settings-panel.is-expanded .dashboard-settings-panel-content {
-	max-height: 800px;
-}
-
-.dashboard-settings-panel-content-inner {
-	padding: 8px 16px 16px;
-	overflow-anchor: none;
-}
 
