@@ -33,6 +33,10 @@ export const en: Record<string, string> = {
 	'settings.languageDesc': 'Interface language',
 	'settings.languageEn': 'English',
 	'settings.languageZh': '中文',
+	'settings.basicSettings': 'Basic Settings',
+	'settings.pathSettings': 'Path Settings',
+	'settings.functionSettings': 'Function Settings',
+	'settings.otherSettings': 'Other Settings',
 
 	// Style Presets
 	'settings.stylePreset': 'Style',
