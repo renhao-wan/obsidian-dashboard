@@ -2624,3 +2624,51 @@
 	white-space: nowrap;
 }
 
+/* ===== Settings Groups ===== */
+.settings-group {
+  margin-bottom: 24px;
+}
+
+.settings-group:last-child {
+  margin-bottom: 0;
+}
+
+/* 分组标题样式 */
+.settings-group .setting-item-heading {
+  font-size: 1.1em;
+  font-weight: 600;
+  color: var(--text-normal);
+  border-bottom: 1px solid var(--background-modifier-border);
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+}
+
+/* 设置项样式 */
+.settings-group .setting-item {
+  margin-bottom: 8px;
+}
+
+.settings-group .setting-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Widget 设置卡片样式优化 */
+.dashboard-widget-settings-card {
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.dashboard-widget-settings-card:last-child {
+  margin-bottom: 0;
+}
+
+.dashboard-widget-settings-card > .setting-item:first-child {
+  padding-top: 0;
+}
+
+.dashboard-widget-settings-card > .setting-item:last-child {
+  padding-bottom: 0;
+}
+
