@@ -22,6 +22,7 @@ export const en: Record<string, string> = {
 	'settings.memoSavePathDesc': 'Folder where memo cards are saved as notes (default: .dashboard/memo). Use . prefix to hide from file explorer.',
 	'settings.taskArchivePath': 'Task archive file path',
 	'settings.taskArchivePathDesc': 'File where completed tasks are appended (default: .dashboard/archive). Folders are created as needed.',
+	'settings.defaultArchivePath': '.dashboard/archive/Completed.md',
 	'settings.theme': 'Theme',
 	'settings.themeDesc': 'Dashboard color theme',
 	'settings.themeAuto': 'Auto',
@@ -676,4 +677,13 @@ export const en: Record<string, string> = {
 	'library.confirmDelete': 'Delete "{name}"? This cannot be undone.',
 	'library.deleted': 'Moved to trash',
 	'library.deleteFailed': 'Failed to delete file',
+
+	// Stats
+	'stats.totalFiles': 'Total Files',
+	'stats.totalSize': 'Total Size',
+	'stats.today': 'Today',
+	'stats.thisWeek': 'This Week',
+	'stats.fileTypes': 'File Types',
+	'stats.topFolders': 'Top Folders',
+	'stats.fileCount': '{count} files',
 };

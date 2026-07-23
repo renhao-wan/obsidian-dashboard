@@ -63,7 +63,7 @@ export interface OverviewStats {
   folderStats: FolderStats[];
 }
 
-export interface StatsCache {
+export interface CachedStatsData {
   data: OverviewStats;
   timestamp: number;
   fileHash: string;

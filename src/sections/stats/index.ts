@@ -1,5 +1,5 @@
 import type { App } from 'obsidian';
-import type { DashboardSettings } from '../../core/types';
+import type { DashboardSettings, DashboardColumn } from '../../core/types';
 import type { StatsSettings, OverviewStats } from './types';
 import { StatsScanner } from './scanner';
 import { StatsAnalyzer } from './analyzer';
@@ -69,9 +69,10 @@ export class StatsSection {
     const files = await this.scanner.scan();
     const stats = this.analyzer.analyze(files);
 
-    // Update cache
+    // Update cache with a hash based on stats data
     if (this.statsSettings.performance.cacheEnabled) {
-      this.cache.set(stats, '');
+      const hash = `${stats.totalFiles}-${stats.totalSize}-${stats.todayCreated}`;
+      this.cache.set(stats, hash);
     }
 
     return stats;
@@ -79,10 +80,11 @@ export class StatsSection {
 }
 
 export function renderStatsSection(
-  container: HTMLElement,
+  el: HTMLElement,
+  column: DashboardColumn,
   app: App,
   settings: DashboardSettings
 ): void {
   const statsSection = new StatsSection(app, settings);
-  statsSection.render(container);
+  statsSection.render(el);
 }

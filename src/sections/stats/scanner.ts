@@ -16,12 +16,11 @@ export class StatsScanner {
 
     for (const file of allFiles) {
       if (this.shouldIncludeFile(file.path)) {
-        const stat = await this.app.vault.adapter.stat(file.path);
         files.push({
           path: file.path,
           name: file.name,
           extension: file.extension,
-          size: stat?.size ?? 0,
+          size: file.stat.size,
           created: file.stat.ctime,
           modified: file.stat.mtime,
           folder: file.parent?.path ?? '',

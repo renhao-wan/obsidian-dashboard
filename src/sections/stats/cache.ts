@@ -1,10 +1,10 @@
-import type { OverviewStats, StatsCache } from './types';
+import type { OverviewStats, CachedStatsData } from './types';
 
 export class StatsCache {
-  private cache: StatsCache | null = null;
+  private cache: CachedStatsData | null = null;
   private ttl: number = 5 * 60 * 1000; // 5 minutes default
 
-  get(): StatsCache | null {
+  get(): CachedStatsData | null {
     if (!this.cache) {
       return null;
     }

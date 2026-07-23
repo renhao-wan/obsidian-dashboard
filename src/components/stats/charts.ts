@@ -39,7 +39,7 @@ export function renderBarChart(
     orientation = 'vertical',
   } = options;
 
-  const chartContainer = container.createDiv({ cls: 'stats-bar-chart' });
+  const chartContainer = container.createDiv({ cls: 'dashboard-stats-bar-chart' });
   chartContainer.style.width = `${width}px`;
   chartContainer.style.height = `${height}px`;
 
@@ -60,21 +60,21 @@ function renderVerticalBarChart(
   showValues: boolean,
   showLabels: boolean
 ): void {
-  const barsContainer = container.createDiv({ cls: 'stats-bars-vertical' });
+  const barsContainer = container.createDiv({ cls: 'dashboard-stats-bars-vertical' });
 
   for (const point of data) {
-    const barWrapper = barsContainer.createDiv({ cls: 'stats-bar-wrapper' });
+    const barWrapper = barsContainer.createDiv({ cls: 'dashboard-stats-bar-wrapper' });
     const barHeight = (point.value / maxValue) * (height - 40);
-    const bar = barWrapper.createDiv({ cls: 'stats-bar' });
+    const bar = barWrapper.createDiv({ cls: 'dashboard-stats-bar' });
     bar.style.height = `${barHeight}px`;
     bar.style.backgroundColor = point.color || 'var(--db-accent)';
 
     if (showValues) {
-      barWrapper.createDiv({ cls: 'stats-bar-value', text: point.value.toString() });
+      barWrapper.createDiv({ cls: 'dashboard-stats-bar-value', text: point.value.toString() });
     }
 
     if (showLabels) {
-      barWrapper.createDiv({ cls: 'stats-bar-label', text: point.label });
+      barWrapper.createDiv({ cls: 'dashboard-stats-bar-label', text: point.label });
     }
   }
 }
@@ -87,23 +87,23 @@ function renderHorizontalBarChart(
   showValues: boolean,
   showLabels: boolean
 ): void {
-  const barsContainer = container.createDiv({ cls: 'stats-bars-horizontal' });
+  const barsContainer = container.createDiv({ cls: 'dashboard-stats-bars-horizontal' });
 
   for (const point of data) {
-    const barWrapper = barsContainer.createDiv({ cls: 'stats-hbar-wrapper' });
+    const barWrapper = barsContainer.createDiv({ cls: 'dashboard-stats-hbar-wrapper' });
 
     if (showLabels) {
-      barWrapper.createDiv({ cls: 'stats-hbar-label', text: point.label });
+      barWrapper.createDiv({ cls: 'dashboard-stats-hbar-label', text: point.label });
     }
 
-    const barContainer = barWrapper.createDiv({ cls: 'stats-hbar-container' });
+    const barContainer = barWrapper.createDiv({ cls: 'dashboard-stats-hbar-container' });
     const barWidth = (point.value / maxValue) * (width - 100);
-    const bar = barContainer.createDiv({ cls: 'stats-hbar' });
+    const bar = barContainer.createDiv({ cls: 'dashboard-stats-hbar' });
     bar.style.width = `${barWidth}px`;
     bar.style.backgroundColor = point.color || 'var(--db-accent)';
 
     if (showValues) {
-      barWrapper.createDiv({ cls: 'stats-hbar-value', text: point.value.toString() });
+      barWrapper.createDiv({ cls: 'dashboard-stats-hbar-value', text: point.value.toString() });
     }
   }
 }
@@ -125,7 +125,7 @@ export function renderDonutChart(
   const total = data.reduce((sum, d) => sum + d.value, 0);
   if (total === 0) return;
 
-  const chartContainer = container.createDiv({ cls: 'stats-donut-chart' });
+  const chartContainer = container.createDiv({ cls: 'dashboard-stats-donut-chart' });
 
   // Create SVG
   const svg = chartContainer.createSvg('svg', {
@@ -180,16 +180,16 @@ export function renderDonutChart(
 
   // Add legend
   if (showLegend) {
-    const legend = chartContainer.createDiv({ cls: 'stats-chart-legend' });
+    const legend = chartContainer.createDiv({ cls: 'dashboard-stats-chart-legend' });
     data.forEach((point, index) => {
-      const legendItem = legend.createDiv({ cls: 'stats-legend-item' });
-      const colorBox = legendItem.createDiv({ cls: 'stats-legend-color' });
+      const legendItem = legend.createDiv({ cls: 'dashboard-stats-legend-item' });
+      const colorBox = legendItem.createDiv({ cls: 'dashboard-stats-legend-color' });
       colorBox.style.backgroundColor = point.color || defaultColors[index % defaultColors.length] || '#6366f1';
-      legendItem.createSpan({ cls: 'stats-legend-label', text: point.label });
+      legendItem.createSpan({ cls: 'dashboard-stats-legend-label', text: point.label });
 
       if (showPercentages) {
         const percentage = ((point.value / total) * 100).toFixed(1);
-        legendItem.createSpan({ cls: 'stats-legend-value', text: `${percentage}%` });
+        legendItem.createSpan({ cls: 'dashboard-stats-legend-value', text: `${percentage}%` });
       }
     });
   }

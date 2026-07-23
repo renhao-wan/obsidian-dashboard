@@ -22,6 +22,7 @@ export const zh: Record<string, string> = {
 	'settings.memoSavePathDesc': '备忘录卡片保存为笔记的文件夹（默认：.dashboard/memo）。使用 . 前缀可隐藏目录',
 	'settings.taskArchivePath': '待办归档文件路径',
 	'settings.taskArchivePathDesc': '已完成事项追加保存的文件（默认：.dashboard/archive），所需文件夹会自动创建',
+	'settings.defaultArchivePath': '.dashboard/archive/已完成.md',
 	'settings.theme': '主题',
 	'settings.themeDesc': '仪表盘颜色主题',
 	'settings.themeAuto': '自动',
@@ -675,4 +676,13 @@ export const zh: Record<string, string> = {
 	'library.dateEnd': '结束日期',
 	'library.filterActive': '筛选已激活',
 	'library.filterValues': '{property}: {values}',
+
+	// Stats
+	'stats.totalFiles': '总文件数',
+	'stats.totalSize': '总大小',
+	'stats.today': '今日',
+	'stats.thisWeek': '本周',
+	'stats.fileTypes': '文件类型',
+	'stats.topFolders': '热门文件夹',
+	'stats.fileCount': '{count} 个文件',
 };
