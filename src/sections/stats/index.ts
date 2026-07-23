@@ -1,5 +1,5 @@
 import type { App } from 'obsidian';
-import type { DashboardSettings, DashboardColumn, StatsSettings as CoreStatsSettings } from '../../core/types';
+import type { DashboardSettings, StatsSettings as CoreStatsSettings } from '../../core/types';
 import type { StatsSettings, OverviewStats } from './types';
 import { StatsScanner } from './scanner';
 import { StatsAnalyzer } from './analyzer';
@@ -89,7 +89,7 @@ export function renderStatsSection(
   settings: DashboardSettings
 ): () => void {
   const statsSection = new StatsSection(app, settings);
-  statsSection.render(el);
+  void statsSection.render(el);
   return () => {
     statsSection.destroy();
   };
