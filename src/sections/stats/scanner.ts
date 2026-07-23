@@ -1,12 +1,12 @@
 import type { App, TFile } from 'obsidian';
-import type { StatsSettings, FileMetadata } from './types';
+import type { StatsRuntimeConfig, FileMetadata } from './types';
 import { shouldIncludeFile, getFileExtension, getFileName, getFolder } from '../../utils/stats/file-utils';
 
 export class StatsScanner {
   private app: App;
-  private settings: StatsSettings;
+  private settings: StatsRuntimeConfig;
 
-  constructor(app: App, settings: StatsSettings) {
+  constructor(app: App, settings: StatsRuntimeConfig) {
     this.app = app;
     this.settings = settings;
   }
@@ -36,13 +36,18 @@ export class StatsScanner {
     };
   }
 
+  /**
+   * Perform incremental scan to detect created, modified, and deleted files.
+   * @param lastScanTime - Timestamp of the last scan
+   * @param previousPaths - Set of file paths from the previous scan (used for deleted detection)
+   */
   scanIncremental(
-    lastScanTime: number
+    lastScanTime: number,
+    previousPaths?: Set<string>
   ): { created: FileMetadata[]; modified: FileMetadata[]; deleted: string[] } {
     const created: FileMetadata[] = [];
     const modified: FileMetadata[] = [];
-    // TODO: deleted 检测尚未实现——需要将上次扫描结果与当前文件列表进行比对
-    const deleted: string[] = [];
+    const currentPaths = new Set<string>();
 
     const allFiles = this.app.vault.getFiles();
 
@@ -51,12 +56,23 @@ export class StatsScanner {
         continue;
       }
 
+      currentPaths.add(file.path);
       const metadata = this.getFileMetadata(file);
 
       if (file.stat.ctime > lastScanTime) {
         created.push(metadata);
       } else if (file.stat.mtime > lastScanTime) {
         modified.push(metadata);
+      }
+    }
+
+    // Detect deleted files by comparing with previous paths
+    const deleted: string[] = [];
+    if (previousPaths) {
+      for (const path of previousPaths) {
+        if (!currentPaths.has(path)) {
+          deleted.push(path);
+        }
       }
     }
 

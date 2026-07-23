@@ -10,6 +10,11 @@ export function shouldIncludeFile(
   filePath: string,
   config: FileTypeConfig
 ): boolean {
+  // If file type filtering is disabled, include all files
+  if (!config.enabled) {
+    return true;
+  }
+
   // Check if file extension is enabled
   const extension = getFileExtension(filePath);
   if (!config.extensions.includes(extension)) {
@@ -80,12 +85,26 @@ export function isCreatedToday(createdTimestamp: number): boolean {
 
 /**
  * Check if a file is created this week
+ * @param createdTimestamp - The timestamp to check
+ * @param weekStartsOnMonday - Whether week starts on Monday (ISO 8601) or Sunday (default: true)
  */
-export function isCreatedThisWeek(createdTimestamp: number): boolean {
+export function isCreatedThisWeek(createdTimestamp: number, weekStartsOnMonday: boolean = true): boolean {
   const now = new Date();
   const dayOfWeek = now.getDay();
+
+  // Calculate days to subtract to get to the start of the week
+  // Sunday = 0, Monday = 1, ..., Saturday = 6
+  let daysToSubtract: number;
+  if (weekStartsOnMonday) {
+    // ISO 8601: Monday is day 1, Sunday is day 7
+    daysToSubtract = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+  } else {
+    // US convention: Sunday is day 0
+    daysToSubtract = dayOfWeek;
+  }
+
   const startOfWeek = new Date(now);
-  startOfWeek.setDate(now.getDate() - dayOfWeek);
+  startOfWeek.setDate(now.getDate() - daysToSubtract);
   startOfWeek.setHours(0, 0, 0, 0);
   return createdTimestamp >= startOfWeek.getTime();
 }

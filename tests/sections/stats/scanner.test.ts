@@ -1,5 +1,5 @@
 import { StatsScanner } from '../../../src/sections/stats/scanner';
-import type { StatsSettings } from '../../../src/sections/stats/types';
+import type { StatsRuntimeConfig } from '../../../src/sections/stats/types';
 
 // Mock Obsidian TFile
 function createMockFile(path: string, size: number, ctime: number, mtime?: number) {
@@ -14,7 +14,7 @@ function createMockFile(path: string, size: number, ctime: number, mtime?: numbe
 }
 
 describe('StatsScanner', () => {
-  const defaultSettings: StatsSettings = {
+  const defaultSettings: StatsRuntimeConfig = {
     fileType: {
       enabled: true,
       extensions: ['.md'],
@@ -119,7 +119,7 @@ describe('StatsScanner', () => {
     });
 
     it('should handle multiple extensions in config', () => {
-      const settings: StatsSettings = {
+      const settings: StatsRuntimeConfig = {
         ...defaultSettings,
         fileType: {
           ...defaultSettings.fileType,

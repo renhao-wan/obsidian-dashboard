@@ -105,20 +105,34 @@ export function renderStatCard(
 }
 
 /**
+ * Default chart colors (can be overridden via CSS variables)
+ */
+const DEFAULT_CHART_COLORS = [
+  '#3498db',
+  '#2ecc71',
+  '#e74c3c',
+  '#f39c12',
+  '#9b59b6',
+  '#1abc9c',
+  '#e67e22',
+  '#34495e',
+  '#16a085',
+  '#c0392b',
+];
+
+/**
  * Get a chart color by index (cycles through predefined colors)
+ * Supports CSS custom properties for theme customization
  */
 function getChartColor(index: number): string {
-  const colors: string[] = [
-    '#3498db',
-    '#2ecc71',
-    '#e74c3c',
-    '#f39c12',
-    '#9b59b6',
-    '#1abc9c',
-    '#e67e22',
-    '#34495e',
-    '#16a085',
-    '#c0392b',
-  ];
-  return colors[index % colors.length] ?? '#3498db';
+  // Try to get color from CSS variable first
+  const cssVar = `--db-chart-color-${(index % 10) + 1}`;
+  const cssColor = getComputedStyle(document.documentElement).getPropertyValue(cssVar).trim();
+
+  if (cssColor) {
+    return cssColor;
+  }
+
+  // Fallback to default colors
+  return DEFAULT_CHART_COLORS[index % DEFAULT_CHART_COLORS.length] ?? '#3498db';
 }

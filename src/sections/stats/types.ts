@@ -25,12 +25,19 @@ export interface UIConfig {
   chartLibrary: 'custom' | 'chartjs';
 }
 
-export interface StatsSettings {
+/**
+ * Runtime configuration for the stats module.
+ * This is derived from the core DashboardSettings.stats but includes additional runtime fields.
+ */
+export interface StatsRuntimeConfig {
   fileType: FileTypeConfig;
   stats: StatsConfig;
   performance: PerformanceConfig;
   ui: UIConfig;
 }
+
+/** @deprecated Use StatsRuntimeConfig instead */
+export type StatsSettings = StatsRuntimeConfig;
 
 export interface FileMetadata {
   path: string;

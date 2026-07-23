@@ -168,14 +168,24 @@ describe('file-utils', () => {
       jest.useRealTimers();
     });
 
-    it('should return true for a timestamp from this week', () => {
-      expect(isCreatedThisWeek(Date.now())).toBe(true);
+    it('should return true for a timestamp from this week (ISO 8601, Monday start)', () => {
+      expect(isCreatedThisWeek(Date.now(), true)).toBe(true);
     });
 
-    it('should return false for a timestamp from last week', () => {
+    it('should return false for a timestamp from last week (ISO 8601, Monday start)', () => {
+      // 2026-07-16 is last Thursday, definitely before start of week (Monday 2026-07-20)
+      const lastWeek = new Date(2026, 6, 16, 0, 0, 0);
+      expect(isCreatedThisWeek(lastWeek.getTime(), true)).toBe(false);
+    });
+
+    it('should return true for a timestamp from this week (US, Sunday start)', () => {
+      expect(isCreatedThisWeek(Date.now(), false)).toBe(true);
+    });
+
+    it('should return false for a timestamp from last week (US, Sunday start)', () => {
       // 2026-07-16 is last Thursday, definitely before start of week (Sunday 2026-07-19)
       const lastWeek = new Date(2026, 6, 16, 0, 0, 0);
-      expect(isCreatedThisWeek(lastWeek.getTime())).toBe(false);
+      expect(isCreatedThisWeek(lastWeek.getTime(), false)).toBe(false);
     });
   });
 

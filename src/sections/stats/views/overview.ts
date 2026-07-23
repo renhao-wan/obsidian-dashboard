@@ -1,4 +1,4 @@
-import type { OverviewStats, StatsSettings } from '../types';
+import type { OverviewStats, StatsRuntimeConfig } from '../types';
 import { renderPieChart, renderBarChart, renderStatCard } from '../../../components/stats/charts';
 import { formatFileSize } from '../../../utils/stats/file-utils';
 import { t } from '../../../utils/i18n';
@@ -6,7 +6,7 @@ import { t } from '../../../utils/i18n';
 export function renderOverview(
   container: HTMLElement,
   stats: OverviewStats,
-  settings: StatsSettings
+  settings: StatsRuntimeConfig
 ): void {
   // Clear container
   container.empty();

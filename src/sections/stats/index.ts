@@ -1,6 +1,6 @@
 import type { App } from 'obsidian';
 import type { DashboardSettings, StatsSettings as CoreStatsSettings } from '../../core/types';
-import type { StatsSettings, OverviewStats } from './types';
+import type { StatsRuntimeConfig, OverviewStats } from './types';
 import { StatsScanner } from './scanner';
 import { StatsAnalyzer } from './analyzer';
 import { StatsCacheManager } from './cache';
@@ -9,7 +9,7 @@ import { renderOverview } from './views/overview';
 export class StatsSection {
   private app: App;
   private settings: DashboardSettings;
-  private statsSettings: StatsSettings;
+  private statsSettings: StatsRuntimeConfig;
   private scanner: StatsScanner;
   private analyzer: StatsAnalyzer;
   private cache: StatsCacheManager;
@@ -23,7 +23,7 @@ export class StatsSection {
     this.cache = new StatsCacheManager(settings.stats.performance.cacheTTL);
   }
 
-  private buildStatsSettings(coreSettings: CoreStatsSettings): StatsSettings {
+  private buildStatsSettings(coreSettings: CoreStatsSettings): StatsRuntimeConfig {
     return {
       fileType: {
         enabled: coreSettings.fileType.enabled,
@@ -60,6 +60,22 @@ export class StatsSection {
     this.cache.invalidate();
   }
 
+  /**
+   * Calculate a hash based on stats data for cache invalidation.
+   * Includes multiple fields to detect various types of changes.
+   */
+  private calculateStatsHash(stats: OverviewStats): string {
+    const parts = [
+      stats.totalFiles,
+      stats.totalSize,
+      stats.todayCreated,
+      stats.weekCreated,
+      stats.fileTypeStats.length,
+      stats.folderStats.length,
+    ];
+    return parts.join('-');
+  }
+
   private async getStats(): Promise<OverviewStats> {
     // Check cache first
     if (this.statsSettings.performance.cacheEnabled) {
@@ -75,7 +91,7 @@ export class StatsSection {
 
     // Update cache with a hash based on stats data
     if (this.statsSettings.performance.cacheEnabled) {
-      const hash = `${stats.totalFiles}-${stats.totalSize}-${stats.todayCreated}`;
+      const hash = this.calculateStatsHash(stats);
       this.cache.set(stats, hash);
     }
 
