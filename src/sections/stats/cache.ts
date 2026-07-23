@@ -1,6 +1,6 @@
 import type { OverviewStats, StatsCache } from './types';
 
-export class StatsCacheManager {
+export class StatsCache {
   private cache: StatsCache | null = null;
   private ttl: number = 5 * 60 * 1000; // 5 minutes default
 
