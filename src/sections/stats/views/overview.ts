@@ -1,60 +1,173 @@
 import type { OverviewStats, StatsSettings } from '../types';
+import { renderPieChart, renderBarChart, renderStatCard } from '../../../components/stats/charts';
 import { formatFileSize } from '../../../utils/stats/file-utils';
-import { t } from '../../../utils/i18n';
 
 export function renderOverview(
   container: HTMLElement,
   stats: OverviewStats,
   settings: StatsSettings
 ): void {
+  // Clear container
   container.empty();
+  container.addClass('stats-overview');
 
-  const wrapper = container.createDiv({ cls: 'dashboard-stats-overview' });
+  // Render stat cards
+  const cardsContainer = container.createDiv({ cls: 'stats-cards' });
+  renderStatCard(cardsContainer, 'Total Notes', stats.totalFiles);
+  renderStatCard(cardsContainer, 'Total Size', formatFileSize(stats.totalSize));
+  renderStatCard(cardsContainer, 'Today Created', stats.todayCreated);
+  renderStatCard(cardsContainer, 'This Week', stats.weekCreated);
 
-  // Summary cards
-  const summaryRow = wrapper.createDiv({ cls: 'dashboard-stats-summary-row' });
-  renderSummaryCard(summaryRow, t('stats.totalFiles'), stats.totalFiles.toString());
-  renderSummaryCard(summaryRow, t('stats.totalSize'), formatFileSize(stats.totalSize));
-  renderSummaryCard(summaryRow, t('stats.today'), stats.todayCreated.toString());
-  renderSummaryCard(summaryRow, t('stats.thisWeek'), stats.weekCreated.toString());
+  // Render charts
+  const chartsContainer = container.createDiv({ cls: 'stats-charts' });
 
-  // File type distribution
-  if (settings.stats.fileCount && stats.fileTypeStats.length > 0) {
-    const section = wrapper.createDiv({ cls: 'dashboard-stats-section' });
-    section.createEl('h3', { text: t('stats.fileTypes') });
-    renderFileTypeList(section, stats.fileTypeStats);
+  // File type distribution pie chart
+  if (stats.fileTypeStats.length > 0) {
+    renderPieChart(chartsContainer, stats.fileTypeStats, 'File Type Distribution');
   }
 
-  // Folder distribution
-  if (settings.stats.fileSize && stats.folderStats.length > 0) {
-    const section = wrapper.createDiv({ cls: 'dashboard-stats-section' });
-    section.createEl('h3', { text: t('stats.topFolders') });
-    renderFolderList(section, stats.folderStats.slice(0, 10));
+  // Folder distribution bar chart
+  if (stats.folderStats.length > 0) {
+    renderBarChart(chartsContainer, stats.folderStats, 'Folder Distribution');
   }
+
+  // Add styles
+  addOverviewStyles();
 }
 
-function renderSummaryCard(container: HTMLElement, label: string, value: string): void {
-  const card = container.createDiv({ cls: 'dashboard-stats-summary-card' });
-  card.createDiv({ cls: 'dashboard-stats-summary-value', text: value });
-  card.createDiv({ cls: 'dashboard-stats-summary-label', text: label });
-}
-
-function renderFileTypeList(container: HTMLElement, stats: Array<{ extension: string; count: number; totalSize: number }>): void {
-  const list = container.createDiv({ cls: 'dashboard-stats-file-type-list' });
-  for (const stat of stats) {
-    const item = list.createDiv({ cls: 'dashboard-stats-file-type-item' });
-    item.createSpan({ cls: 'dashboard-stats-file-type-ext', text: `.${stat.extension}` });
-    item.createSpan({ cls: 'dashboard-stats-file-type-count', text: t('stats.fileCount', { count: stat.count.toString() }) });
-    item.createSpan({ cls: 'dashboard-stats-file-type-size', text: formatFileSize(stat.totalSize) });
+function addOverviewStyles(): void {
+  const styleId = 'stats-overview-styles';
+  if (document.getElementById(styleId)) {
+    return;
   }
-}
 
-function renderFolderList(container: HTMLElement, stats: Array<{ path: string; count: number; totalSize: number }>): void {
-  const list = container.createDiv({ cls: 'dashboard-stats-folder-list' });
-  for (const stat of stats) {
-    const item = list.createDiv({ cls: 'dashboard-stats-folder-item' });
-    item.createSpan({ cls: 'dashboard-stats-folder-path', text: stat.path || '/' });
-    item.createSpan({ cls: 'dashboard-stats-folder-count', text: t('stats.fileCount', { count: stat.count.toString() }) });
-    item.createSpan({ cls: 'dashboard-stats-folder-size', text: formatFileSize(stat.totalSize) });
-  }
+  const style = document.createElement('style');
+  style.id = styleId;
+  style.textContent = `
+    .stats-overview {
+      padding: 20px;
+    }
+
+    .stats-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stats-card {
+      background: var(--background-secondary);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .stats-card-title {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .stats-card-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--text-normal);
+    }
+
+    .stats-card-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .stats-charts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .stats-chart-wrapper {
+      background: var(--background-secondary);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .stats-chart-title {
+      font-size: 16px;
+      color: var(--text-normal);
+      margin-bottom: 16px;
+    }
+
+    .stats-pie-chart {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      margin: 0 auto 16px;
+    }
+
+    .stats-chart-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .stats-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .stats-legend-color {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+    }
+
+    .stats-bar-chart {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .stats-bar-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stats-bar-label {
+      width: 100px;
+      font-size: 12px;
+      color: var(--text-muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .stats-bar-container {
+      flex: 1;
+      height: 20px;
+      background: var(--background-primary);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .stats-bar {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+
+    .stats-bar-value {
+      width: 60px;
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: right;
+    }
+  `;
+
+  document.head.appendChild(style);
 }
