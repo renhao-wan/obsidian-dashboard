@@ -310,24 +310,41 @@ export class DashboardSettingTab extends PluginSettingTab {
 				return;
 			}
 
-			// 找到滚动容器（Obsidian 设置界面的滚动容器）
-			const scrollContainer = containerEl.closest('.vertical-tab-content') ||
-									containerEl.closest('.settings-container') ||
-									containerEl.parentElement;
+			// 找到滚动容器
+			// Obsidian 设置界面的滚动容器是 .modal-scroll-content 或 .vertical-tab-content
+			const scrollContainer = containerEl.closest('.modal-scroll-content') ||
+									containerEl.closest('.vertical-tab-content') ||
+									containerEl.closest('[class*="scroll"]') ||
+									document.querySelector('.modal-scroll-content') ||
+									document.querySelector('.vertical-tab-content');
 
-			// 保存当前滚动位置
-			const scrollTop = scrollContainer ? scrollContainer.scrollTop : 0;
+			// 保存当前滚动位置和面板位置
+			const scrollTop = scrollContainer ? scrollContainer.scrollTop : window.scrollY;
+			const panelRect = pomodoroPanel.getBoundingClientRect();
+			const panelTop = panelRect.top;
 
 			// 切换展开状态
 			pomodoroPanel.toggleClass('is-expanded', !pomodoroPanel.hasClass('is-expanded'));
 
 			// 恢复滚动位置
-			if (scrollContainer) {
-				// 使用 requestAnimationFrame 确保在下一帧恢复滚动位置
-				requestAnimationFrame(() => {
-					scrollContainer.scrollTop = scrollTop;
-				});
-			}
+			// 使用 setTimeout 确保在 DOM 更新后恢复滚动位置
+			setTimeout(() => {
+				if (scrollContainer) {
+					// 计算面板的新位置
+					const newPanelRect = pomodoroPanel.getBoundingClientRect();
+					const newPanelTop = newPanelRect.top;
+					// 计算需要滚动的距离
+					const scrollDelta = newPanelTop - panelTop;
+					// 恢复滚动位置
+					scrollContainer.scrollTop = scrollTop + scrollDelta;
+				} else {
+					// 如果没有找到滚动容器，使用 window.scrollTo
+					const newPanelRect = pomodoroPanel.getBoundingClientRect();
+					const newPanelTop = newPanelRect.top;
+					const scrollDelta = newPanelTop - panelTop;
+					window.scrollTo(0, scrollTop + scrollDelta);
+				}
+			}, 0);
 		});
 
 		// 内容区域
