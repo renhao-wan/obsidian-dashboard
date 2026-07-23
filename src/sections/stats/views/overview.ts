@@ -14,9 +14,9 @@ export function renderOverview(
 
   // Render stat cards
   const cardsContainer = container.createDiv({ cls: 'stats-cards' });
-  renderStatCard(cardsContainer, t('stats.totalFiles'), stats.totalFiles);
+  renderStatCard(cardsContainer, t('stats.totalNotes'), stats.totalFiles);
   renderStatCard(cardsContainer, t('stats.totalSize'), formatFileSize(stats.totalSize));
-  renderStatCard(cardsContainer, t('stats.today'), stats.todayCreated);
+  renderStatCard(cardsContainer, t('stats.todayCreated'), stats.todayCreated);
   renderStatCard(cardsContainer, t('stats.thisWeek'), stats.weekCreated);
 
   // Render charts
@@ -24,11 +24,11 @@ export function renderOverview(
 
   // File type distribution pie chart
   if (stats.fileTypeStats.length > 0) {
-    renderPieChart(chartsContainer, stats.fileTypeStats, t('stats.fileTypes'));
+    renderPieChart(chartsContainer, stats.fileTypeStats, t('stats.fileTypeDistribution'));
   }
 
   // Folder distribution bar chart
   if (stats.folderStats.length > 0) {
-    renderBarChart(chartsContainer, stats.folderStats, t('stats.topFolders'));
+    renderBarChart(chartsContainer, stats.folderStats, t('stats.folderDistribution'));
   }
 }

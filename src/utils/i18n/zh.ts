@@ -679,12 +679,12 @@ export const zh: Record<string, string> = {
 
 	// Stats
 	'stats.title': '笔记统计',
-	'stats.totalFiles': '总文件数',
+	'stats.totalNotes': '总笔记数',
 	'stats.totalSize': '总大小',
-	'stats.today': '今日',
+	'stats.todayCreated': '今日新增',
 	'stats.thisWeek': '本周',
-	'stats.fileTypes': '文件类型',
-	'stats.topFolders': '热门文件夹',
+	'stats.fileTypeDistribution': '文件类型分布',
+	'stats.folderDistribution': '文件夹分布',
 	'stats.fileCount': '{count} 个文件',
 	'stats.noData': '暂无数据',
 	'stats.settings.enable': '启用统计',

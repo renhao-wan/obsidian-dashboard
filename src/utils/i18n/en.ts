@@ -681,12 +681,12 @@ export const en: Record<string, string> = {
 
 	// Stats
 	'stats.title': 'Note Statistics',
-	'stats.totalFiles': 'Total Files',
+	'stats.totalNotes': 'Total Notes',
 	'stats.totalSize': 'Total Size',
-	'stats.today': 'Today',
+	'stats.todayCreated': 'Today Created',
 	'stats.thisWeek': 'This Week',
-	'stats.fileTypes': 'File Types',
-	'stats.topFolders': 'Top Folders',
+	'stats.fileTypeDistribution': 'File Types',
+	'stats.folderDistribution': 'Top Folders',
 	'stats.fileCount': '{count} files',
 	'stats.noData': 'No data available',
 	'stats.settings.enable': 'Enable Statistics',
