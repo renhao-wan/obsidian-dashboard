@@ -1,8 +1,12 @@
 import type { OverviewStats, CachedStatsData } from './types';
 
-export class StatsCache {
+export class StatsCacheManager {
   private cache: CachedStatsData | null = null;
-  private ttl: number = 5 * 60 * 1000; // 5 minutes default
+  private ttl: number;
+
+  constructor(ttl: number = 5 * 60 * 1000) {
+    this.ttl = ttl;
+  }
 
   get(): CachedStatsData | null {
     if (!this.cache) {
@@ -10,8 +14,7 @@ export class StatsCache {
     }
 
     // Check if cache is expired
-    const now = Date.now();
-    if (now - this.cache.timestamp > this.ttl) {
+    if (Date.now() - this.cache.timestamp > this.ttl) {
       this.cache = null;
       return null;
     }
@@ -31,7 +34,21 @@ export class StatsCache {
     this.cache = null;
   }
 
-  setTTL(ttl: number): void {
-    this.ttl = ttl;
+  isValid(fileHash: string): boolean {
+    if (!this.cache) {
+      return false;
+    }
+
+    // Check if cache is expired
+    if (Date.now() - this.cache.timestamp > this.ttl) {
+      return false;
+    }
+
+    // Check if file hash matches
+    if (this.cache.fileHash !== fileHash) {
+      return false;
+    }
+
+    return true;
   }
 }
