@@ -135,6 +135,16 @@ describe('file-utils', () => {
   });
 
   describe('isCreatedToday', () => {
+    beforeEach(() => {
+      // Fix current time to 2026-07-23 12:00:00 local
+      jest.useFakeTimers();
+      jest.setSystemTime(new Date(2026, 6, 23, 12, 0, 0));
+    });
+
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
     it('should return true for a timestamp from today', () => {
       expect(isCreatedToday(Date.now())).toBe(true);
     });
@@ -148,33 +158,44 @@ describe('file-utils', () => {
   });
 
   describe('isCreatedThisWeek', () => {
+    beforeEach(() => {
+      // Fix current time to 2026-07-23 12:00:00 local (Thursday)
+      jest.useFakeTimers();
+      jest.setSystemTime(new Date(2026, 6, 23, 12, 0, 0));
+    });
+
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
     it('should return true for a timestamp from this week', () => {
       expect(isCreatedThisWeek(Date.now())).toBe(true);
     });
 
     it('should return false for a timestamp from last week', () => {
-      const lastWeek = new Date();
-      lastWeek.setDate(lastWeek.getDate() - 7);
-      lastWeek.setHours(0, 0, 0, 0);
-      // Make sure it's before the start of this week
-      const startOfThisWeek = new Date();
-      const dayOfWeek = startOfThisWeek.getDay();
-      startOfThisWeek.setDate(startOfThisWeek.getDate() - dayOfWeek);
-      startOfThisWeek.setHours(0, 0, 0, 0);
-      if (lastWeek.getTime() < startOfThisWeek.getTime()) {
-        expect(isCreatedThisWeek(lastWeek.getTime())).toBe(false);
-      }
+      // 2026-07-16 is last Thursday, definitely before start of week (Sunday 2026-07-19)
+      const lastWeek = new Date(2026, 6, 16, 0, 0, 0);
+      expect(isCreatedThisWeek(lastWeek.getTime())).toBe(false);
     });
   });
 
   describe('isCreatedThisMonth', () => {
+    beforeEach(() => {
+      // Fix current time to 2026-07-23 12:00:00 local
+      jest.useFakeTimers();
+      jest.setSystemTime(new Date(2026, 6, 23, 12, 0, 0));
+    });
+
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
     it('should return true for a timestamp from this month', () => {
       expect(isCreatedThisMonth(Date.now())).toBe(true);
     });
 
     it('should return false for a timestamp from last month', () => {
-      const lastMonth = new Date();
-      lastMonth.setMonth(lastMonth.getMonth() - 1);
+      const lastMonth = new Date(2026, 5, 15, 0, 0, 0);
       expect(isCreatedThisMonth(lastMonth.getTime())).toBe(false);
     });
   });
