@@ -11,39 +11,37 @@ export class StatsScanner {
     this.settings = settings;
   }
 
-  async scan(): Promise<FileMetadata[]> {
+  scan(): FileMetadata[] {
     const files: FileMetadata[] = [];
     const allFiles = this.app.vault.getFiles();
 
     for (const file of allFiles) {
       if (shouldIncludeFile(file.path, this.settings.fileType)) {
-        const metadata = await this.getFileMetadata(file);
-        files.push(metadata);
+        files.push(this.getFileMetadata(file));
       }
     }
 
     return files;
   }
 
-  private async getFileMetadata(file: TFile): Promise<FileMetadata> {
-    const stat = await this.app.vault.adapter.stat(file.path);
-
+  private getFileMetadata(file: TFile): FileMetadata {
     return {
       path: file.path,
       name: getFileName(file.path),
       extension: getFileExtension(file.path),
-      size: stat?.size || 0,
+      size: file.stat.size,
       created: file.stat.ctime,
       modified: file.stat.mtime,
       folder: getFolder(file.path),
     };
   }
 
-  async scanIncremental(
+  scanIncremental(
     lastScanTime: number
-  ): Promise<{ created: FileMetadata[]; modified: FileMetadata[]; deleted: string[] }> {
+  ): { created: FileMetadata[]; modified: FileMetadata[]; deleted: string[] } {
     const created: FileMetadata[] = [];
     const modified: FileMetadata[] = [];
+    // TODO: deleted 检测尚未实现——需要将上次扫描结果与当前文件列表进行比对
     const deleted: string[] = [];
 
     const allFiles = this.app.vault.getFiles();
@@ -53,7 +51,7 @@ export class StatsScanner {
         continue;
       }
 
-      const metadata = await this.getFileMetadata(file);
+      const metadata = this.getFileMetadata(file);
 
       if (file.stat.ctime > lastScanTime) {
         created.push(metadata);

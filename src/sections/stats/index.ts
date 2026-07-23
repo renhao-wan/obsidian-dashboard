@@ -66,7 +66,7 @@ export class StatsSection {
     }
 
     // Scan files and analyze
-    const files = await this.scanner.scan();
+    const files = this.scanner.scan();
     const stats = this.analyzer.analyze(files);
 
     // Update cache with a hash based on stats data
