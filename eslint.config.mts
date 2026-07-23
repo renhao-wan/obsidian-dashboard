@@ -16,7 +16,6 @@ export default tseslint.config(
 					allowDefaultProject: [
 						'eslint.config.js',
 						'manifest.json',
-						'build-css.mjs',
 						'jest.config.cjs',
 					]
 				},
@@ -29,6 +28,7 @@ export default tseslint.config(
 	globalIgnores([
 		"node_modules",
 		"dist",
+		"build-css.mjs",
 		"esbuild.config.mjs",
 		"eslint.config.js",
 		"eslint.config.mts",
