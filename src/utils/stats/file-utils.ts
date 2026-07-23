@@ -1,38 +1,59 @@
 /**
  * File utilities for stats module
  */
+import type { FileTypeConfig } from '../../sections/stats/types';
 
 /**
- * Get file extension from path
+ * Check if a file should be included based on extension and exclude patterns
  */
-export function getFileExtension(path: string): string {
-  const parts = path.split('.');
-  if (parts.length <= 1) return '';
-  return parts.pop()?.toLowerCase() || '';
+export function shouldIncludeFile(
+  filePath: string,
+  config: FileTypeConfig
+): boolean {
+  // Check if file extension is enabled
+  const extension = getFileExtension(filePath);
+  if (!config.extensions.includes(extension)) {
+    return false;
+  }
+
+  // Check if file matches exclude patterns
+  for (const pattern of config.excludePatterns) {
+    if (filePath.includes(pattern)) {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 /**
- * Get file name without extension
+ * Get file extension from path (includes the dot, e.g., ".md")
  */
-export function getFileNameWithoutExtension(path: string): string {
-  const name = path.split('/').pop() || '';
-  const lastDot = name.lastIndexOf('.');
-  return lastDot > 0 ? name.substring(0, lastDot) : name;
+export function getFileExtension(filePath: string): string {
+  const lastDot = filePath.lastIndexOf('.');
+  if (lastDot === -1) {
+    return '';
+  }
+  return filePath.slice(lastDot).toLowerCase();
+}
+
+/**
+ * Get file name from path (with extension)
+ */
+export function getFileName(filePath: string): string {
+  const parts = filePath.split('/');
+  return parts[parts.length - 1] || '';
 }
 
 /**
  * Get folder path from file path
  */
-export function getFolderPath(path: string): string {
-  const lastSlash = path.lastIndexOf('/');
-  return lastSlash > 0 ? path.substring(0, lastSlash) : '';
-}
-
-/**
- * Check if path matches any exclude pattern
- */
-export function matchesExcludePattern(path: string, patterns: string[]): boolean {
-  return patterns.some(pattern => path.includes(pattern));
+export function getFolder(filePath: string): string {
+  const parts = filePath.split('/');
+  if (parts.length <= 1) {
+    return '';
+  }
+  return parts.slice(0, -1).join('/');
 }
 
 /**
@@ -40,10 +61,12 @@ export function matchesExcludePattern(path: string, patterns: string[]): boolean
  */
 export function formatFileSize(bytes: number): string {
   if (bytes === 0) return '0 B';
+
   const k = 1024;
   const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 }
 
 /**
