@@ -309,7 +309,25 @@ export class DashboardSettingTab extends PluginSettingTab {
 			if (e.target instanceof HTMLElement && e.target.closest('.dashboard-settings-panel-toggle')) {
 				return;
 			}
+
+			// 找到滚动容器（Obsidian 设置界面的滚动容器）
+			const scrollContainer = containerEl.closest('.vertical-tab-content') ||
+									containerEl.closest('.settings-container') ||
+									containerEl.parentElement;
+
+			// 保存当前滚动位置
+			const scrollTop = scrollContainer ? scrollContainer.scrollTop : 0;
+
+			// 切换展开状态
 			pomodoroPanel.toggleClass('is-expanded', !pomodoroPanel.hasClass('is-expanded'));
+
+			// 恢复滚动位置
+			if (scrollContainer) {
+				// 使用 requestAnimationFrame 确保在下一帧恢复滚动位置
+				requestAnimationFrame(() => {
+					scrollContainer.scrollTop = scrollTop;
+				});
+			}
 		});
 
 		// 内容区域
