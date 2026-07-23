@@ -130,7 +130,7 @@ export function renderHeatmap(
 
   // Create SVG
   const svgWidth = (weeks + 1) * (cellSize + gap) + 40; // Extra space for labels
-  const svgHeight = 7 * (cellSize + gap) + 30; // Extra space for month labels
+  const svgHeight = 7 * (cellSize + gap) + (showLegend ? 55 : 30); // Extra space for month labels and legend
 
   const svg = wrapper.createSvg('svg', {
     attr: {

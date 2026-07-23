@@ -71,61 +71,20 @@ export function renderStatCard(
 ): void {
   const card = container.createDiv({ cls: 'stats-card' });
 
+  // Header row: icon + title
+  const headerEl = card.createDiv({ cls: 'stats-card-header' });
   if (icon) {
-    const iconEl = card.createDiv({ cls: 'stats-card-icon' });
+    const iconEl = headerEl.createDiv({ cls: 'stats-card-icon' });
     setIcon(iconEl, icon);
   }
+  headerEl.createDiv({ text: title, cls: 'stats-card-title' });
 
-  card.createDiv({ text: title, cls: 'stats-card-title' });
+  // Value
   card.createDiv({ text: String(value), cls: 'stats-card-value' });
+
   if (subtitle) {
     card.createDiv({ text: subtitle, cls: 'stats-card-subtitle' });
   }
-}
-
-/**
- * Render a horizontal bar chart for folder distribution
- */
-export function renderBarChart(
-  container: HTMLElement,
-  data: Array<{ path: string; count: number; totalSize: number }>,
-  title: string,
-  maxItems: number = 10,
-  icon?: string
-): void {
-  const wrapper = container.createDiv({ cls: 'stats-chart-wrapper' });
-  const titleEl = wrapper.createEl('h3', { cls: 'stats-chart-title' });
-
-  if (icon) {
-    const iconEl = titleEl.createSpan({ cls: 'stats-chart-title-icon' });
-    setIcon(iconEl, icon);
-  }
-
-  titleEl.createSpan({ text: title });
-
-  if (data.length === 0) {
-    wrapper.createDiv({ text: t('stats.noData'), cls: 'stats-chart-empty' });
-    return;
-  }
-
-  const chartContainer = wrapper.createDiv({ cls: 'stats-bar-chart' });
-  const maxValue = Math.max(...data.slice(0, maxItems).map(item => item.count));
-
-  data.slice(0, maxItems).forEach((item, index) => {
-    const barWrapper = chartContainer.createDiv({ cls: 'stats-bar-wrapper' });
-    const label = barWrapper.createDiv({ cls: 'stats-bar-label' });
-    label.textContent = item.path || 'Root';
-    label.title = item.path || 'Root';
-
-    const barContainer = barWrapper.createDiv({ cls: 'stats-bar-container' });
-    const bar = barContainer.createDiv({ cls: 'stats-bar' });
-    const percentage = maxValue > 0 ? (item.count / maxValue) * 100 : 0;
-    bar.style.width = `${percentage}%`;
-    bar.style.backgroundColor = getChartColor(index);
-
-    const value = barWrapper.createDiv({ cls: 'stats-bar-value' });
-    value.textContent = t('stats.fileCount', { count: item.count });
-  });
 }
 
 /**

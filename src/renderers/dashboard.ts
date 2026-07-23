@@ -10,6 +10,7 @@ import {
 } from './utils';
 import { getSectionType } from './card-bodies';
 import { renderSection } from './section';
+import { setIcon } from 'obsidian';
 
 // Re-export commonly used functions for backward compatibility
 export { destroyAllCharts } from './utils';
@@ -42,23 +43,76 @@ export function renderDashboard(
 	container.empty();
 	container.addClass('dashboard-kanban');
 
-	for (const column of data.columns) {
-		const section = renderSection(column, callbacks, app, data, settings);
-		container.appendChild(section);
-	}
-
-	const addColBtn = container.createDiv({ cls: 'dashboard-add-section' });
-	addColBtn.setText(t('renderer.addSection'));
-	addColBtn.setAttribute('role', 'button');
-	addColBtn.addEventListener('click', () => {
-		callbacks.onRequestAddSection();
-	});
-
-	// Render stats section if enabled
+	// If stats section is enabled, create tab container
 	if (statsSection) {
-		const statsContainer = container.createDiv({ cls: 'dashboard-stats-section' });
-		statsSection.render(statsContainer).catch(err => {
+		const tabContainer = container.createDiv({ cls: 'dashboard-content-tabs' });
+
+		// Tab header
+		const tabHeader = tabContainer.createDiv({ cls: 'dashboard-tab-header' });
+
+		const tabs = [
+			{ id: 'home', label: t('dashboard.tabHome') || '主页', icon: 'home' },
+			{ id: 'stats', label: t('dashboard.tabStats') || '统计', icon: 'bar-chart-2' },
+		];
+
+		// Tab content containers
+		const homeContent = tabContainer.createDiv({ cls: 'dashboard-tab-content dashboard-tab-content--active' });
+		homeContent.setAttribute('data-tab', 'home');
+		const statsContent = tabContainer.createDiv({ cls: 'dashboard-tab-content' });
+		statsContent.setAttribute('data-tab', 'stats');
+
+		// Create tab buttons
+		for (const tab of tabs) {
+			const btn = tabHeader.createDiv({ cls: 'dashboard-tab-btn' });
+			if (tab.id === 'home') btn.addClass('dashboard-tab-btn--active');
+			btn.setAttribute('data-tab-btn', tab.id);
+
+			const iconEl = btn.createSpan({ cls: 'dashboard-tab-btn-icon' });
+			setIcon(iconEl, tab.icon);
+			btn.createSpan({ text: tab.label, cls: 'dashboard-tab-btn-label' });
+
+			// Click handler
+			btn.addEventListener('click', () => {
+				// Update active state
+				tabHeader.querySelectorAll('.dashboard-tab-btn').forEach(b => b.removeClass('dashboard-tab-btn--active'));
+				btn.addClass('dashboard-tab-btn--active');
+
+				// Show/hide content
+				tabContainer.querySelectorAll('.dashboard-tab-content').forEach(c => c.removeClass('dashboard-tab-content--active'));
+				const targetContent = tabContainer.querySelector(`.dashboard-tab-content[data-tab="${tab.id}"]`);
+				if (targetContent) targetContent.addClass('dashboard-tab-content--active');
+			});
+		}
+
+		// Render home content (columns)
+		for (const column of data.columns) {
+			const section = renderSection(column, callbacks, app, data, settings);
+			homeContent.appendChild(section);
+		}
+
+		const addColBtn = homeContent.createDiv({ cls: 'dashboard-add-section' });
+		addColBtn.setText(t('renderer.addSection'));
+		addColBtn.setAttribute('role', 'button');
+		addColBtn.addEventListener('click', () => {
+			callbacks.onRequestAddSection();
+		});
+
+		// Render stats content
+		statsSection.render(statsContent).catch(err => {
 			console.error('Stats render failed:', err);
+		});
+	} else {
+		// No stats section, render normally
+		for (const column of data.columns) {
+			const section = renderSection(column, callbacks, app, data, settings);
+			container.appendChild(section);
+		}
+
+		const addColBtn = container.createDiv({ cls: 'dashboard-add-section' });
+		addColBtn.setText(t('renderer.addSection'));
+		addColBtn.setAttribute('role', 'button');
+		addColBtn.addEventListener('click', () => {
+			callbacks.onRequestAddSection();
 		});
 	}
 }

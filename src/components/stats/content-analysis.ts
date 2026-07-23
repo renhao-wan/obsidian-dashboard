@@ -3,6 +3,7 @@
  * Renders tag clouds, keyword clouds, and content statistics
  */
 
+import { setIcon } from 'obsidian';
 import { t } from '../../utils/i18n';
 
 export interface TagData {
@@ -199,7 +200,7 @@ export async function renderTagCloud(
   title: string,
   maxTags: number = 30
 ): Promise<void> {
-  const { setIcon } = await import('obsidian');
+  
   const wrapper = container.createDiv({ cls: 'stats-tag-cloud-wrapper' });
 
   // Create title with icon
@@ -252,7 +253,7 @@ export async function renderKeywordCloud(
   title: string,
   maxKeywords: number = 30
 ): Promise<void> {
-  const { setIcon } = await import('obsidian');
+  
   const wrapper = container.createDiv({ cls: 'stats-keyword-cloud-wrapper' });
 
   // Create title with icon
@@ -304,7 +305,7 @@ export async function renderContentStats(
   stats: ContentStats,
   title: string
 ): Promise<void> {
-  const { setIcon } = await import('obsidian');
+  
   const wrapper = container.createDiv({ cls: 'stats-content-stats-wrapper' });
 
   // Create title with icon
@@ -356,7 +357,7 @@ export async function renderWordLengthDistribution(
   distribution: WordLengthDistribution[],
   title: string
 ): Promise<void> {
-  const { setIcon } = await import('obsidian');
+  
   const wrapper = container.createDiv({ cls: 'stats-word-distribution-wrapper' });
 
   // Create title with icon

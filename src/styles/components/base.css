@@ -62,3 +62,115 @@
 	-webkit-backdrop-filter: none;
 }
 
+/* ===== Dashboard Content Tabs ===== */
+
+.dashboard-content-tabs {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	min-height: 0;
+	overflow: hidden;
+}
+
+.dashboard-tab-header {
+	display: flex;
+	gap: 4px;
+	padding: 8px 16px 0;
+	background: transparent;
+	flex-shrink: 0;
+	z-index: 10;
+}
+
+.dashboard-tab-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 10px 20px;
+	cursor: pointer;
+	color: var(--db-text-muted);
+	font-size: 0.85em;
+	font-weight: 500;
+	transition: all 0.2s ease;
+	border-radius: 8px 8px 0 0;
+	background: var(--db-bg-input);
+	border: 1px solid transparent;
+	border-bottom: none;
+	position: relative;
+}
+
+.dashboard-tab-btn:hover {
+	color: var(--db-text);
+	background: var(--db-bg-hover);
+}
+
+.dashboard-tab-btn--active {
+	color: var(--db-accent);
+	background: var(--db-bg-card);
+	border-color: var(--db-border-card);
+	font-weight: 600;
+}
+
+.dashboard-tab-btn--active::after {
+	content: '';
+	position: absolute;
+	bottom: -1px;
+	left: 0;
+	right: 0;
+	height: 2px;
+	background: var(--db-bg-card);
+}
+
+.dashboard-tab-btn-icon {
+	display: flex;
+	align-items: center;
+}
+
+.dashboard-tab-btn-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.dashboard-tab-btn-label {
+	white-space: nowrap;
+}
+
+.dashboard-tab-content {
+	display: none !important;
+	flex: 1;
+	overflow-y: auto;
+	overflow-x: hidden;
+	min-height: 0;
+	background: var(--db-bg-card);
+	border: 1px solid var(--db-border-card);
+	border-top: none;
+	border-radius: 0 0 12px 12px;
+	margin: 0;
+	padding: 12px;
+}
+
+.dashboard-tab-content--active {
+	display: flex !important;
+	flex-direction: column;
+	gap: 12px;
+}
+
+/* Stats section inside tab */
+.dashboard-stats-section {
+	padding: 0;
+	flex: 1;
+}
+
+/* Override kanban scrollbar for tab content */
+.dashboard-tab-content .dashboard-kanban,
+.dashboard-tab-content .dashboard-kanban-wrapper {
+	scrollbar-width: auto !important;
+	overflow-y: auto !important;
+}
+
+.dashboard-tab-content .dashboard-kanban::-webkit-scrollbar,
+.dashboard-tab-content .dashboard-kanban-wrapper::-webkit-scrollbar {
+	width: 8px !important;
+	display: block !important;
+}
+

@@ -94,6 +94,8 @@ export const en: Record<string, string> = {
 	'main.toggleNotePopover': 'Toggle: open notes directly in a tab',
 	'main.notePopoverOff': 'Notes open directly in a tab (popover off)',
 	'main.notePopoverOn': 'Notes open in the dashboard popover',
+	'dashboard.tabHome': 'Home',
+	'dashboard.tabStats': 'Stats',
 
 	// Renderer
 	// Default dashboard content
@@ -686,8 +688,6 @@ export const en: Record<string, string> = {
 	'stats.todayCreated': 'Today Created',
 	'stats.thisWeek': 'This Week',
 	'stats.fileTypeDistribution': 'File Types',
-	'stats.folderDistribution': 'Top Folders',
-	'stats.fileCount': '{count} files',
 	'stats.noData': 'No data available',
 	'stats.settings.enable': 'Enable Statistics',
 	'stats.settings.enableDesc': 'Enable note statistics feature',
@@ -698,6 +698,9 @@ export const en: Record<string, string> = {
 	'stats.settings.cacheEnabled': 'Enable Cache',
 	'stats.settings.cacheEnabledDesc': 'Cache statistics data for better performance',
 	'stats.chartsTitle': 'Statistics Charts',
+	'stats.tabOverview': 'Overview',
+	'stats.tabActivity': 'Activity',
+	'stats.tabAnalysis': 'Analysis',
 	'stats.createdHeatmap': 'Note Creation Activity',
 	'stats.modifiedHeatmap': 'Note Modification Activity',
 	'stats.timelineTitle': 'Timeline Statistics',

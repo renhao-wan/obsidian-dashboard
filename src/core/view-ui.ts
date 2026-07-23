@@ -477,6 +477,9 @@ export function setupSidebarBehavior(
 		if (sidebarAlwaysExpanded) return;
 		if (!state.sidebarExpanded) return;
 		if (sidebar.contains(e.target as Node)) return;
+		// Don't collapse sidebar when clicking on tab buttons
+		const target = e.target as HTMLElement;
+		if (target.closest('.dashboard-tab-btn') || target.closest('.dashboard-content-tabs')) return;
 		sidebar.removeClass('dashboard-sidebar--expanded');
 		sidebar.addClass('dashboard-sidebar--collapsed');
 		state.sidebarExpanded = false;
