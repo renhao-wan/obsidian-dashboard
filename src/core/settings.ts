@@ -311,6 +311,8 @@ export class DashboardSettingTab extends PluginSettingTab {
 			}
 
 			const isExpanded = pomodoroPanel.hasClass('is-expanded');
+			// 保存当前滚动位置
+			const scrollTop = containerEl.scrollTop;
 
 			if (isExpanded) {
 				// 折叠：先设置当前高度，然后动画到0
@@ -332,6 +334,11 @@ export class DashboardSettingTab extends PluginSettingTab {
 				};
 				pomodoroContent.addEventListener('transitionend', onTransitionEnd);
 			}
+
+			// 恢复滚动位置
+			requestAnimationFrame(() => {
+				containerEl.scrollTop = scrollTop;
+			});
 		});
 
 		// 内容区域
