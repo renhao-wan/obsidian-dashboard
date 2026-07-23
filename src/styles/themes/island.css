@@ -1,0 +1,95 @@
+/* ----- 6. ISLAND (动物森友会 — 淡彩无人岛) ----- */
+.obsidian-dashboard-root[data-theme="island"] {
+	/* 背景：奶油白底，区块/侧栏用淡绿淡蓝 */
+	--db-bg: #f8f8f0;
+	--db-bg-section: #e6f4e8;
+	--db-bg-card: #faf6ee;
+	--db-bg-card-hover: #fefefa;
+	--db-bg-sidebar: #e8f6ea;
+	--db-bg-input: rgba(25, 200, 185, 0.04);
+	--db-bg-btn: #f8f8f0;
+	--db-bg-btn-hover: #e6f9f6;
+	--db-bg-banner: rgba(111, 186, 44, 0.08);
+	--db-bg-overlay: linear-gradient(135deg, rgba(30,60,40,0.40) 0%, rgba(40,80,60,0.15) 100%);
+	--db-bg-hover: rgba(25, 200, 185, 0.06);
+	--db-bg-hover-strong: rgba(25, 200, 185, 0.10);
+	--db-bg-add-section: rgba(25, 200, 185, 0.06);
+	--db-bg-drop-indicator: rgba(25, 200, 185, 0.10);
+
+	/* 边框：暖灰+绿色调 */
+	--db-border: #c8dcc5;
+	--db-border-card: #b5d4b0;
+	--db-border-section: #b8d8b5;
+	--db-border-sidebar: #b0d0ac;
+	--db-border-input: #b5d4b0;
+	--db-border-input-focus: #ffcc00;
+	--db-border-btn: #b5d4b0;
+	--db-border-add-section: #19c8b9;
+
+	/* 文字：森林棕绿（非纯棕） */
+	--db-text: #4a6741;
+	--db-text-muted: #5a7247;
+	--db-text-faint: #8aaa80;
+	--db-text-inverse: rgba(255, 255, 255, 0.95);
+	--db-text-inverse-muted: rgba(255, 255, 255, 0.6);
+
+	/* 强调色：薄荷青+草绿双主色 */
+	--db-accent: #19c8b9;
+	--db-accent-light: #6fba2c;
+	--db-danger: #e05a5a;
+
+	/* 阴影：3D 按键感 */
+	--db-shadow-card: 0 4px 0 0 #a8c8a5, 0 4px 10px rgba(74, 103, 65, 0.12);
+	--db-shadow-card-hover: 0 5px 0 0 #a8c8a5, 0 8px 24px rgba(74, 103, 65, 0.15);
+	--db-backdrop-blur: none;
+
+	/* 圆角：最大最圆润 */
+	--db-radius-sm: 12px;
+	--db-radius-md: 18px;
+	--db-radius-lg: 20px;
+
+	/* 字体：Nunito 圆体 */
+	--db-font: 'Nunito', 'Noto Sans SC', 'Zen Maru Gothic', -apple-system, 'PingFang SC', var(--font-interface);
+
+	/* 进度条/复选框：薄荷→草绿渐变 */
+	--db-progress-from: #19c8b9;
+	--db-progress-to: #6fba2c;
+	--db-checkbox: #6fba2c;
+	--db-quote-border: #82d5bb;
+	--db-link: #19c8b9;
+}
+.theme-dark .obsidian-dashboard-root[data-theme="island"] {
+	--db-bg: #1a2a1e;
+	--db-bg-section: #223428;
+	--db-bg-card: #263830;
+	--db-bg-card-hover: #2e4438;
+	--db-bg-sidebar: #1e3024;
+	--db-bg-input: rgba(255, 255, 255, 0.04);
+	--db-bg-btn: #2e4438;
+	--db-bg-btn-hover: rgba(25, 200, 185, 0.12);
+	--db-bg-banner: rgba(25, 200, 185, 0.06);
+	--db-bg-overlay: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 100%);
+	--db-bg-hover: rgba(25, 200, 185, 0.06);
+	--db-bg-hover-strong: rgba(25, 200, 185, 0.10);
+	--db-bg-add-section: rgba(25, 200, 185, 0.05);
+	--db-border: #3a5a3e;
+	--db-border-card: #3a5a3e;
+	--db-border-section: #3a5a3e;
+	--db-border-sidebar: #3a5a3e;
+	--db-border-input: #3a5a3e;
+	--db-border-input-focus: #ffcc00;
+	--db-text: #c8e0c4;
+	--db-text-muted: #98b894;
+	--db-text-faint: #688864;
+	--db-accent: #3dd4c6;
+	--db-accent-light: #86d67a;
+	--db-danger: #e05a5a;
+	--db-shadow-card: 0 4px 0 0 #2a4a2e, 0 4px 10px rgba(0, 0, 0, 0.25);
+	--db-shadow-card-hover: 0 5px 0 0 #2a4a2e, 0 8px 24px rgba(0, 0, 0, 0.25);
+	--db-progress-from: #3dd4c6;
+	--db-progress-to: #86d67a;
+	--db-checkbox: #86d67a;
+	--db-quote-border: #3dd4c6;
+	--db-link: #3dd4c6;
+}
+

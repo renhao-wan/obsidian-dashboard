@@ -1,0 +1,109 @@
+/* ----- 7. TUNDRA (苔原 — Earth clone, transparent sections) ----- */
+.obsidian-dashboard-root[data-theme="tundra"] {
+	--db-bg: #eef0ec;
+	--db-bg-section: transparent;
+	--db-bg-card: #FAF6F0;
+	--db-bg-card-hover: #FFFFFF;
+	--db-bg-sidebar: transparent;
+	--db-bg-input: rgba(120, 80, 40, 0.04);
+	--db-bg-btn: #E0D5C5;
+	--db-bg-btn-hover: #D5C8B5;
+	--db-bg-banner: rgba(217, 119, 6, 0.1);
+	--db-bg-overlay: linear-gradient(135deg, rgba(60,30,10,0.5) 0%, rgba(60,30,10,0.2) 100%);
+	--db-bg-hover: rgba(120, 80, 40, 0.06);
+	--db-bg-hover-strong: rgba(120, 80, 40, 0.1);
+	--db-bg-add-section: rgba(217, 119, 6, 0.06);
+	--db-bg-drop-indicator: rgba(217, 119, 6, 0.1);
+
+	--db-border: #D5C8B5;
+	--db-border-card: #D5C8B5;
+	--db-border-section: transparent;
+	--db-border-sidebar: transparent;
+	--db-border-input: #D5C8B5;
+	--db-border-input-focus: #d97706;
+	--db-border-btn: #D5C8B5;
+	--db-border-add-section: #d97706;
+
+	--db-text: #3D2B1F;
+	--db-text-muted: #6B5040;
+	--db-text-faint: #8B7060;
+	--db-text-inverse: rgba(255, 255, 255, 0.95);
+	--db-text-inverse-muted: rgba(255, 255, 255, 0.6);
+
+	--db-accent: #d97706;
+	--db-accent-light: #65a30d;
+	--db-danger: #dc2626;
+
+	--db-shadow-card: 0 2px 8px rgba(60, 40, 20, 0.08);
+	--db-shadow-card-hover: 0 6px 20px rgba(60, 40, 20, 0.14);
+	--db-backdrop-blur: none;
+
+	--db-radius-sm: 8px;
+	--db-radius-md: 14px;
+	--db-radius-lg: 18px;
+
+	--db-font: 'Merriweather', 'Noto Serif SC', var(--font-interface);
+	--db-progress-from: #6b8f5e;
+	--db-progress-to: #a3b899;
+	--db-checkbox: #6b8f5e;
+	--db-quote-border: #a3b899;
+	--db-link: #6b8f5e;
+
+	/* Tundra aurora + avocado green */
+	--db-aurora-bg: linear-gradient(135deg,
+		#eef0ec 0%,
+		rgba(134, 168, 120, 0.12) 18%,
+		rgba(160, 190, 140, 0.08) 36%,
+		rgba(120, 155, 110, 0.10) 54%,
+		rgba(145, 178, 130, 0.06) 72%,
+		#eef0ec 100%);
+	--db-aurora-size: 400% 400%;
+	--db-aurora-speed: 14s;
+}
+.theme-dark .obsidian-dashboard-root[data-theme="tundra"] {
+	--db-bg: #141816;
+	--db-bg-section: transparent;
+		--db-bg-card: rgba(107, 143, 94, 0.10);
+		--db-bg-card-hover: rgba(107, 143, 94, 0.18);
+	--db-bg-sidebar: transparent;
+		--db-bg-input: rgba(107, 143, 94, 0.06);
+		--db-bg-btn: rgba(143, 184, 130, 0.10);
+		--db-bg-btn-hover: rgba(143, 184, 130, 0.18);
+		--db-bg-banner: rgba(143, 184, 130, 0.06);
+	--db-bg-overlay: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 100%);
+	--db-bg-hover: rgba(255, 255, 255, 0.04);
+	--db-bg-hover-strong: rgba(255, 255, 255, 0.07);
+	--db-bg-add-section: rgba(143, 184, 130, 0.05);
+		--db-border: rgba(143, 184, 130, 0.12);
+		--db-border-card: rgba(143, 184, 130, 0.18);
+	--db-border-section: transparent;
+	--db-border-sidebar: transparent;
+	--db-border-input: rgba(143, 184, 130, 0.12);
+	--db-border-input-focus: #8fb882;
+	--db-text: #e8ddd0;
+	--db-text-muted: #b8a890;
+	--db-text-faint: #887868;
+		--db-accent: #8fb882;
+		--db-accent-light: #b8d4ae;
+	--db-danger: #ef4444;
+	--db-shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3);
+		--db-shadow-card-hover: 0 6px 20px rgba(0, 0, 0, 0.25);
+		--db-progress-from: #8fb882;
+		--db-progress-to: #b8d4ae;
+		--db-checkbox: #8fb882;
+		--db-quote-border: #b8d4ae;
+		--db-link: #8fb882;
+
+		/* Tundra aurora dark: deep gray + avocado green glow */
+		--db-aurora-bg: linear-gradient(135deg,
+			#141816 0%,
+			rgba(80, 130, 70, 0.18) 18%,
+			rgba(50, 90, 45, 0.22) 36%,
+			#141816 50%,
+			rgba(70, 120, 60, 0.20) 64%,
+			#161a18 82%,
+			#141816 100%);
+		--db-aurora-size: 400% 400%;
+		--db-aurora-speed: 14s;
+}
+

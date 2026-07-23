@@ -1,0 +1,117 @@
+	/* ----- 13. MATCHA (抹茶) — Morandi green, solid warm ----- */
+	.obsidian-dashboard-root[data-theme="matcha"] {
+		--db-bg: #b8c8ac;
+		--db-bg-section: transparent;
+		--db-bg-card: #dde4d0;
+		--db-bg-card-hover: #e8eee0;
+		--db-bg-sidebar: transparent;
+		--db-bg-input: rgba(143, 170, 152, 0.08);
+		--db-bg-btn: #c8d4bc;
+		--db-bg-btn-hover: #bcc8b0;
+		--db-bg-banner: rgba(200, 184, 144, 0.08);
+		--db-bg-overlay: linear-gradient(135deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.3) 100%);
+		--db-bg-hover: rgba(143, 170, 152, 0.06);
+		--db-bg-hover-strong: rgba(143, 170, 152, 0.10);
+		--db-bg-add-section: rgba(143, 170, 152, 0.06);
+		--db-bg-drop-indicator: rgba(143, 170, 152, 0.10);
+
+		--db-border: #a0b094;
+		--db-border-card: #b0c0a4;
+		--db-border-section: transparent;
+		--db-border-sidebar: transparent;
+		--db-border-input: #b0c0a4;
+		--db-border-input-focus: #8faa98;
+		--db-border-btn: #a0b094;
+		--db-border-add-section: rgba(143, 170, 152, 0.20);
+
+		--db-text: #2a3628;
+		--db-text-muted: #4a6050;
+		--db-text-faint: #6a8070;
+		--db-text-inverse: rgba(255, 255, 255, 0.95);
+		--db-text-inverse-muted: rgba(255, 255, 255, 0.55);
+
+		--db-accent: #7a9a80;
+		--db-accent-light: #a89068;
+		--db-danger: #c84040;
+
+		--db-shadow-card: 0 2px 8px rgba(100, 130, 100, 0.10);
+		--db-shadow-card-hover: 0 4px 16px rgba(100, 130, 100, 0.15);
+		--db-backdrop-blur: none;
+
+		--db-radius-sm: 10px;
+		--db-radius-md: 14px;
+		--db-radius-lg: 18px;
+
+		--db-font: 'Nunito', 'LXGW WenKai', var(--font-interface);
+		--db-progress-from: #7a9a80;
+		--db-progress-to: #a89068;
+		--db-checkbox: #7a9a80;
+		--db-quote-border: #a89068;
+		--db-link: #7a9a80;
+
+		--db-aurora-bg: linear-gradient(135deg,
+			#b8c8ac 0%,
+			rgba(143, 170, 152, 0.12) 18%,
+			rgba(168, 144, 104, 0.08) 36%,
+			rgba(122, 154, 128, 0.10) 54%,
+			rgba(143, 170, 152, 0.06) 72%,
+			#b8c8ac 100%);
+		--db-aurora-size: 400% 400%;
+		--db-aurora-speed: 14s;
+	}
+	.theme-light .obsidian-dashboard-root[data-theme="matcha"] {
+		--db-bg: #dde6d8;
+		--db-bg-section: transparent;
+		--db-bg-card: #e8efe4;
+		--db-bg-card-hover: #f0f5ec;
+		--db-bg-sidebar: transparent;
+		--db-bg-input: rgba(143, 170, 152, 0.08);
+		--db-bg-btn: #c0ccb4;
+		--db-bg-btn-hover: #b4c2a8;
+		--db-bg-banner: rgba(200, 184, 144, 0.10);
+		--db-bg-overlay: linear-gradient(135deg, rgba(30,40,30,0.4) 0%, rgba(30,40,30,0.15) 100%);
+		--db-bg-hover: rgba(143, 170, 152, 0.06);
+		--db-bg-hover-strong: rgba(143, 170, 152, 0.10);
+		--db-bg-add-section: rgba(143, 170, 152, 0.05);
+
+		--db-border: #b8c8ac;
+		--db-border-card: #b8c8ac;
+		--db-border-section: transparent;
+		--db-border-sidebar: transparent;
+		--db-border-input: #b8c8ac;
+		--db-border-input-focus: #6a8a78;
+		--db-border-btn: #a8b89c;
+
+		--db-text: #1a2a1e;
+		--db-text-muted: #4a6050;
+		--db-text-faint: #809888;
+
+		--db-accent: #6a8a78;
+		--db-accent-light: #a89068;
+		--db-danger: #dc2626;
+
+		--db-shadow-card: 0 2px 8px rgba(143, 170, 152, 0.08);
+		--db-shadow-card-hover: 0 4px 16px rgba(143, 170, 152, 0.12);
+		--db-backdrop-blur: none;
+
+		--db-progress-from: #6a8a78;
+		--db-progress-to: #a89068;
+		--db-checkbox: #6a8a78;
+		--db-quote-border: #a89068;
+		--db-link: #6a8a78;
+
+		--db-aurora-bg: linear-gradient(135deg,
+			#dde6d8 0%,
+			rgba(106, 138, 120, 0.10) 18%,
+			rgba(168, 144, 104, 0.06) 36%,
+			rgba(106, 138, 120, 0.08) 54%,
+			rgba(143, 170, 152, 0.04) 72%,
+			#dde6d8 100%);
+	}
+
+	/* Matcha: gradient background */
+	.obsidian-dashboard-root[data-theme="matcha"] {
+		background: var(--db-aurora-bg);
+		transition: color 0.3s ease;
+	}
+

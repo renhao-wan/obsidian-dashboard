@@ -1,0 +1,103 @@
+/* ----- 1. AURORA (极光) ----- */
+.obsidian-dashboard-root[data-theme="aurora"] {
+		--db-bg: #0f0a1e;
+		--db-bg-section: rgba(139, 92, 246, 0.05);
+	--db-bg-card: rgba(255, 255, 255, 0.06);
+	--db-bg-card-hover: rgba(255, 255, 255, 0.10);
+		--db-bg-sidebar: rgba(139, 92, 246, 0.05);
+	--db-bg-input: rgba(255, 255, 255, 0.05);
+		--db-bg-btn: rgba(139, 92, 246, 0.10);
+		--db-bg-btn-hover: rgba(139, 92, 246, 0.18);
+		--db-bg-banner: rgba(168, 85, 247, 0.15);
+	--db-bg-overlay: linear-gradient(135deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.3) 100%);
+	--db-bg-hover: rgba(255, 255, 255, 0.05);
+	--db-bg-hover-strong: rgba(255, 255, 255, 0.09);
+	--db-bg-add-section: rgba(255, 255, 255, 0.02);
+		--db-bg-drop-indicator: rgba(139, 92, 246, 0.08);
+
+	--db-border: rgba(255, 255, 255, 0.08);
+	--db-border-card: rgba(255, 255, 255, 0.10);
+	--db-border-section: rgba(255, 255, 255, 0.07);
+	--db-border-sidebar: rgba(255, 255, 255, 0.07);
+	--db-border-input: rgba(255, 255, 255, 0.08);
+		--db-border-input-focus: rgba(139, 92, 246, 0.6);
+	--db-border-btn: rgba(255, 255, 255, 0.10);
+		--db-border-add-section: rgba(139, 92, 246, 0.15);
+
+	--db-text: #e8f0f8;
+	--db-text-muted: #94a8c0;
+	--db-text-faint: #5a7088;
+	--db-text-inverse: rgba(255, 255, 255, 0.95);
+	--db-text-inverse-muted: rgba(255, 255, 255, 0.55);
+
+		--db-accent: #a78bfa;
+		--db-accent-light: #6366f1;
+	--db-danger: #f43f5e;
+
+	--db-shadow-card: 0 2px 12px rgba(0, 0, 0, 0.3);
+		--db-shadow-card-hover: 0 6px 24px rgba(139, 92, 246, 0.15), 0 0 16px rgba(99, 102, 241, 0.08);
+	--db-backdrop-blur: blur(12px);
+
+	--db-radius-sm: 8px;
+	--db-radius-md: 14px;
+	--db-radius-lg: 18px;
+
+		--db-font: 'Outfit', 'LXGW WenKai', var(--font-interface);
+		--db-progress-from: #a78bfa;
+		--db-progress-to: #6366f1;
+		--db-checkbox: #a78bfa;
+		--db-quote-border: #6366f1;
+		--db-link: #a78bfa;
+
+	/* Aurora gradient */
+	--db-aurora-bg: linear-gradient(135deg,
+			#0f0a1e 0%,
+			rgba(139, 92, 246, 0.10) 20%,
+			rgba(99, 102, 241, 0.08) 40%,
+			rgba(168, 85, 247, 0.06) 60%,
+			rgba(79, 70, 229, 0.08) 80%,
+			#0f0a1e 100%);
+	--db-aurora-size: 400% 400%;
+	--db-aurora-speed: 12s;
+}
+	.theme-light .obsidian-dashboard-root[data-theme="aurora"] {
+		--db-bg: #f3f0ff;
+		--db-bg-section: rgba(139, 92, 246, 0.06);
+		--db-bg-card-hover: rgba(255, 255, 255, 0.70);
+		--db-bg-sidebar: rgba(139, 92, 246, 0.06);
+		--db-bg-input: rgba(139, 92, 246, 0.05);
+		--db-bg-btn: rgba(139, 92, 246, 0.08);
+		--db-bg-btn-hover: rgba(139, 92, 246, 0.14);
+		--db-bg-banner: rgba(168, 85, 247, 0.10);
+		--db-bg-hover: rgba(139, 92, 246, 0.06);
+		--db-bg-hover-strong: rgba(139, 92, 246, 0.10);
+		--db-bg-add-section: rgba(139, 92, 246, 0.04);
+		--db-bg-drop-indicator: rgba(139, 92, 246, 0.08);
+		--db-border: rgba(139, 92, 246, 0.10);
+		--db-border-card: rgba(139, 92, 246, 0.12);
+		--db-border-section: rgba(139, 92, 246, 0.08);
+		--db-border-sidebar: rgba(139, 92, 246, 0.08);
+		--db-border-input: rgba(139, 92, 246, 0.10);
+		--db-border-input-focus: rgba(139, 92, 246, 0.5);
+		--db-border-btn: rgba(139, 92, 246, 0.12);
+		--db-text: #1e293b;
+		--db-text-muted: #475569;
+		--db-text-faint: #94a3b8;
+		--db-accent: #7c3aed;
+		--db-accent-light: #6366f1;
+		--db-shadow-card: 0 2px 12px rgba(139, 92, 246, 0.06);
+		--db-shadow-card-hover: 0 8px 32px rgba(139, 92, 246, 0.10), 0 4px 16px rgba(0, 0, 0, 0.06);
+		--db-progress-from: #7c3aed;
+		--db-progress-to: #6366f1;
+		--db-checkbox: #7c3aed;
+		--db-quote-border: #6366f1;
+		--db-link: #7c3aed;
+		--db-aurora-bg: linear-gradient(135deg,
+				#f3f0ff 0%,
+				rgba(139, 92, 246, 0.08) 20%,
+				rgba(99, 102, 241, 0.06) 40%,
+				rgba(168, 85, 247, 0.05) 60%,
+				rgba(79, 70, 229, 0.06) 80%,
+				#f3f0ff 100%);
+	}
+

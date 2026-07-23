@@ -1,0 +1,64 @@
+/* =================================================================
+   COMPONENT STYLES
+   ================================================================= */
+
+/* Reset Obsidian view-content padding for dashboard */
+.workspace-leaf-content[data-type="obsidian-dashboard-view"] .view-content {
+	padding: 0 !important;
+}
+
+/* ===== Root ===== */
+.obsidian-dashboard-root {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	overflow: hidden;
+	background: var(--db-bg);
+	color: var(--db-text);
+	font-family: var(--db-font);
+	transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* ===== Settings Footer ===== */
+.dashboard-settings-footer {
+	text-align: center;
+	padding: 30px 0 10px;
+	margin-top: 20px;
+	font-size: 0.8em;
+	color: var(--text-faint);
+	opacity: 0.5;
+	letter-spacing: 0.03em;
+	user-select: none;
+	pointer-events: none;
+}
+
+/* Aurora gradient animation for aurora theme only */
+.obsidian-dashboard-root[data-theme="aurora"] {
+	background: var(--db-aurora-bg);
+	background-size: var(--db-aurora-size);
+	animation: db-aurora-shift var(--db-aurora-speed) ease-in-out infinite;
+	transition: color 0.3s ease;
+	will-change: background-position;
+	backface-visibility: hidden;
+}
+
+/* Respect reduced-motion: stop the aurora drift for users who disable animation */
+@media (prefers-reduced-motion: reduce) {
+	.obsidian-dashboard-root[data-theme="aurora"] {
+		animation: none;
+	}
+}
+
+/* Aurora: disable card backdrop-blur.
+   The animated gradient root behind translucent cards forces the browser to
+   re-blur every frame, which strobes/flickers on many systems. Removing the
+   blur eliminates the strobe while keeping the gradient look. */
+.obsidian-dashboard-root[data-theme="aurora"] {
+	--db-backdrop-blur: none;
+}
+.obsidian-dashboard-root[data-theme="aurora"] .dashboard-card,
+.obsidian-dashboard-root[data-theme="aurora"] .dashboard-section {
+	backdrop-filter: none;
+	-webkit-backdrop-filter: none;
+}
+

@@ -1,0 +1,103 @@
+/* ----- 12. JADE (翡翠) — Green bamboo mist, cloned from Haze ----- */
+.obsidian-dashboard-root[data-theme="jade"] {
+	--db-bg: #f0f5f2;
+	--db-bg-section: transparent;
+	--db-bg-card: transparent;
+	--db-bg-card-hover: rgba(16, 185, 129, 0.06);
+	--db-bg-sidebar: transparent;
+	--db-bg-input: rgba(16, 185, 129, 0.05);
+	--db-bg-btn: rgba(16, 185, 129, 0.08);
+	--db-bg-btn-hover: rgba(16, 185, 129, 0.14);
+	--db-bg-banner: rgba(16, 185, 129, 0.06);
+	--db-bg-overlay: linear-gradient(135deg, rgba(10,40,30,0.5) 0%, rgba(10,40,30,0.2) 100%);
+	--db-bg-hover: rgba(16, 185, 129, 0.05);
+	--db-bg-hover-strong: rgba(16, 185, 129, 0.09);
+	--db-bg-add-section: rgba(16, 185, 129, 0.04);
+	--db-bg-drop-indicator: rgba(16, 185, 129, 0.08);
+
+	--db-border: rgba(16, 185, 129, 0.10);
+	--db-border-card: rgba(16, 185, 129, 0.20);
+	--db-border-section: transparent;
+	--db-border-sidebar: transparent;
+	--db-border-input: rgba(16, 185, 129, 0.10);
+	--db-border-input-focus: #10b981;
+	--db-border-btn: rgba(16, 185, 129, 0.12);
+	--db-border-add-section: rgba(16, 185, 129, 0.15);
+
+	--db-text: #0a1a14;
+	--db-text-muted: #e8f0ec;
+	--db-text-faint: #a0c0b0;
+	--db-text-inverse: rgba(255, 255, 255, 0.95);
+	--db-text-inverse-muted: rgba(255, 255, 255, 0.55);
+
+	--db-accent: #10b981;
+	--db-accent-light: #fbbf24;
+	--db-danger: #ef4444;
+
+	--db-shadow-card: 0 2px 8px rgba(10, 40, 30, 0.06);
+	--db-shadow-card-hover: 0 6px 20px rgba(16, 185, 129, 0.10);
+	--db-backdrop-blur: none;
+
+	--db-radius-sm: 4px;
+	--db-radius-md: 6px;
+	--db-radius-lg: 8px;
+
+	--db-font: 'DM Sans', 'Noto Sans SC', var(--font-interface);
+	--db-progress-from: #10b981;
+	--db-progress-to: #fbbf24;
+	--db-checkbox: #10b981;
+	--db-quote-border: #fbbf24;
+	--db-link: #10b981;
+}
+.theme-dark .obsidian-dashboard-root[data-theme="jade"] {
+	--db-bg: #0a1210;
+	--db-bg-section: transparent;
+	--db-bg-card: transparent;
+	--db-bg-card-hover: rgba(16, 185, 129, 0.08);
+	--db-bg-sidebar: transparent;
+	--db-bg-input: rgba(16, 185, 129, 0.05);
+	--db-bg-btn: rgba(16, 185, 129, 0.08);
+	--db-bg-btn-hover: rgba(16, 185, 129, 0.14);
+	--db-bg-banner: rgba(16, 185, 129, 0.06);
+	--db-bg-overlay: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 100%);
+	--db-bg-hover: rgba(16, 185, 129, 0.04);
+	--db-bg-hover-strong: rgba(16, 185, 129, 0.08);
+	--db-bg-add-section: rgba(16, 185, 129, 0.04);
+	--db-border: rgba(16, 185, 129, 0.10);
+	--db-border-card: rgba(16, 185, 129, 0.18);
+	--db-border-section: transparent;
+	--db-border-sidebar: transparent;
+	--db-border-input: rgba(16, 185, 129, 0.10);
+	--db-border-input-focus: #10b981;
+	--db-text: #d0e8dd;
+	--db-text-muted: #90b8a0;
+	--db-text-faint: #508068;
+	--db-accent: #10b981;
+	--db-accent-light: #fbbf24;
+	--db-danger: #ef4444;
+	--db-shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3);
+	--db-shadow-card-hover: 0 6px 20px rgba(16, 185, 129, 0.12);
+	--db-progress-from: #10b981;
+	--db-progress-to: #fbbf24;
+	--db-checkbox: #10b981;
+	--db-quote-border: #fbbf24;
+	--db-link: #10b981;
+}
+/* Jade: green bamboo mist gradient */
+.obsidian-dashboard-root[data-theme="jade"] {
+	background:
+		radial-gradient(ellipse at 20% 10%, rgba(16, 185, 129, 0.2) 0%, transparent 50%),
+		radial-gradient(ellipse at 75% 5%, rgba(100, 200, 160, 0.15) 0%, transparent 45%),
+		radial-gradient(ellipse at 40% 85%, rgba(10, 18, 16, 0.9) 0%, transparent 50%),
+		radial-gradient(ellipse at 85% 75%, rgba(8, 20, 16, 0.7) 0%, transparent 45%),
+		linear-gradient(180deg, #f0f5f2 0%, #c8e0d4 30%, #2a6850 70%, #0a1210 100%);
+	transition: color 0.3s ease;
+}
+.theme-dark .obsidian-dashboard-root[data-theme="jade"] {
+	background:
+		radial-gradient(ellipse at 30% 15%, rgba(40, 120, 80, 0.12) 0%, transparent 50%),
+		radial-gradient(ellipse at 70% 10%, rgba(30, 100, 70, 0.08) 0%, transparent 45%),
+		radial-gradient(ellipse at 50% 80%, rgba(4, 8, 6, 0.6) 0%, transparent 50%),
+		linear-gradient(180deg, #101a16 0%, #0a1210 40%, #060e0a 100%);
+	}
+

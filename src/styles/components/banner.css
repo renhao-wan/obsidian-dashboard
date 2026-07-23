@@ -1,0 +1,179 @@
+/* ===== Banner ===== */
+.dashboard-banner {
+	position: relative;
+	height: 120px;
+	background-size: cover;
+	background-position: center;
+	border-radius: var(--db-radius-lg);
+	overflow: hidden;
+	flex-shrink: 0;
+	background-color: var(--db-bg-banner);
+	margin: 0 16px 4px 16px;
+}
+
+.dashboard-banner-overlay {
+	position: absolute;
+	inset: 0;
+	background: none;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 20px 48px;
+}
+
+.dashboard-banner-content {
+	text-align: center;
+	position: relative;
+}
+
+.dashboard-banner-quote {
+	font-size: 1.2em;
+	font-style: italic;
+	color: var(--db-text-inverse);
+	margin: 0 0 8px 0;
+	line-height: 1.4;
+	border: none;
+	padding: 0;
+	text-shadow:
+		0 1px 3px rgba(0, 0, 0, 0.4),
+		0 0 12px rgba(0, 0, 0, 0.15);
+}
+
+.dashboard-banner-author {
+	font-size: 0.8em;
+	color: var(--db-text-inverse-muted);
+	font-style: normal;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.dashboard-banner-quote--fading,
+.dashboard-banner-author--fading {
+	opacity: 0;
+	transition: opacity 0.4s ease;
+}
+
+.dashboard-banner-quote,
+.dashboard-banner-author {
+	transition: opacity 0.4s ease;
+}
+
+.dashboard-banner--fading {
+	opacity: 0;
+	transition: opacity 0.6s ease;
+}
+
+.dashboard-banner {
+	transition: opacity 0.6s ease, height 0.45s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+.dashboard-banner-edit-btn {
+	position: absolute;
+	bottom: 8px;
+	right: 10px;
+	background: none !important;
+	border: none !important;
+	box-shadow: none !important;
+	color: rgba(255, 255, 255, 0.4);
+	padding: 2px;
+	font-size: 0.55em;
+	cursor: pointer;
+	opacity: 0;
+	transition: opacity 0.2s ease, color 0.2s ease;
+	display: flex;
+	align-items: center;
+	line-height: 1;
+	outline: none;
+}
+
+.dashboard-banner:hover .dashboard-banner-edit-btn {
+	opacity: 1;
+	color: rgba(255, 255, 255, 0.8);
+}
+
+.dashboard-banner-edit-btn:hover,
+.dashboard-banner-edit-btn:active {
+	background: none !important;
+	border: none !important;
+	box-shadow: none !important;
+	color: #ffffff !important;
+}
+
+/* --- Banner bookmark toggle --- */
+.dashboard-banner-pin-btn {
+	position: absolute;
+	top: 8px;
+	right: 10px;
+	left: auto;
+	z-index: 10;
+	background: none !important;
+	border: none !important;
+	box-shadow: none !important;
+	color: rgba(255, 255, 255, 0.4);
+	padding: 4px;
+	cursor: pointer;
+	opacity: 0;
+	transition: opacity 0.2s ease, color 0.2s ease, transform 0.2s ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	outline: none;
+}
+
+.dashboard-banner:hover .dashboard-banner-pin-btn {
+	opacity: 1;
+	color: rgba(255, 255, 255, 0.8);
+}
+
+.dashboard-banner-pin-btn:hover,
+.dashboard-banner-pin-btn:active {
+	background: none !important;
+	border: none !important;
+	box-shadow: none !important;
+	color: #ffffff !important;
+	transform: scale(1.15);
+}
+
+/* --- Banner collapsed state (desktop only) --- */
+@media (min-width: 641px) {
+	.dashboard-banner--collapsed {
+		height: 4px !important;
+		min-height: 0 !important;
+		overflow: visible !important;
+		background-image: none !important;
+		background-color: transparent !important;
+	}
+
+	.dashboard-banner--collapsed > *:not(.dashboard-banner-pin-btn) {
+		opacity: 0;
+		pointer-events: none;
+		visibility: hidden;
+		transition: opacity 0.15s ease;
+	}
+
+	/* Bookmark tab: anchors at top edge, extends downward */
+	.dashboard-banner--collapsed .dashboard-banner-pin-btn {
+		top: 0;
+		left: auto;
+		right: 16px;
+		width: 28px;
+		height: 30px;
+		padding: 0;
+		opacity: 1;
+		background: var(--db-bg-card) !important;
+		border: none !important;
+		border-radius: 4px 4px 6px 6px;
+		color: var(--db-text-faint);
+		/* stylelint-disable-next-line */
+		clip-path: polygon(0% 0%, 100% 0%, 100% 82%, 55% 100%, 45% 100%, 0% 82%);
+		transition: opacity 0.2s ease, color 0.2s ease, transform 0.15s ease;
+	}
+
+	.dashboard-banner--collapsed .dashboard-banner-pin-btn:hover {
+		opacity: 1;
+		color: var(--db-text);
+		background: var(--db-bg-hover) !important;
+		transform: scaleY(1.06);
+	}
+}
+

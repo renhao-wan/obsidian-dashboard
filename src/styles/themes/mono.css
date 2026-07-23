@@ -1,0 +1,131 @@
+	/* ----- 17. MONO (墨白) — Pure black/white minimal, system-adaptive ----- */
+	.obsidian-dashboard-root[data-theme="mono"] {
+		--db-bg: #ffffff;
+		--db-bg-section: transparent;
+		--db-bg-card: #ffffff;
+		--db-bg-card-hover: #f5f5f5;
+		--db-bg-sidebar: transparent;
+		--db-bg-input: #f7f7f7;
+		--db-bg-btn: #f7f7f7;
+		--db-bg-btn-hover: #f0f0f0;
+		--db-bg-banner: #f7f7f7;
+		--db-bg-overlay: linear-gradient(135deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 100%);
+		--db-bg-hover: #f5f5f5;
+		--db-bg-hover-strong: #eeeeee;
+		--db-bg-add-section: #fafafa;
+		--db-bg-drop-indicator: rgba(0, 0, 0, 0.06);
+
+		--db-border: #e2e2e2;
+		--db-border-card: #e2e2e2;
+		--db-border-section: transparent;
+		--db-border-sidebar: transparent;
+		--db-border-input: #e2e2e2;
+		--db-border-input-focus: #0a0a0a;
+		--db-border-btn: #e2e2e2;
+		--db-border-add-section: #e2e2e2;
+
+		--db-text: #0a0a0a;
+		--db-text-muted: #525252;
+		--db-text-faint: #a3a3a3;
+		--db-text-inverse: #ffffff;
+		--db-text-inverse-muted: rgba(255, 255, 255, 0.6);
+
+		--db-accent: #0a0a0a;
+		--db-accent-light: #404040;
+		--db-danger: #dc2626;
+
+		--db-shadow-card: none;
+		--db-shadow-card-hover: none;
+		--db-backdrop-blur: none;
+
+		--db-radius-sm: 4px;
+		--db-radius-md: 8px;
+		--db-radius-lg: 12px;
+
+		--db-font: 'Inter', 'DM Sans', 'Noto Sans SC', var(--font-interface);
+		--db-progress-from: #0a0a0a;
+		--db-progress-to: #a3a3a3;
+		--db-checkbox: #0a0a0a;
+		--db-quote-border: #0a0a0a;
+		--db-link: #0a0a0a;
+	}
+	.theme-dark .obsidian-dashboard-root[data-theme="mono"] {
+		--db-bg: #0a0a0a;
+		--db-bg-section: transparent;
+		--db-bg-card: #141414;
+		--db-bg-card-hover: #1c1c1c;
+		--db-bg-sidebar: transparent;
+		--db-bg-input: #161616;
+		--db-bg-btn: #161616;
+		--db-bg-btn-hover: #1f1f1f;
+		--db-bg-banner: #141414;
+		--db-bg-overlay: linear-gradient(135deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.35) 100%);
+		--db-bg-hover: #1c1c1c;
+		--db-bg-hover-strong: #262626;
+		--db-bg-add-section: #141414;
+		--db-bg-drop-indicator: rgba(255, 255, 255, 0.08);
+
+		--db-border: #2a2a2a;
+		--db-border-card: #2a2a2a;
+		--db-border-section: transparent;
+		--db-border-sidebar: transparent;
+		--db-border-input: #2a2a2a;
+		--db-border-input-focus: #fafafa;
+		--db-border-btn: #2a2a2a;
+		--db-border-add-section: #2a2a2a;
+
+		--db-text: #fafafa;
+		--db-text-muted: #a3a3a3;
+		--db-text-faint: #525252;
+		--db-text-inverse: #0a0a0a;
+		--db-text-inverse-muted: rgba(0, 0, 0, 0.5);
+
+		--db-accent: #fafafa;
+		--db-accent-light: #d4d4d4;
+		--db-danger: #ef4444;
+
+		--db-shadow-card: none;
+		--db-shadow-card-hover: none;
+
+		--db-progress-from: #fafafa;
+		--db-progress-to: #525252;
+		--db-checkbox: #fafafa;
+		--db-quote-border: #fafafa;
+		--db-link: #fafafa;
+	}
+	/* Mono: flat solid background, no gradient — same in light & dark */
+	.obsidian-dashboard-root[data-theme="mono"] {
+		background: var(--db-bg);
+		transition: color 0.3s ease;
+	}
+
+	/* ===== Shared: transparent sections for jade, carbon, onyx, mono ===== */
+.obsidian-dashboard-root[data-theme="jade"] .dashboard-section-row,
+.obsidian-dashboard-root[data-theme="carbon"] .dashboard-section-row,
+.obsidian-dashboard-root[data-theme="onyx"] .dashboard-section-row,
+.obsidian-dashboard-root[data-theme="mono"] .dashboard-section-row {
+	background: transparent;
+	border: none;
+	backdrop-filter: none;
+	-webkit-backdrop-filter: none;
+	padding: 6px;
+}
+
+.obsidian-dashboard-root[data-theme="jade"] .dashboard-section,
+.obsidian-dashboard-root[data-theme="carbon"] .dashboard-section,
+.obsidian-dashboard-root[data-theme="onyx"] .dashboard-section,
+.obsidian-dashboard-root[data-theme="mono"] .dashboard-section {
+	background: transparent;
+	border: none;
+	backdrop-filter: none;
+	-webkit-backdrop-filter: none;
+}
+
+/* Tighter kanban gap for jade, carbon */
+.obsidian-dashboard-root[data-theme="jade"] .dashboard-kanban,
+.obsidian-dashboard-root[data-theme="carbon"] .dashboard-kanban,
+.obsidian-dashboard-root[data-theme="onyx"] .dashboard-kanban,
+.obsidian-dashboard-root[data-theme="mono"] .dashboard-kanban {
+	gap: 8px;
+}
+

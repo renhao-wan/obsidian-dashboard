@@ -1,0 +1,1629 @@
+/* ===================================================================
+   MONO (墨白) overrides — solid, no glass/gradient/shadow
+   =================================================================== */
+/* Mono: banner — solid dark frame + flat scrim, white quote (both modes) */
+[data-theme="mono"] .dashboard-banner {
+	border-radius: 12px;
+	border: 1px solid var(--db-border-card);
+}
+[data-theme="mono"] .dashboard-banner-overlay {
+	background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.60) 100%);
+}
+[data-theme="mono"] .dashboard-banner-quote {
+	color: #ffffff;
+	text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+}
+[data-theme="mono"] .dashboard-banner-author {
+	color: rgba(255, 255, 255, 0.82);
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+/* Mono: modal — flat, line-bordered, no blur */
+[data-theme="mono"] .dashboard-modal {
+	border-radius: 8px;
+	border: 1px solid var(--db-border-card);
+	background: var(--db-bg-card) !important;
+	backdrop-filter: none;
+	-webkit-backdrop-filter: none;
+}
+[data-theme="mono"] .dashboard-modal h2 {
+	color: var(--db-text);
+	border-bottom: 1px solid var(--db-border);
+	font-weight: 700;
+	letter-spacing: 0.01em;
+}
+[data-theme="mono"] .dashboard-modal-form label {
+	color: var(--db-text-muted);
+}
+[data-theme="mono"] .dashboard-modal-input {
+	background: var(--db-bg-input);
+	border: 1px solid var(--db-border-input);
+	color: var(--db-text);
+	border-radius: 6px;
+}
+[data-theme="mono"] .dashboard-modal-input:focus {
+	border-color: var(--db-accent);
+	box-shadow: none;
+}
+[data-theme="mono"] .dashboard-modal-actions button {
+	border-radius: 6px;
+	border: 1px solid var(--db-border-btn);
+}
+[data-theme="mono"] .dashboard-modal-actions .mod-cta {
+	background: var(--db-accent) !important;
+	color: var(--db-text-inverse) !important;
+	border: 1px solid var(--db-accent) !important;
+	font-weight: 600;
+}
+[data-theme="mono"] .dashboard-modal-actions .mod-cta:hover {
+	opacity: 0.85;
+}
+[data-theme="mono"] .dashboard-add-section {
+	border-radius: 6px;
+	border: 1px solid var(--db-border-add-section);
+}
+[data-theme="mono"] .dashboard-add-section:hover {
+	border-color: var(--db-accent);
+	box-shadow: none;
+}
+
+/* Mono: pomodoro Start/Stop — solid accent pill with inverse text */
+[data-theme="mono"] .dashboard-sidebar-pomodoro-main-btn {
+	background: var(--db-accent) !important;
+	background-color: var(--db-accent) !important;
+	color: var(--db-text-inverse) !important;
+	border: none !important;
+	box-shadow: none !important;
+}
+[data-theme="mono"] .dashboard-sidebar-pomodoro-main-btn:hover {
+	opacity: 0.8;
+}
+[data-theme="mono"] .dashboard-sidebar-pomodoro-main-btn--running {
+	background: transparent !important;
+	background-color: transparent !important;
+	color: var(--db-accent) !important;
+	border: 1px solid var(--db-accent) !important;
+}
+
+/* Mono: banner modal Add-Quote / Add-Image — flat chip, monochrome */
+[data-theme="mono"] .dashboard-modal-quote-add,
+[data-theme="mono"] .dashboard-modal-image-add {
+	background: var(--db-bg-btn) !important;
+	border: 1px solid var(--db-border-btn) !important;
+	color: var(--db-text) !important;
+}
+[data-theme="mono"] .dashboard-modal-quote-add:hover,
+[data-theme="mono"] .dashboard-modal-image-add:hover {
+	background: var(--db-bg-btn-hover) !important;
+	border-color: var(--db-accent) !important;
+	color: var(--db-text) !important;
+}
+
+/* =================================================================
+   MOBILE LAYOUT (phones only, <=640px)
+   Tablets (>=641px) keep the desktop layout unchanged.
+   ================================================================= */
+/* Hide memo color picker on Obsidian mobile app (color input doesn't work) */
+.is-mobile .dashboard-card-btn--color {
+	display: none;
+}
+
+@media (max-width: 640px) {
+	/* Disable per-element glass backdrop blur on mobile. blur(24px) on every
+	   card/section/row is the single biggest GPU/heat driver on phones; the
+	   variable cascades to all .dashboard-card / .dashboard-section / etc. */
+	.obsidian-dashboard-root[data-theme] {
+		--db-backdrop-blur: none;
+	}
+
+	/* Hide sidebar widgets on mobile */
+	.dashboard-sidebar-widgets {
+		display: none !important;
+	}
+
+	/* Root: allow vertical scrolling */
+	.obsidian-dashboard-root {
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
+
+	/* Banner: compact */
+	.dashboard-banner {
+		height: 90px;
+		margin: 8px;
+		border-radius: var(--db-radius-md);
+	}
+
+	.dashboard-banner-overlay {
+		padding: 12px 20px;
+	}
+
+	.dashboard-banner-quote {
+		font-size: 0.95em;
+		margin: 0 0 4px 0;
+	}
+
+	.dashboard-banner-quote-decor {
+		font-size: 2em;
+		top: -12px;
+		left: -14px;
+	}
+
+	.dashboard-banner-author {
+		font-size: 0.7em;
+	}
+
+	/* Main: stack vertically, allow scroll */
+	.dashboard-main {
+		flex-direction: column;
+		gap: 8px;
+		padding: 8px;
+		overflow: visible;
+	}
+
+	/* Sidebar: hidden on phone */
+	.dashboard-sidebar {
+		display: none;
+	}
+
+	/* Mobile action buttons on banner */
+	.dashboard-mobile-actions {
+		display: flex;
+		gap: 8px;
+		position: absolute;
+		bottom: 4px;
+		left: 10px;
+		z-index: 1;
+	}
+
+	.dashboard-mobile-action-btn {
+		background: none !important;
+		border: none !important;
+		box-shadow: none !important;
+		color: rgba(255, 255, 255, 0.35);
+		padding: 2px;
+		cursor: pointer;
+		transition: opacity 0.2s ease;
+		outline: none;
+	}
+
+	.dashboard-mobile-action-btn:active {
+		color: rgba(255, 255, 255, 0.7);
+	}
+
+		/* Mobile widget bar: sits below the banner */
+		.dashboard-mobile-widget-bar {
+			display: block;
+			position: relative;
+			z-index: 5;
+			margin-top: 0;
+			margin-bottom: 0;
+			padding: 0 16px;
+		}
+
+		/* Collapsed strip: thin interactive bar below the banner */
+		.dashboard-mobile-widget-strip {
+			height: 8px;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: background 0.2s ease;
+		}
+
+		.dashboard-mobile-widget-strip-hint {
+			width: 32px;
+			height: 3px;
+			border-radius: 1.5px;
+			background: var(--db-border-card);
+			opacity: 0.5;
+			transition: opacity 0.2s ease, width 0.2s ease, background 0.2s ease;
+			pointer-events: none;
+		}
+
+		.dashboard-mobile-widget-strip:active .dashboard-mobile-widget-strip-hint,
+		.dashboard-mobile-widget-strip--active .dashboard-mobile-widget-strip-hint {
+			opacity: 0.9;
+			width: 40px;
+			background: var(--db-text-faint);
+		}
+
+		/* Tab row: hidden by default, drops down when strip is tapped */
+		.dashboard-mobile-widget-tabs {
+			display: flex;
+			gap: 6px;
+			justify-content: center;
+			max-height: 0;
+			overflow: hidden;
+			opacity: 0;
+			transition: max-height 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+			            opacity 0.2s ease,
+			            padding 0.25s ease;
+			padding: 0;
+		}
+
+		.dashboard-mobile-widget-tabs--open {
+			max-height: 50px;
+			opacity: 1;
+			padding: 4px 0 2px 0;
+		}
+
+		.dashboard-mobile-widget-btn {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 52px;
+			height: 28px;
+			background: var(--db-bg-card) !important;
+			border: 1px solid var(--db-border-card) !important;
+			border-radius: var(--db-radius-sm);
+			padding: 0;
+			color: var(--db-text-faint);
+			cursor: pointer;
+			transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, transform 0.2s ease;
+			outline: none;
+			box-shadow: none;
+			line-height: 1;
+		}
+
+		.dashboard-mobile-widget-btn svg {
+			width: 16px;
+			height: 16px;
+		}
+
+		.dashboard-mobile-widget-btn.active {
+			color: var(--db-text);
+			background: var(--db-bg-card-hover) !important;
+			border-color: var(--db-border) !important;
+			height: 30px;
+		}
+
+		/* Expandable widget panel */
+		.dashboard-mobile-widget-panel {
+			max-height: 0;
+			overflow: hidden;
+			transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+		}
+
+		.dashboard-mobile-widget-panel--open {
+			max-height: 400px;
+			overflow-y: auto;
+			margin-top: 4px;
+			-webkit-overflow-scrolling: touch;
+		}
+
+		.dashboard-mobile-widget-panel .dashboard-sidebar-widget {
+			background: var(--db-bg-card);
+			border: 1px solid var(--db-border-card);
+			border-radius: var(--db-radius-md);
+			backdrop-filter: var(--db-backdrop-blur);
+			-webkit-backdrop-filter: var(--db-backdrop-blur);
+		}
+
+		/* Hide banner edit btn on mobile by default */
+	.dashboard-banner .dashboard-banner-edit-btn {
+		opacity: 0 !important;
+		pointer-events: none;
+	}
+
+	/* Show edit btn only when hovering/tapping right half of banner on mobile */
+	.dashboard-banner-overlay:hover .dashboard-banner-edit-btn {
+		opacity: 0 !important;
+		pointer-events: none;
+	}
+
+	.dashboard-banner-edit-btn--mobile-visible {
+		opacity: 1 !important;
+		pointer-events: auto !important;
+		color: rgba(255, 255, 255, 0.8) !important;
+	}
+
+	/* Banner collapse: never on mobile */
+	.dashboard-banner-pin-btn {
+		display: none !important;
+	}
+
+	.dashboard-banner--collapsed {
+		height: 90px !important;
+		min-height: 90px !important;
+		overflow: hidden !important;
+		background-image: revert !important;
+		background-color: revert !important;
+	}
+
+	.dashboard-banner--collapsed > * {
+		opacity: revert !important;
+		pointer-events: revert !important;
+		visibility: revert !important;
+	}
+
+	/* Mobile drawer overlay */
+	.dashboard-mobile-drawer {
+		position: fixed;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 100;
+		display: flex;
+		pointer-events: auto;
+	}
+
+	.dashboard-mobile-drawer-content {
+		width: 80%;
+		height: 100%;
+		background: var(--db-bg);
+		border-right: 1px solid var(--db-border);
+		border-top: 1px solid var(--db-border);
+		border-top-right-radius: 12px;
+		overflow-y: auto;
+		padding: 16px;
+		transform: translateX(-100%);
+		transition: transform 0.25s ease-out;
+	}
+
+	.dashboard-mobile-drawer-content--open {
+		transform: translateX(0);
+	}
+
+	.dashboard-mobile-drawer-title {
+		font-size: 0.85em;
+		font-weight: 700;
+		margin: 0 0 12px 0;
+		color: var(--db-text);
+	}
+
+		/* Mobile drawer: quick actions fill available space */
+		.dashboard-mobile-drawer-content .dashboard-quick-actions {
+			height: auto;
+			flex: 1;
+		}
+
+		/* Mobile drawer: style add button as dashed-border row */
+		.dashboard-mobile-drawer-content .dashboard-qa-header {
+			border-bottom: none;
+			margin: 0 0 6px 0;
+			justify-content: center;
+		}
+
+		.dashboard-mobile-drawer-content .dashboard-qa-header .dashboard-section-title {
+			display: none;
+		}
+
+		.dashboard-mobile-drawer-content .dashboard-qa-header .dashboard-qa-btn-group {
+			width: 100%;
+		}
+
+		.dashboard-mobile-drawer-content .dashboard-qa-header .dashboard-qa-add-btn {
+			opacity: 1;
+			width: 100%;
+			padding: 10px 0;
+			font-size: 0.85em;
+			border: 1px dashed var(--db-border) !important;
+			border-radius: 8px;
+			justify-content: center;
+			color: var(--db-text-faint);
+		}
+
+		.dashboard-mobile-drawer-content .dashboard-qa-header .dashboard-qa-add-btn::after {
+			content: 'Add action';
+			margin-left: 6px;
+		}
+
+		.dashboard-mobile-drawer-content .dashboard-qa-header .dashboard-qa-add-btn:lang(zh)::after {
+			content: '添加操作';
+		}
+
+		.dashboard-mobile-drawer-content .dashboard-qa-header .dashboard-qa-add-btn:hover,
+		.dashboard-mobile-drawer-content .dashboard-qa-header .dashboard-qa-add-btn:active {
+			background: var(--db-bg-secondary) !important;
+			color: var(--db-text) !important;
+		}
+
+		.dashboard-mobile-drawer-content > .dashboard-recent > .dashboard-section-title {
+			display: none;
+		}
+
+		.dashboard-mobile-drawer-content .dashboard-qa-list {
+			max-height: none;
+			overflow-y: auto;
+			-webkit-overflow-scrolling: touch;
+		}
+
+	.dashboard-mobile-drawer-backdrop {
+		width: 20%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.2);
+	}
+
+	/* Kanban: full width, allow scroll */
+	.dashboard-kanban-wrapper {
+		overflow: visible;
+		flex: none;
+		width: 100%;
+	}
+
+	.dashboard-kanban {
+		overflow: visible;
+		gap: 8px;
+	}
+
+	/* Section rows: fixed height at 50vh (Memo keeps 30vh via own rule) */
+	.dashboard-section-row {
+		height: 50vh;
+		flex-shrink: 0;
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+		padding: 10px;
+	}
+
+	.dashboard-section-header {
+		flex-shrink: 0;
+		margin-bottom: 8px;
+	}
+
+	/* All section cards: horizontal scroll */
+	.dashboard-section-cards {
+		flex-wrap: nowrap !important;
+		overflow-x: auto !important;
+		overflow-y: hidden !important;
+		flex: 1;
+		min-height: 0;
+		gap: 10px;
+		-webkit-overflow-scrolling: touch;
+		scrollbar-width: none;
+	}
+
+	.dashboard-section-cards::-webkit-scrollbar {
+		display: none;
+	}
+
+	/* All cards: fixed width for horizontal scroll */
+	.dashboard-section-cards > .dashboard-card {
+		flex: 0 0 70vw !important;
+		min-width: 70vw !important;
+		max-width: 70vw !important;
+		overflow-y: auto;
+		scrollbar-width: thin;
+	}
+
+	/* Memo section: override fixed height — use same 30vh */
+	.dashboard-section-row[data-section-type="memo"] {
+		height: 30vh;
+		flex-shrink: 0;
+	}
+
+	.dashboard-section-row[data-section-type="memo"] .dashboard-section-cards > .dashboard-card {
+		flex: 0 0 70vw !important;
+		min-width: 70vw !important;
+		max-width: 70vw !important;
+	}
+
+	/* Todo section cards: match mobile width */
+	.dashboard-section-row[data-section-type="todo"] .dashboard-section-cards > .dashboard-card {
+		flex: 0 0 60vw !important;
+		min-width: 60vw !important;
+		max-width: 60vw !important;
+	}
+
+	/* Cards: compact */
+	.dashboard-card {
+		padding: 12px;
+	}
+
+	.dashboard-card:hover {
+		transform: none;
+	}
+
+	/* Card actions: hidden by default on mobile, shown on tap */
+	.dashboard-card-actions {
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.15s ease;
+	}
+
+	.dashboard-card-header--touched .dashboard-card-actions {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	/* Project cover: shorter */
+	.dashboard-project-cover {
+		height: 70px;
+		margin: -12px -12px 8px -12px;
+		border-radius: var(--db-radius-md) var(--db-radius-md) 0 0;
+	}
+
+	/* Add section: compact */
+	.dashboard-add-section {
+		padding: 10px;
+		flex-shrink: 0;
+	}
+
+	/* Memo textarea: compact */
+	.dashboard-memo-textarea {
+		font-size: 0.88em;
+		padding: 8px;
+	}
+
+	/* Task items: compact */
+	.dashboard-task-item {
+		padding: 2px 8px;
+		gap: 4px;
+	}
+
+	.dashboard-task-delete {
+		opacity: 1;
+	}
+
+	/* Task input: compact */
+	.dashboard-task-input {
+		font-size: 0.85em;
+		padding: 3px 0;
+	}
+
+	/* Project doc items: compact */
+	.dashboard-project-doc-item {
+		padding: 2px 8px;
+	}
+
+	.dashboard-project-doc-remove {
+		opacity: 1;
+	}
+
+	/* Section add button: always visible */
+	.dashboard-section-add-btn {
+		opacity: 1;
+	}
+
+	/* Modal: full width on mobile */
+	.dashboard-modal {
+		border-radius: var(--db-radius-md);
+	}
+
+	/* Quick link remove: always visible */
+	.dashboard-qa-remove {
+		opacity: 1;
+	}
+
+	/* Quick action buttons: compact but touch-friendly */
+	.dashboard-qa-item {
+		padding: 6px 12px;
+	}
+
+	/* Hide memo resize handle on mobile */
+	.dashboard-card-resize-handle {
+		display: none;
+	}
+
+	/* Hide section reorder grip and resize handle on mobile (desktop only) */
+	.dashboard-section-grip,
+	.dashboard-section-resize-handle {
+		display: none;
+	}
+
+	/* Hide memo color picker on mobile (color input doesn't work on mobile) */
+	.dashboard-card-btn--color {
+		display: none;
+	}
+
+	.dashboard-section-row[data-section-type="memo"] .dashboard-card:hover {
+		overflow: hidden;
+	}
+}
+
+/* ===== Task Reminder ===== */
+.dashboard-task-reminder-btn {
+	background: none !important;
+	border: none !important;
+	box-shadow: none !important;
+	color: var(--db-text-muted);
+	cursor: pointer;
+	padding: 0 2px;
+	min-height: 0;
+	line-height: 1;
+	opacity: 0;
+	transition: opacity 0.15s ease, color 0.15s ease;
+	display: flex;
+	align-items: center;
+	flex-shrink: 0;
+}
+
+.dashboard-task-reminder-btn svg {
+	width: 14px;
+	height: 14px;
+}
+
+.dashboard-task-item:hover .dashboard-task-reminder-btn {
+	opacity: 1;
+}
+
+.dashboard-task-reminder-btn:hover {
+	color: var(--db-text) !important;
+}
+
+.dashboard-task-reminder-btn--active {
+	opacity: 0.6;
+	color: var(--db-accent) !important;
+}
+
+.dashboard-task-item:hover .dashboard-task-reminder-btn--active {
+	opacity: 0.8;
+}
+
+.dashboard-task-reminder-btn--overdue {
+	opacity: 1 !important;
+	color: #ef4444 !important;
+	animation: reminder-pulse 2s ease-in-out infinite;
+}
+
+@keyframes reminder-pulse {
+	0%, 100% { opacity: 1; }
+	50% { opacity: 0.5; }
+}
+
+.dashboard-task-reminder-popup {
+	background: var(--db-bg, #1e1e2e);
+	border: 1px solid var(--db-border-card, rgba(255, 255, 255, 0.10));
+	border-radius: var(--db-radius-md, 10px);
+	padding: 12px;
+	z-index: 10000;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	min-width: 240px;
+	font-size: 13px;
+	color: var(--db-text, var(--text-normal));
+}
+
+/* Countdown calendar popup (outside obsidian-dashboard-root, use Obsidian theme vars) */
+.dashboard-countdown-calendar-popup {
+	background: var(--background-primary);
+	color: var(--text-normal);
+	border-color: var(--background-modifier-border);
+}
+
+.dashboard-countdown-calendar-popup .dashboard-task-reminder-calendar-day {
+	color: var(--text-normal);
+}
+
+.dashboard-countdown-calendar-popup .dashboard-task-reminder-calendar-day--today {
+	color: var(--interactive-accent);
+}
+
+.dashboard-countdown-calendar-popup .dashboard-task-reminder-calendar-day--selected {
+	background: var(--interactive-accent) !important;
+	color: var(--text-on-accent) !important;
+}
+
+.dashboard-countdown-calendar-popup .dashboard-task-reminder-calendar-day--other-month {
+	color: var(--text-faint);
+}
+
+.dashboard-countdown-calendar-popup .dashboard-task-reminder-calendar-nav span {
+	color: var(--text-normal);
+}
+
+.dashboard-countdown-calendar-popup .dashboard-task-reminder-calendar-nav button {
+	color: var(--text-muted);
+}
+
+.dashboard-countdown-calendar-popup .dashboard-task-reminder-calendar-nav button:hover {
+	color: var(--text-normal);
+	background: var(--background-modifier-hover);
+}
+
+.dashboard-countdown-calendar-popup .dashboard-task-reminder-popup-btns button {
+	color: var(--text-normal);
+	background: var(--background-secondary);
+	border-color: var(--background-modifier-border);
+}
+
+.dashboard-countdown-calendar-popup .dashboard-task-reminder-popup-btns button:hover {
+	background: var(--background-modifier-hover);
+}
+
+.dashboard-countdown-calendar-popup .dashboard-task-reminder-popup-btns button.mod-cta {
+	background: var(--interactive-accent);
+	color: var(--text-on-accent);
+	border-color: var(--interactive-accent);
+}
+
+/* Calendar popup on body (outside theme scope) */
+.dashboard-library-calendar-popup,
+.dashboard-task-reminder-popup.dashboard-library-calendar-popup {
+	background: var(--db-bg-card, rgba(255, 255, 255, 0.06));
+	color: var(--db-text, var(--text-normal));
+	border-color: var(--db-border-card, rgba(255, 255, 255, 0.1));
+}
+
+.dashboard-library-calendar-popup .dashboard-task-reminder-calendar-day {
+	color: var(--db-text, var(--text-normal)) !important;
+}
+
+.dashboard-library-calendar-popup .dashboard-task-reminder-calendar-day--today {
+	color: var(--db-accent, var(--interactive-accent));
+}
+
+.dashboard-library-calendar-popup .dashboard-task-reminder-calendar-day--selected {
+	background: var(--db-accent, var(--interactive-accent)) !important;
+	color: #fff !important;
+}
+
+.dashboard-library-calendar-popup .dashboard-task-reminder-calendar-day--other-month {
+	color: var(--db-text-muted, var(--text-faint));
+}
+
+.dashboard-library-calendar-popup .dashboard-task-reminder-calendar-nav span {
+	color: var(--db-text, var(--text-normal)) !important;
+}
+
+.dashboard-library-calendar-popup .dashboard-task-reminder-calendar-nav button {
+	color: var(--db-text-muted, var(--text-muted)) !important;
+}
+
+.dashboard-library-calendar-popup .dashboard-task-reminder-calendar-nav button:hover {
+	color: var(--db-text, var(--text-normal));
+	background: var(--db-bg-card-hover, rgba(255, 255, 255, 0.08));
+}
+
+.dashboard-library-calendar-popup .dashboard-task-reminder-popup-btns button {
+	color: var(--db-text, var(--text-normal)) !important;
+}
+
+.dashboard-library-calendar-popup .dashboard-task-reminder-popup-btns button.mod-cta {
+	color: #fff;
+}
+
+.dashboard-library-calendar-popup .dashboard-task-reminder-time {
+	color: var(--db-text, var(--text-normal));
+}
+
+.dashboard-library-calendar-popup .dashboard-task-reminder-time select {
+	background: var(--db-bg-input, var(--db-bg-card));
+	color: var(--db-text, var(--text-normal));
+	border-color: var(--db-border-input, var(--db-border-card));
+}
+
+.dashboard-task-reminder-calendar-nav {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 4px;
+}
+
+.dashboard-task-reminder-calendar-nav span {
+	font-size: 12px;
+	font-weight: 500;
+}
+
+.dashboard-task-reminder-calendar-nav button {
+	background: none;
+	border: none;
+	cursor: pointer;
+	color: var(--db-text-muted);
+	padding: 2px 6px;
+	border-radius: 4px;
+	font-size: 14px;
+}
+
+.dashboard-task-reminder-calendar-nav button:hover {
+	color: var(--db-text);
+	background: var(--db-bg-card-hover);
+}
+
+.dashboard-task-reminder-calendar {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	gap: 2px;
+	text-align: center;
+}
+
+.dashboard-task-reminder-calendar-header {
+	font-size: 11px;
+	color: var(--db-text-muted, var(--text-faint));
+	padding: 4px 0;
+	font-weight: 500;
+}
+
+.dashboard-task-reminder-calendar-day {
+	font-size: 12px;
+	padding: 5px 2px;
+	border-radius: 4px;
+	cursor: pointer;
+	border: none;
+	background: none;
+	color: var(--db-text);
+	transition: background 0.1s;
+}
+
+.dashboard-task-reminder-calendar-day:hover {
+	background: var(--db-bg-card-hover);
+}
+
+.dashboard-task-reminder-calendar-day--today {
+	font-weight: 700;
+	color: var(--db-accent);
+}
+
+.dashboard-task-reminder-calendar-day--selected {
+	background: var(--db-accent) !important;
+	color: white !important;
+}
+
+.dashboard-task-reminder-calendar-day--other-month {
+	opacity: 0.3;
+}
+
+.dashboard-task-reminder-time {
+	display: flex;
+	gap: 4px;
+	align-items: center;
+	font-size: 12px;
+	margin-top: 4px;
+}
+
+.dashboard-task-reminder-time select {
+	padding: 4px 6px;
+	border: 1px solid var(--db-border-card);
+	border-radius: 4px;
+	background: var(--db-bg-card);
+	color: var(--db-text);
+	font-size: 12px;
+}
+
+.dashboard-task-reminder-popup-btns {
+	display: flex;
+	gap: 6px;
+	margin-top: 4px;
+}
+
+.dashboard-task-reminder-popup-btns button {
+	padding: 5px 12px;
+	border-radius: var(--db-radius-sm);
+	border: 1px solid var(--db-border-card);
+	background: var(--db-bg-card);
+	color: var(--db-text);
+	cursor: pointer;
+	font-size: 12px;
+	transition: background 0.1s;
+}
+
+.dashboard-task-reminder-popup-btns button:hover {
+	background: var(--db-bg-card-hover);
+}
+
+.dashboard-task-reminder-popup-btns button.mod-cta {
+	background: var(--db-accent);
+	color: white;
+	border-color: var(--db-accent);
+}
+
+.dashboard-task-reminder-popup-btns button.mod-cta:hover {
+	opacity: 0.9;
+}
+
+.dashboard-task-reminder-popup-btns .dashboard-task-reminder-clear {
+	color: var(--db-text-muted);
+}
+
+/* ===== Dashboard Section (Charts) ===== */
+.dashboard-section-row[data-section-type="dashboard"] .dashboard-section-cards {
+	flex-wrap: wrap;
+	gap: 12px;
+}
+
+.dashboard-section-row[data-section-type="dashboard"] .dashboard-section-cards > .dashboard-card {
+	flex: 0 0 200px;
+	min-width: 180px;
+	max-width: 240px;
+	cursor: default;
+	padding: 16px;
+}
+
+.dashboard-section-row[data-section-type="dashboard"] .dashboard-card:hover {
+	transform: none;
+	box-shadow: var(--db-shadow-card);
+}
+
+/* ===== Confirm Dialog ===== */
+.dashboard-confirm-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 9999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(0, 0, 0, 0.5);
+	backdrop-filter: blur(4px);
+	-webkit-backdrop-filter: blur(4px);
+}
+
+.dashboard-confirm-card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	max-width: 340px;
+	width: 90%;
+	padding: 24px 28px 20px;
+	text-align: center;
+	background: rgba(255, 255, 255, 0.06);
+	backdrop-filter: blur(24px);
+	-webkit-backdrop-filter: blur(24px);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 12px;
+	color: var(--text-normal);
+}
+
+.dashboard-confirm-title {
+	margin: 0 0 8px;
+	font-size: 1.1em;
+	color: var(--text-normal);
+	border-bottom: none;
+}
+
+.dashboard-confirm-message {
+	margin: 0 0 20px;
+	font-size: 0.9em;
+	color: var(--text-normal);
+	opacity: 0.7;
+	line-height: 1.5;
+}
+
+.dashboard-confirm-actions {
+	display: flex;
+	gap: 10px;
+	justify-content: center;
+}
+
+.dashboard-confirm-cancel,
+.dashboard-confirm-delete {
+	padding: 7px 20px;
+	border-radius: 8px;
+	font-size: 0.9em;
+	cursor: pointer;
+	transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.dashboard-confirm-cancel {
+	background: rgba(255, 255, 255, 0.06);
+	border: 1px solid rgba(255, 255, 255, 0.10);
+	color: var(--text-normal);
+}
+
+.dashboard-confirm-cancel:hover {
+	background: rgba(255, 255, 255, 0.10);
+}
+
+.dashboard-confirm-delete {
+	background: #f43f5e;
+	border: 1px solid transparent;
+	color: #fff;
+}
+
+.dashboard-confirm-delete:hover {
+	opacity: 0.85;
+}
+
+/* Widget Type Selector Modal */
+.widget-type-row {
+	display: flex;
+	gap: 12px;
+	padding: 16px 0;
+}
+
+.widget-type-btn {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+	padding: 20px 12px;
+	border-radius: 12px;
+	background: var(--db-bg-hover);
+	border: 2px solid transparent;
+	cursor: pointer;
+	transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.widget-type-btn:hover {
+	border-color: var(--db-accent);
+	transform: translateY(-2px);
+}
+
+.widget-type-btn-icon {
+	color: var(--db-accent);
+	width: 28px;
+	height: 28px;
+}
+
+.widget-type-btn-name {
+	font-weight: 600;
+	font-size: 14px;
+	color: var(--db-text);
+}
+
+.widget-type-btn-desc {
+	font-size: 11px;
+	color: var(--db-text-faint);
+	text-align: center;
+	line-height: 1.4;
+}
+
+/* Weather Card */
+.dashboard-weather {
+	padding: 4px 0;
+}
+
+.dashboard-weather-current {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 12px;
+}
+
+.dashboard-weather-temp-wrap {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.dashboard-weather-temp {
+	font-size: 32px;
+	font-weight: 700;
+	color: var(--db-accent);
+	line-height: 1;
+}
+
+.dashboard-weather-icon {
+	font-size: 28px;
+	line-height: 1;
+}
+
+.dashboard-weather-details {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.dashboard-weather-city {
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--db-text);
+}
+
+.dashboard-weather-desc {
+	font-size: 12px;
+	color: var(--db-text-muted);
+}
+
+.dashboard-weather-wind {
+	font-size: 11px;
+	color: var(--db-text-faint);
+}
+
+.dashboard-weather-forecast {
+	display: flex;
+	gap: 4px;
+	border-top: 1px solid var(--db-border);
+	padding-top: 10px;
+}
+
+.dashboard-weather-day {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 4px;
+	padding: 4px 2px;
+	border-radius: 6px;
+	transition: background 0.15s;
+}
+
+.dashboard-weather-day:hover {
+	background: var(--db-bg-hover);
+}
+
+.dashboard-weather-day-name {
+	font-size: 10px;
+	color: var(--db-text-faint);
+	font-weight: 500;
+}
+
+.dashboard-weather-day-icon {
+	font-size: 16px;
+	line-height: 1;
+}
+
+.dashboard-weather-day-temps {
+	font-size: 10px;
+	color: var(--db-text-muted);
+	white-space: nowrap;
+}
+
+.dashboard-weather-loading {
+	text-align: center;
+	padding: 24px;
+	color: var(--db-text-faint);
+	font-size: 13px;
+}
+
+.dashboard-weather-error {
+	text-align: center;
+	padding: 16px;
+	color: var(--db-text-faint);
+	font-size: 12px;
+}
+
+/* Weather Config Modal */
+.weather-city-results {
+	margin-top: 4px;
+	max-height: 160px;
+	overflow-y: auto;
+	border-radius: 6px;
+}
+
+.weather-city-result-item {
+	padding: 8px 10px;
+	cursor: pointer;
+	font-size: 13px;
+	color: var(--db-text);
+	border-radius: 4px;
+	transition: background 0.15s;
+}
+
+.weather-city-result-item:hover {
+	background: var(--db-bg-hover);
+}
+
+.weather-coords-wrap {
+	margin-top: 8px;
+}
+
+/* Tracker Card */
+.dashboard-tracker {
+	padding: 4px 0;
+}
+
+.dashboard-tracker-sparkline {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 8px;
+}
+
+.dashboard-tracker-stats {
+	display: flex;
+	gap: 8px;
+	justify-content: space-between;
+}
+
+.dashboard-tracker-stat {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 2px;
+}
+
+.dashboard-tracker-stat-label {
+	font-size: 10px;
+	color: var(--db-text-faint);
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+.dashboard-tracker-stat-value {
+	font-size: 14px;
+	font-weight: 600;
+	color: var(--db-accent);
+}
+
+.dashboard-tracker-empty {
+	text-align: center;
+	padding: 20px;
+	color: var(--db-text-faint);
+	font-size: 12px;
+}
+
+/* ===== Chart.js Canvas Base ===== */
+.dashboard-chart-canvas {
+	display: block;
+	width: 100% !important;
+	max-width: 100%;
+}
+
+/* ===== Tracker Widget Size Variants ===== */
+.dashboard-tracker--S .dashboard-tracker-compact {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 2px;
+}
+.dashboard-tracker--S .dashboard-tracker-compact-value {
+	font-size: 1.8em;
+	font-weight: 700;
+	color: var(--db-accent);
+}
+.dashboard-tracker--S .dashboard-tracker-compact-label {
+	font-size: 0.65em;
+	color: var(--db-text-faint);
+}
+.dashboard-tracker-trend {
+	font-size: 1.2em;
+	font-weight: 700;
+}
+.dashboard-tracker-trend--up { color: #22c55e; }
+.dashboard-tracker-trend--down { color: #ef4444; }
+.dashboard-tracker-trend--flat { color: var(--db-text-muted); }
+
+.dashboard-tracker-chart {
+	position: relative;
+}
+.dashboard-tracker--M .dashboard-tracker-chart { height: 50px; }
+.dashboard-tracker--L .dashboard-tracker-chart { height: 80px; }
+
+/* ===== Tracker Heatmap ===== */
+.dashboard-tracker-heatmap {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.dashboard-tracker-heatmap-grid {
+	display: grid;
+	overflow: hidden;
+}
+
+.dashboard-tracker-heatmap-cell {
+	transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.dashboard-tracker-heatmap-cell:hover {
+	transform: scale(1.3);
+	z-index: 1;
+	position: relative;
+}
+
+.dashboard-tracker-heatmap-cell--empty {
+	background-color: var(--db-bg-hover) !important;
+	opacity: 0.3 !important;
+}
+
+.dashboard-tracker-heatmap-labels {
+	display: grid;
+	grid-template-rows: repeat(7, 14px);
+	gap: 2px;
+	margin-right: 4px;
+}
+
+.dashboard-tracker-heatmap-day-label {
+	font-size: 8px;
+	color: var(--db-text-faint);
+	display: flex;
+	align-items: center;
+	line-height: 1;
+}
+
+/* Tracker Config Modal */
+.tracker-key-hint {
+	font-size: 11px;
+	color: var(--text-faint);
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 4px;
+	margin-top: 2px;
+}
+
+.tracker-key-tag {
+	padding: 1px 8px;
+	border-radius: 10px;
+	background: var(--background-modifier-hover);
+	color: var(--text-muted);
+	font-size: 11px;
+	cursor: pointer;
+	border: none;
+	line-height: 1.6;
+	transition: background 0.15s, border-color 0.15s, box-shadow 0.15s, color 0.15s, transform 0.15s;
+}
+
+.tracker-key-tag:hover {
+	background: var(--interactive-accent);
+	color: var(--text-on-accent);
+}
+
+/* Dashboard Section: CSS Grid Layout */
+.dashboard-section-row[data-section-type="dashboard"] .dashboard-section-cards {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-auto-rows: auto;
+	gap: 12px;
+	overflow: visible;
+}
+
+.dashboard-section-row[data-section-type="dashboard"] .dashboard-section-cards > .dashboard-card {
+	min-width: 0;
+	min-height: 0;
+	flex: none;
+}
+
+/* ===== Template Modal ===== */
+.template-modal-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 16px;
+}
+
+.template-modal-header h2 {
+	border-bottom: none;
+	margin-bottom: 0;
+	padding-bottom: 0;
+	flex: 1;
+}
+
+.template-modal-manage-btn,
+.template-modal-back-btn {
+	background: transparent;
+	border: 1px solid var(--db-border-input, rgba(255, 255, 255, 0.08));
+	border-radius: var(--db-radius-sm, 6px);
+	color: var(--db-text-muted);
+	font-size: 0.85em;
+	padding: 4px 12px;
+	cursor: pointer;
+	font-family: var(--db-font, var(--font-interface));
+}
+
+.template-modal-manage-btn:hover,
+.template-modal-back-btn:hover {
+	border-color: var(--db-accent, var(--interactive-accent));
+	color: var(--db-text, var(--text-normal));
+}
+
+.template-modal-empty {
+	text-align: center;
+	padding: 40px 0;
+	color: var(--db-text-muted);
+}
+
+.template-modal-empty button {
+	margin-top: 16px;
+}
+
+.template-modal-list {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	max-height: 400px;
+	overflow-y: auto;
+	scrollbar-width: thin;
+	scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+}
+
+.template-modal-list::-webkit-scrollbar {
+	width: 4px;
+}
+
+.template-modal-list::-webkit-scrollbar-thumb {
+	background: rgba(255, 255, 255, 0.12);
+	border-radius: 4px;
+}
+
+.template-modal-item {
+	padding: 12px 16px;
+	border: 1px solid var(--db-border-input, rgba(255, 255, 255, 0.08));
+	border-radius: var(--db-radius-md, 8px);
+	cursor: pointer;
+	transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.template-modal-item:hover {
+	border-color: var(--db-accent, rgba(255, 255, 255, 0.2));
+	background: var(--db-bg-card-hover, rgba(255, 255, 255, 0.03));
+}
+
+.template-modal-item--selected {
+	border-color: var(--db-accent, var(--interactive-accent));
+	background: var(--db-bg-card-hover, rgba(255, 255, 255, 0.06));
+	box-shadow: 0 0 0 1px var(--db-accent, var(--interactive-accent));
+	/* Selection should feel instant — skip the transition on click */
+	transition: none;
+}
+
+.template-modal-item-name {
+	font-weight: 600;
+	font-size: 0.95em;
+	margin-bottom: 2px;
+}
+
+.template-modal-item-count {
+	font-size: 0.8em;
+	color: var(--db-text-muted);
+}
+
+.template-modal-item-preview {
+	margin-top: 8px;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.template-modal-item-preview-task {
+	font-size: 0.82em;
+	color: var(--db-text-muted);
+	padding-left: 12px;
+	position: relative;
+}
+
+.template-modal-item-preview-task::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 50%;
+	width: 6px;
+	height: 1px;
+	background: var(--db-text-muted);
+}
+
+.template-modal-item-preview-more {
+	font-size: 0.8em;
+	color: var(--db-text-muted);
+	opacity: 0.6;
+	padding-left: 12px;
+}
+
+.template-modal-actions {
+	display: flex;
+	gap: 8px;
+	justify-content: flex-end;
+	margin-top: 16px;
+}
+
+.template-modal-actions button {
+	border-radius: var(--db-radius-sm, 6px);
+	font-family: var(--db-font, var(--font-interface));
+}
+
+.template-modal-manage-list {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	margin-bottom: 16px;
+}
+
+.template-modal-manage-row {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 10px 14px;
+	border: 1px solid var(--db-border-input, rgba(255, 255, 255, 0.08));
+	border-radius: var(--db-radius-sm, 6px);
+}
+
+.template-modal-manage-name {
+	flex: 1;
+	font-weight: 500;
+}
+
+.template-modal-manage-count {
+	font-size: 0.8em;
+	color: var(--db-text-muted);
+}
+
+.template-modal-manage-edit,
+.template-modal-manage-delete {
+	background: transparent;
+	border: none;
+	color: var(--db-text-muted);
+	cursor: pointer;
+	padding: 4px;
+	border-radius: 4px;
+}
+
+.template-modal-manage-edit:hover {
+	color: var(--db-accent, var(--interactive-accent));
+}
+
+.template-modal-manage-delete:hover {
+	color: #ef4444;
+}
+
+.template-modal-create-btn {
+	width: 100%;
+	padding: 10px;
+	border-radius: var(--db-radius-md, 8px);
+}
+
+.template-modal-form {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.template-modal-field {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.template-modal-field label {
+	font-size: 0.9em;
+	font-weight: 500;
+	color: var(--db-text, var(--text-normal));
+}
+
+.template-modal-task-list {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.template-modal-task-row {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.template-modal-task-row .template-modal-input {
+	flex: 1;
+}
+
+.template-modal-task-remove {
+	background: transparent;
+	border: none;
+	color: var(--db-text-muted);
+	cursor: pointer;
+	padding: 4px;
+	border-radius: 4px;
+	flex-shrink: 0;
+}
+
+.template-modal-task-remove:hover {
+	color: #ef4444;
+}
+
+.template-modal-add-task {
+	background: transparent;
+	border: 1px dashed var(--db-border-input, rgba(255, 255, 255, 0.1));
+	border-radius: var(--db-radius-sm, 6px);
+	color: var(--db-text-muted);
+	padding: 6px 12px;
+	cursor: pointer;
+	font-size: 0.9em;
+	text-align: left;
+	font-family: var(--db-font, var(--font-interface));
+}
+
+.template-modal-add-task:hover {
+	border-color: var(--db-accent, var(--interactive-accent));
+	color: var(--db-text, var(--text-normal));
+}
+
+.template-modal-form-actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-top: 8px;
+}
+
+.template-modal-form-actions button {
+	border-radius: var(--db-radius-sm, 6px);
+	font-family: var(--db-font, var(--font-interface));
+}
+
+/* Mobile: tap task item to reveal delete/reminder buttons */
+@media (max-width: 640px) {
+	.dashboard-task-item .dashboard-task-delete,
+	.dashboard-task-item .dashboard-task-reminder-btn {
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	.dashboard-task-item.dashboard-task-item--touched .dashboard-task-delete,
+	.dashboard-task-item.dashboard-task-item--touched .dashboard-task-reminder-btn {
+		opacity: 1;
+		pointer-events: auto;
+	}
+}
+

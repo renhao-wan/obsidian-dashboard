@@ -1,0 +1,46 @@
+/* ===== Shared: transparent sections for tundra, haze, blossom, matcha, lilac ===== */
+.obsidian-dashboard-root[data-theme="tundra"] .dashboard-section-row,
+.obsidian-dashboard-root[data-theme="haze"] .dashboard-section-row,
+.obsidian-dashboard-root[data-theme="blossom"] .dashboard-section-row,
+.obsidian-dashboard-root[data-theme="matcha"] .dashboard-section-row,
+.obsidian-dashboard-root[data-theme="lilac"] .dashboard-section-row {
+	background: transparent;
+	border: none;
+	backdrop-filter: none;
+	-webkit-backdrop-filter: none;
+	padding: 6px;
+}
+
+.obsidian-dashboard-root[data-theme="tundra"] .dashboard-section,
+.obsidian-dashboard-root[data-theme="haze"] .dashboard-section,
+.obsidian-dashboard-root[data-theme="blossom"] .dashboard-section,
+.obsidian-dashboard-root[data-theme="matcha"] .dashboard-section,
+.obsidian-dashboard-root[data-theme="lilac"] .dashboard-section {
+	background: transparent;
+	border: none;
+	backdrop-filter: none;
+	-webkit-backdrop-filter: none;
+}
+
+/* Tighter kanban gap for transparent-section themes */
+.obsidian-dashboard-root[data-theme="tundra"] .dashboard-kanban,
+.obsidian-dashboard-root[data-theme="haze"] .dashboard-kanban,
+.obsidian-dashboard-root[data-theme="blossom"] .dashboard-kanban,
+.obsidian-dashboard-root[data-theme="matcha"] .dashboard-kanban,
+.obsidian-dashboard-root[data-theme="lilac"] .dashboard-kanban {
+	gap: 8px;
+}
+
+/* Allow card hover translate without clipping top border */
+.obsidian-dashboard-root[data-theme="tundra"] .dashboard-section-cards,
+.obsidian-dashboard-root[data-theme="haze"] .dashboard-section-cards,
+.obsidian-dashboard-root[data-theme="blossom"] .dashboard-section-cards,
+.obsidian-dashboard-root[data-theme="matcha"] .dashboard-section-cards,
+.obsidian-dashboard-root[data-theme="lilac"] .dashboard-section-cards,
+.obsidian-dashboard-root[data-theme="jade"] .dashboard-section-cards,
+.obsidian-dashboard-root[data-theme="carbon"] .dashboard-section-cards,
+.obsidian-dashboard-root[data-theme="onyx"] .dashboard-section-cards,
+.obsidian-dashboard-root[data-theme="mono"] .dashboard-section-cards {
+	overflow: visible;
+}
+

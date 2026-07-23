@@ -1,0 +1,59 @@
+	/* ----- 16. ONYX (曜黑) — Pure black + lemon, identical in light & dark ----- */
+	.obsidian-dashboard-root[data-theme="onyx"] {
+		--db-bg: #000000;
+		--db-bg-section: transparent;
+		--db-bg-card: transparent;
+		--db-bg-card-hover: rgba(233, 255, 64, 0.05);
+		--db-bg-sidebar: transparent;
+		--db-bg-input: rgba(233, 255, 64, 0.04);
+		--db-bg-btn: rgba(233, 255, 64, 0.06);
+		--db-bg-btn-hover: rgba(233, 255, 64, 0.12);
+		--db-bg-banner: rgba(233, 255, 64, 0.05);
+		--db-bg-overlay: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%);
+		--db-bg-hover: rgba(255, 255, 255, 0.04);
+		--db-bg-hover-strong: rgba(255, 255, 255, 0.07);
+		--db-bg-add-section: rgba(233, 255, 64, 0.03);
+		--db-bg-drop-indicator: rgba(233, 255, 64, 0.10);
+
+		--db-border: rgba(255, 255, 255, 0.08);
+		--db-border-card: rgba(233, 255, 64, 0.14);
+		--db-border-section: transparent;
+		--db-border-sidebar: transparent;
+		--db-border-input: rgba(233, 255, 64, 0.12);
+		--db-border-input-focus: #e9ff40;
+		--db-border-btn: rgba(233, 255, 64, 0.16);
+		--db-border-add-section: rgba(233, 255, 64, 0.18);
+
+		--db-text: #FAFAFA;
+		--db-text-muted: #A8A8A8;
+		--db-text-faint: #5C5C5C;
+		--db-text-inverse: rgba(255, 255, 255, 0.96);
+		--db-text-inverse-muted: rgba(255, 255, 255, 0.6);
+
+		--db-accent: #e9ff40;
+		--db-accent-light: #f5ff8a;
+		--db-danger: #ff5c5c;
+
+		--db-shadow-card: none;
+		--db-shadow-card-hover: 0 0 0 1px rgba(233, 255, 64, 0.22), 0 8px 24px rgba(0, 0, 0, 0.6);
+		--db-backdrop-blur: none;
+
+		--db-radius-sm: 4px;
+		--db-radius-md: 8px;
+		--db-radius-lg: 12px;
+
+		--db-font: 'Inter', 'DM Sans', 'Noto Sans SC', var(--font-interface);
+		--db-progress-from: #e9ff40;
+		--db-progress-to: #f5ff8a;
+		--db-checkbox: #e9ff40;
+		--db-quote-border: #e9ff40;
+		--db-link: #e9ff40;
+	}
+	/* Onyx: pure black with a whisper of lemon at the top — identical in light & dark */
+	.obsidian-dashboard-root[data-theme="onyx"] {
+		background:
+			radial-gradient(ellipse at 50% 0%, rgba(233, 255, 64, 0.04) 0%, transparent 45%),
+			linear-gradient(180deg, #0A0A0A 0%, #000000 70%);
+		transition: color 0.3s ease;
+	}
+

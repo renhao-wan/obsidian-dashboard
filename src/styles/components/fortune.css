@@ -1,0 +1,885 @@
+/* ===== Weread section ===== */
+.dashboard-weread-widgets {
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+	flex: 1;
+	min-height: 0;
+	overflow-y: auto;
+}
+
+.dashboard-weread-widget {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.dashboard-weread-widget-title {
+	font-size: 0.8em;
+	font-weight: 600;
+	color: var(--db-text-muted, var(--text-muted));
+}
+
+.dashboard-weread-pager {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 12px;
+	margin-top: 8px;
+}
+
+.dashboard-weread-pager-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 26px;
+	height: 24px;
+	padding: 0 6px;
+	border-radius: var(--db-radius-sm, 6px);
+	background: var(--db-bg-btn, rgba(139, 92, 246, 0.10));
+	border: 1px solid var(--db-border-card, rgba(255, 255, 255, 0.10));
+	color: var(--db-text-muted, var(--text-muted));
+	cursor: pointer;
+}
+
+.dashboard-weread-pager-btn:hover:not(:disabled) {
+	color: var(--db-accent, var(--interactive-accent));
+	border-color: var(--db-accent, var(--interactive-accent));
+}
+
+.dashboard-weread-pager-btn:disabled {
+	opacity: 0.4;
+	cursor: default;
+}
+
+.dashboard-weread-pager-info {
+	font-size: 0.75em;
+	color: var(--db-text-muted, var(--text-muted));
+}
+
+.dashboard-weread-cfg-list {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	margin-bottom: 8px;
+}
+
+.dashboard-weread-cfg-row {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 8px;
+	border-radius: var(--db-radius-sm, 6px);
+	border: 1px solid var(--db-border-card, rgba(255, 255, 255, 0.10));
+}
+
+.dashboard-weread-cfg-main {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	flex: 1;
+	min-width: 0;
+	flex-wrap: wrap;
+}
+
+.dashboard-weread-cfg-title {
+	flex: 1;
+	min-width: 100px;
+}
+
+.dashboard-weread-cfg-filter {
+	width: auto;
+	min-width: 90px;
+}
+
+.dashboard-weread-cfg-ops {
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	flex-shrink: 0;
+}
+
+.dashboard-weread-cfg-op {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 26px;
+	height: 26px;
+	padding: 0;
+	border-radius: var(--db-radius-sm, 6px);
+	background: transparent;
+	border: none;
+	color: var(--db-text-muted, var(--text-muted));
+	cursor: pointer;
+}
+
+.dashboard-weread-cfg-op:hover:not(:disabled) {
+	color: var(--db-accent, var(--interactive-accent));
+}
+
+.dashboard-weread-cfg-op:disabled {
+	opacity: 0.35;
+	cursor: default;
+}
+
+.dashboard-weread-cfg-add {
+	margin-top: 4px;
+}
+
+.dashboard-weread-content {
+	min-height: 60px;
+}
+
+.dashboard-heatmap-section-body {
+	flex: 1;
+	min-height: 0;
+	overflow-y: auto;
+}
+
+.dashboard-weread-hint {
+	padding: 20px 8px;
+	text-align: center;
+}
+
+.dashboard-weread-hint-title {
+	font-size: 0.85em;
+	color: var(--db-text, var(--text-normal));
+	margin-bottom: 4px;
+}
+
+.dashboard-weread-hint-desc {
+	font-size: 0.75em;
+	color: var(--db-text-muted, var(--text-muted));
+}
+
+.dashboard-weread-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+	gap: 10px;
+}
+
+.dashboard-weread-book {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.dashboard-weread-book-cover {
+	width: 100%;
+	aspect-ratio: 3 / 4;
+	background-size: cover;
+	background-position: center;
+	border-radius: var(--db-radius-sm, 6px);
+	background-color: var(--db-bg-btn, rgba(139, 92, 246, 0.10));
+}
+
+.dashboard-weread-book-cover--placeholder {
+	background-image: none;
+	display: flex;
+}
+
+.dashboard-weread-book-info {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.dashboard-weread-book-title {
+	font-size: 0.78em;
+	font-weight: 600;
+	color: var(--db-text, var(--text-normal));
+	line-height: 1.3;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.dashboard-weread-book-author {
+	font-size: 0.68em;
+	color: var(--db-text-muted, var(--text-muted));
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.dashboard-weread-book-pct {
+	font-size: 0.65em;
+	color: var(--db-text-muted, var(--text-muted));
+}
+
+.dashboard-weread-progress {
+	height: 3px;
+	border-radius: 2px;
+	background: var(--db-bg-btn, rgba(255, 255, 255, 0.10));
+	overflow: hidden;
+	margin-top: 2px;
+}
+
+.dashboard-weread-progress-fill {
+	height: 100%;
+	background: var(--db-accent, var(--interactive-accent));
+	border-radius: 2px;
+}
+
+.dashboard-weread-stats {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 10px;
+}
+
+.dashboard-weread-stat {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 4px;
+	padding: 14px 8px;
+	border-radius: var(--db-radius-md, 10px);
+	background: var(--db-bg-card, rgba(255, 255, 255, 0.06));
+	border: 1px solid var(--db-border-card, rgba(255, 255, 255, 0.10));
+}
+
+.dashboard-weread-stat-value {
+	font-size: 1.1em;
+	font-weight: 700;
+	color: var(--db-accent, var(--interactive-accent));
+}
+
+.dashboard-weread-stat-label {
+	font-size: 0.68em;
+	color: var(--db-text-muted, var(--text-muted));
+	text-align: center;
+}
+
+.dashboard-weread-notebooks {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.dashboard-weread-notebook {
+	border-radius: var(--db-radius-sm, 6px);
+	background: var(--db-bg-card, rgba(255, 255, 255, 0.04));
+	border: 1px solid var(--db-border-card, rgba(255, 255, 255, 0.08));
+	overflow: hidden;
+}
+
+.dashboard-weread-notebook-head {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 10px;
+	cursor: pointer;
+}
+
+.dashboard-weread-notebook-meta {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	min-width: 0;
+	flex: 1;
+	margin-right: auto;
+}
+
+.dashboard-weread-notebook-count {
+	font-size: 0.68em;
+	color: var(--db-text-muted, var(--text-muted));
+}
+
+.dashboard-weread-notebook-chevron {
+	color: var(--db-text-muted, var(--text-muted));
+	font-size: 0.8em;
+}
+
+.dashboard-weread-notebook-detail {
+	display: none;
+	flex-direction: column;
+	gap: 4px;
+	padding: 6px 10px 10px;
+}
+
+.dashboard-weread-notebook-detail--open {
+	display: flex;
+}
+
+.dashboard-weread-highlight {
+	font-size: 0.75em;
+	line-height: 1.5;
+	color: var(--db-text, var(--text-normal));
+	border-left: 2px solid var(--db-accent, var(--interactive-accent));
+	padding: 2px 0 2px 8px;
+}
+
+.dashboard-weread-option {
+	display: flex;
+	align-items: center;
+	padding: 10px 12px;
+	border-radius: var(--db-radius-md, 10px);
+	border: 1px solid var(--db-border-card, rgba(255, 255, 255, 0.10));
+	cursor: pointer;
+	transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.dashboard-weread-option:hover {
+	border-color: var(--db-accent, var(--interactive-accent));
+}
+
+.dashboard-weread-option.active {
+	border-color: var(--db-accent, var(--interactive-accent));
+	background: rgba(139, 92, 246, 0.12);
+}
+
+.dashboard-weread-option-label {
+	font-size: 0.85em;
+	color: var(--db-text, var(--text-normal));
+}
+
+/* ===== TickTick section ===== */
+.dashboard-ticktick-widgets,
+.dashboard-ticktick-content {
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+}
+
+.dashboard-ticktick-widgets {
+	flex: 1;
+	min-height: 0;
+	overflow-y: auto;
+}
+
+.dashboard-ticktick-content {
+	gap: 0;
+	min-height: 40px;
+}
+
+.dashboard-ticktick-widget {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.dashboard-ticktick-widget-title {
+	font-size: 0.8em;
+	font-weight: 600;
+	color: var(--db-text-muted, var(--text-muted));
+}
+
+.dashboard-ticktick-hint {
+	padding: 14px 8px;
+	text-align: center;
+}
+
+.dashboard-ticktick-hint-title {
+	font-size: 0.85em;
+	color: var(--db-text, var(--text-normal));
+}
+
+.dashboard-ticktick-hint-desc {
+	font-size: 0.72em;
+	color: var(--db-text-muted, var(--text-muted));
+	margin-top: 4px;
+}
+
+.dashboard-ticktick-list {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.dashboard-ticktick-row {
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	padding: 6px 8px;
+	border-radius: var(--db-radius-sm, 6px);
+	background: var(--db-bg-card, rgba(255, 255, 255, 0.04));
+	border: 1px solid var(--db-border-card, rgba(255, 255, 255, 0.08));
+}
+
+.dashboard-ticktick-prio {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	margin-top: 7px;
+	flex-shrink: 0;
+}
+
+.dashboard-ticktick-check {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	margin-top: 3px;
+	flex-shrink: 0;
+	color: var(--db-text-faint, var(--text-faint));
+}
+
+.dashboard-ticktick-check svg {
+	width: 16px;
+	height: 16px;
+}
+
+.dashboard-ticktick-check--done {
+	color: #10b981;
+}
+
+.dashboard-ticktick-main {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	min-width: 0;
+	flex: 1;
+}
+
+.dashboard-ticktick-title-line {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	flex-wrap: wrap;
+}
+
+.dashboard-ticktick-title {
+	font-size: 0.82em;
+	line-height: 1.3;
+	color: var(--db-text, var(--text-normal));
+}
+
+.dashboard-ticktick-title--done {
+	text-decoration: line-through;
+	color: var(--db-text-muted, var(--text-muted));
+}
+
+.dashboard-ticktick-badge {
+	font-size: 0.62em;
+	padding: 1px 6px;
+	border-radius: 8px;
+	background: var(--db-bg-btn, rgba(139, 92, 246, 0.10));
+	color: var(--db-text-muted, var(--text-muted));
+}
+
+.dashboard-ticktick-meta {
+	font-size: 0.68em;
+	color: var(--db-text-muted, var(--text-muted));
+}
+
+.dashboard-ticktick-group {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	margin-bottom: 6px;
+}
+
+.dashboard-ticktick-group-head {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.dashboard-ticktick-proj-dot {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	flex-shrink: 0;
+}
+
+.dashboard-ticktick-group-name {
+	font-size: 0.78em;
+	font-weight: 600;
+	color: var(--db-text, var(--text-normal));
+}
+
+.dashboard-ticktick-group-count {
+	font-size: 0.68em;
+	color: var(--db-text-muted, var(--text-muted));
+}
+
+.dashboard-ticktick-cfg-list {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	margin-bottom: 8px;
+}
+
+.dashboard-ticktick-cfg-row {
+	/* shares .dashboard-weread-cfg-row styling */
+}
+
+.dashboard-weread-book-cat {
+	font-size: 0.65em;
+	color: var(--db-text-muted, var(--text-muted));
+	margin-top: 1px;
+}
+
+.dashboard-ticktick-login-status {
+	min-height: 18px;
+	margin: 6px 0;
+}
+
+.dashboard-ticktick-login-info {
+	font-size: 0.78em;
+	color: var(--db-text-muted, var(--text-muted));
+}
+
+.dashboard-ticktick-login-error {
+	font-size: 0.78em;
+	color: #ef4444;
+}
+
+.dashboard-ticktick-manual {
+	margin-top: 16px;
+	padding-top: 12px;
+	border-top: 1px solid var(--db-border-card, rgba(255, 255, 255, 0.08));
+}
+
+.dashboard-weread-notebook-import {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 26px;
+	height: 26px;
+	padding: 0;
+	border-radius: var(--db-radius-sm, 6px);
+	background: transparent;
+	background-image: none;
+	box-shadow: none;
+	border: none;
+	color: var(--db-text-muted, var(--text-muted));
+	cursor: pointer;
+	flex-shrink: 0;
+}
+
+.dashboard-weread-notebook-import:hover:not(:disabled) {
+	color: var(--db-accent, var(--interactive-accent));
+}
+
+.dashboard-weread-notebook-import:disabled {
+	opacity: 0.5;
+	cursor: default;
+}
+
+.dashboard-weread-cfg-filter-group {
+	width: 100%;
+	margin-top: 6px;
+}
+
+.dashboard-weread-cfg-filter-label {
+	font-size: 0.68em;
+	color: var(--db-text-muted, var(--text-muted));
+	margin-bottom: 4px;
+}
+
+.dashboard-weread-cfg-chip {
+	display: inline-flex;
+	align-items: center;
+	padding: 2px 9px;
+	border-radius: 10px;
+	font-size: 0.72em;
+	cursor: pointer;
+	background: var(--db-bg-btn, rgba(139, 92, 246, 0.10));
+	color: var(--db-text-muted, var(--text-muted));
+	border: 1px solid transparent;
+	transition: background 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease, color 0.12s ease, transform 0.12s ease;
+}
+
+.dashboard-weread-cfg-chip:hover {
+	border-color: var(--db-accent, var(--interactive-accent));
+}
+
+.dashboard-weread-cfg-chip.active {
+	background: var(--db-accent, var(--interactive-accent));
+	color: #fff;
+	border-color: var(--db-accent, var(--interactive-accent));
+}
+
+/* Heatmap year grid: month labels on top, week columns below. */
+.dashboard-heatmap-grid .dashboard-sidebar-heatmap-cell {
+	border-radius: 3px;
+}
+
+.dashboard-heatmap-year {
+	width: 100%;
+	margin-top: 4px;
+	padding-left: 20px;
+	--hm-cell: 13px;
+}
+
+.dashboard-heatmap-months-top {
+	display: grid;
+	height: 16px;
+	margin-bottom: 4px;
+	gap: 3px;
+	padding-left: 20px;
+	width: 100%;
+	justify-content: flex-start;
+}
+
+.dashboard-heatmap-month-label-top {
+	font-size: 0.6em;
+	line-height: 16px;
+	color: var(--db-text-muted, var(--text-muted));
+	white-space: nowrap;
+	overflow: visible;
+}
+
+/* GitHub-style matrix: cells fill down a 7-row column (Mon→Sun) then the next
+   week column. Layout lives in CSS (not setCssProps) so grid-auto-flow reliably
+   applies; cell size via the --hm-cell variable. */
+.dashboard-heatmap-grid {
+	display: grid;
+	grid-template-rows: repeat(7, var(--hm-cell, 13px));
+	grid-auto-flow: column;
+	grid-auto-columns: var(--hm-cell, 13px);
+	gap: 3px;
+	justify-content: flex-start;
+	width: 100%;
+	overflow-x: auto;
+	padding-bottom: 2px;
+}
+
+/* TickTick interactivity */
+.dashboard-ticktick-row {
+	transition: background 0.1s ease;
+}
+
+.dashboard-ticktick-check {
+	cursor: pointer;
+}
+
+.dashboard-ticktick-list--reorder .dashboard-ticktick-row {
+	cursor: grab;
+}
+
+.dashboard-ticktick-list--reorder .dashboard-ticktick-row:active {
+	cursor: grabbing;
+}
+
+.dashboard-ticktick-row--dragging {
+	opacity: 0.4;
+}
+
+.dashboard-ticktick-edit-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+	opacity: 0;
+	transition: opacity 0.12s ease;
+	color: var(--db-text-muted, var(--text-muted));
+	cursor: pointer;
+}
+
+.dashboard-ticktick-row:hover .dashboard-ticktick-edit-btn {
+	opacity: 0.8;
+}
+
+.dashboard-ticktick-edit-btn:hover {
+	color: var(--db-accent, var(--interactive-accent));
+	opacity: 1 !important;
+}
+
+.dashboard-ticktick-edit-btn svg {
+	width: 14px;
+	height: 14px;
+}
+
+.dashboard-ticktick-rename-input {
+	width: 100%;
+	font-size: 0.82em;
+	font-family: inherit;
+	padding: 1px 4px;
+	background: var(--db-bg-input, var(--background-modifier-form-field));
+	border: 1px solid var(--db-accent, var(--interactive-accent));
+	border-radius: 4px;
+	color: var(--db-text, var(--text-normal));
+}
+
+/* Modal named inputs (e.g. new-section name) must show a visible border.
+   Overrides .dashboard-task-input's !important borderless style via higher specificity. */
+.dashboard-modal .dashboard-section-name-input {
+	border: 1px solid var(--db-border-card, rgba(255, 255, 255, 0.22)) !important;
+	background: var(--db-bg-input, var(--background-modifier-form-field)) !important;
+	box-shadow: none !important;
+}
+
+.dashboard-modal .dashboard-section-name-input:focus {
+	border-color: var(--db-accent, var(--interactive-accent)) !important;
+}
+
+/* TickTick projects: each list/folder as a card */
+.dashboard-ticktick-proj-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+	gap: 10px;
+}
+
+.dashboard-ticktick-proj-card {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	padding: 10px;
+	border-radius: var(--db-radius-md, 10px);
+	background: var(--db-bg-card, rgba(255, 255, 255, 0.05));
+	border: 1px solid var(--db-border-card, rgba(255, 255, 255, 0.10));
+	border-top: 3px solid var(--proj-color, var(--db-accent, #6366f1));
+	min-height: 0;
+}
+
+.dashboard-ticktick-proj-card-head {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	margin-bottom: 2px;
+}
+
+.dashboard-ticktick-proj-card .dashboard-ticktick-list {
+	max-height: 360px;
+	overflow-y: auto;
+}
+
+.dashboard-ticktick-readonly-hint {
+	padding: 6px 10px;
+	margin-bottom: 8px;
+	border-radius: var(--db-radius-sm, 6px);
+	background: rgba(245, 158, 11, 0.12);
+	border: 1px solid rgba(245, 158, 11, 0.35);
+	color: #f59e0b;
+	font-size: 0.72em;
+	line-height: 1.4;
+}
+
+/* Heatmap stats: above the grid, left-aligned */
+.dashboard-heatmap-section-body .dashboard-sidebar-heatmap-stats {
+	justify-content: flex-start;
+	margin-top: 4px;
+	margin-bottom: 10px;
+}
+
+/* Add-section modal: extra gap between name input and footer buttons */
+.dashboard-add-section-name-row {
+	margin-bottom: 18px;
+}
+
+/* Section header view-toggle active state (TickTick today/lists) */
+.dashboard-section-header-actions .dashboard-section-add-btn.active {
+	color: var(--db-accent, var(--interactive-accent));
+	background: rgba(139, 92, 246, 0.12);
+}
+
+/* TickTick lists view: horizontal scroll row (like todo section cards) */
+.dashboard-ticktick-proj-row {
+	display: flex;
+	gap: 10px;
+	flex: 1;
+	min-height: 0;
+	overflow-x: auto;
+	overflow-y: hidden;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: thin;
+	scrollbar-color: transparent transparent;
+}
+
+.dashboard-ticktick-proj-row:hover {
+	scrollbar-color: color-mix(in srgb, var(--db-accent) 18%, transparent) transparent;
+}
+
+.dashboard-ticktick-proj-row .dashboard-ticktick-proj-card {
+	flex: 0 0 280px;
+	min-width: 280px;
+	max-width: 400px;
+	position: relative;
+}
+
+.dashboard-ticktick-card-resize {
+	position: absolute;
+	top: 4px;
+	right: 0;
+	bottom: 4px;
+	width: 6px;
+	cursor: ew-resize;
+	z-index: 10;
+	border-right: 2px solid transparent;
+	transition: border-color 0.2s ease;
+}
+
+.dashboard-ticktick-proj-card:hover .dashboard-ticktick-card-resize,
+.dashboard-ticktick-card--resizing .dashboard-ticktick-card-resize {
+	border-right-color: var(--db-border-card, rgba(255, 255, 255, 0.12));
+}
+
+.dashboard-ticktick-card-resize:hover {
+	border-right-color: var(--db-text-muted, var(--text-muted)) !important;
+}
+
+.dashboard-ticktick-card--resizing {
+	user-select: none;
+}
+
+/* Heatmap: grid left + stats right, horizontal layout */
+.dashboard-heatmap-layout {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	width: 100%;
+}
+
+.dashboard-heatmap-layout > .dashboard-heatmap-year {
+	flex: 1 1 0;
+	min-width: 0;
+	overflow: hidden;
+}
+
+.dashboard-heatmap-stats-side {
+	flex: 0 0 auto;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	white-space: nowrap;
+}
+
+.dashboard-heatmap-stat-row {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	font-size: 0.75em;
+	color: var(--db-text-muted, var(--text-muted));
+}
+
+.dashboard-heatmap-stat-icon svg {
+	width: 14px;
+	height: 14px;
+	color: var(--db-accent, var(--interactive-accent));
+}
+
+/* Heatmap stats popup (floating, from header button) */
+.dashboard-heatmap-stats-popup {
+	width: 160px;
+	padding: 10px 12px;
+	border-radius: var(--db-radius-md, 10px);
+	background: var(--db-bg-card, rgba(255, 255, 255, 0.08));
+	border: 1px solid var(--db-border-card, rgba(255, 255, 255, 0.12));
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-heatmap-stats-popup-row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 4px 0;
+	font-size: 0.82em;
+	color: var(--db-text, var(--text-normal));
+}
+
+.dashboard-heatmap-stats-popup-row + .dashboard-heatmap-stats-popup-row {
+	border-top: 1px solid var(--db-border-card, rgba(255, 255, 255, 0.06));
+}
+
+.dashboard-heatmap-stats-popup-icon svg {
+	width: 15px;
+	height: 15px;
+	color: var(--db-accent, var(--interactive-accent));
+}

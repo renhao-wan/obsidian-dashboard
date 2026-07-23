@@ -1,0 +1,87 @@
+/* ----- 8. HAZE (薄雾 — Neon clone, transparent sections) ----- */
+.obsidian-dashboard-root[data-theme="haze"] {
+	--db-bg: #0a0d14;
+	--db-bg-section: transparent;
+	--db-bg-card: transparent;
+	--db-bg-card-hover: rgba(0, 240, 255, 0.03);
+	--db-bg-sidebar: transparent;
+	--db-bg-input: rgba(0, 240, 255, 0.05);
+	--db-bg-btn: rgba(0, 240, 255, 0.08);
+	--db-bg-btn-hover: rgba(0, 240, 255, 0.15);
+	--db-bg-banner: rgba(0, 240, 255, 0.06);
+	--db-bg-overlay: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%);
+	--db-bg-hover: rgba(0, 240, 255, 0.05);
+	--db-bg-hover-strong: rgba(0, 240, 255, 0.1);
+	--db-bg-add-section: rgba(0, 240, 255, 0.02);
+	--db-bg-drop-indicator: rgba(0, 240, 255, 0.1);
+
+	--db-border: rgba(0, 240, 255, 0.12);
+	--db-border-card: rgba(0, 240, 255, 0.15);
+	--db-border-section: transparent;
+	--db-border-sidebar: transparent;
+	--db-border-input: rgba(0, 240, 255, 0.12);
+	--db-border-input-focus: #00f0ff;
+	--db-border-btn: rgba(0, 240, 255, 0.2);
+	--db-border-add-section: rgba(0, 240, 255, 0.15);
+
+	--db-text: #e0f0f0;
+	--db-text-muted: #80a0a8;
+	--db-text-faint: #506870;
+	--db-text-inverse: #e0f0f0;
+	--db-text-inverse-muted: rgba(224, 240, 240, 0.6);
+
+	--db-accent: #00f0ff;
+	--db-accent-light: #ff00aa;
+	--db-danger: #ff3366;
+
+	--db-shadow-card: 0 0 1px rgba(0, 240, 255, 0.3);
+		--db-shadow-card-hover: 0 0 12px rgba(0, 240, 255, 0.15), 0 4px 16px rgba(0, 0, 0, 0.2);
+	--db-backdrop-blur: none;
+
+	--db-radius-sm: 2px;
+	--db-radius-md: 4px;
+	--db-radius-lg: 6px;
+
+		--db-font: 'JetBrains Mono', 'Noto Serif SC', 'Songti SC', 'SimSun', var(--font-interface);
+	--db-progress-from: #00f0ff;
+	--db-progress-to: #ff00aa;
+	--db-checkbox: #00f0ff;
+	--db-quote-border: #ff00aa;
+	--db-link: #00f0ff;
+}
+.theme-light .obsidian-dashboard-root[data-theme="haze"] {
+	--db-bg: #e8ecf2;
+	--db-bg-section: transparent;
+	--db-bg-card: transparent;
+	--db-bg-card-hover: rgba(0, 100, 120, 0.03);
+	--db-bg-sidebar: transparent;
+	--db-bg-input: rgba(0, 100, 120, 0.04);
+	--db-bg-btn: rgba(0, 100, 120, 0.06);
+	--db-bg-btn-hover: rgba(0, 100, 120, 0.12);
+	--db-bg-banner: rgba(0, 100, 120, 0.06);
+	--db-bg-overlay: linear-gradient(135deg, rgba(0,20,30,0.5) 0%, rgba(0,20,30,0.2) 100%);
+	--db-bg-hover: rgba(0, 100, 120, 0.04);
+	--db-bg-hover-strong: rgba(0, 100, 120, 0.08);
+	--db-bg-add-section: rgba(0, 100, 120, 0.02);
+	--db-border: rgba(0, 100, 120, 0.12);
+	--db-border-card: rgba(0, 100, 120, 0.15);
+	--db-border-section: transparent;
+	--db-border-sidebar: transparent;
+	--db-border-input: rgba(0, 100, 120, 0.12);
+	--db-border-input-focus: #0088a0;
+	--db-border-btn: rgba(0, 100, 120, 0.2);
+	--db-text: #051218;
+	--db-text-muted: #f0f4f8;
+	--db-text-faint: #d0dce8;
+	--db-accent: #0088a0;
+	--db-accent-light: #cc0088;
+	--db-danger: #cc2244;
+	--db-shadow-card: 0 1px 4px rgba(0, 0, 0, 0.08);
+	--db-shadow-card-hover: 0 4px 16px rgba(0, 0, 0, 0.12);
+	--db-progress-from: #0088a0;
+	--db-progress-to: #cc0088;
+	--db-checkbox: #0088a0;
+	--db-quote-border: #cc0088;
+	--db-link: #0088a0;
+}
+

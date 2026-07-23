@@ -1,0 +1,144 @@
+/* ----- 9. BLOSSOM (花漾 — Prism clone, transparent sections) ----- */
+.obsidian-dashboard-root[data-theme="blossom"] {
+	--db-bg: #12081a;
+	--db-bg-section: transparent;
+	--db-bg-card: rgba(255, 255, 255, 0.06);
+	--db-bg-card-hover: rgba(255, 255, 255, 0.10);
+	--db-bg-sidebar: transparent;
+	--db-bg-input: rgba(255, 255, 255, 0.05);
+	--db-bg-btn: rgba(244, 63, 94, 0.08);
+	--db-bg-btn-hover: rgba(244, 63, 94, 0.15);
+	--db-bg-banner: rgba(139, 92, 246, 0.12);
+	--db-bg-overlay: linear-gradient(135deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.3) 100%);
+	--db-bg-hover: rgba(255, 255, 255, 0.05);
+	--db-bg-hover-strong: rgba(255, 255, 255, 0.09);
+	--db-bg-add-section: rgba(255, 255, 255, 0.02);
+	--db-bg-drop-indicator: rgba(244, 63, 94, 0.08);
+
+	--db-border: rgba(255, 255, 255, 0.08);
+	--db-border-card: rgba(255, 255, 255, 0.10);
+	--db-border-section: transparent;
+	--db-border-sidebar: transparent;
+	--db-border-input: rgba(255, 255, 255, 0.08);
+	--db-border-input-focus: rgba(244, 63, 94, 0.5);
+	--db-border-btn: rgba(255, 255, 255, 0.10);
+	--db-border-add-section: rgba(244, 63, 94, 0.15);
+
+	--db-text: #f0e8f0;
+	--db-text-muted: #b098b8;
+	--db-text-faint: #705878;
+	--db-text-inverse: rgba(255, 255, 255, 0.95);
+	--db-text-inverse-muted: rgba(255, 255, 255, 0.55);
+
+	--db-accent: #f43f5e;
+	--db-accent-light: #a855f7;
+	--db-danger: #ef4444;
+
+	--db-shadow-card: 0 2px 12px rgba(0, 0, 0, 0.3);
+		--db-shadow-card-hover: 0 6px 24px rgba(244, 63, 94, 0.12), 0 0 16px rgba(168, 85, 247, 0.06);
+	--db-backdrop-blur: none;
+
+	--db-radius-sm: 8px;
+	--db-radius-md: 14px;
+	--db-radius-lg: 18px;
+
+		--db-font: 'Quicksand', 'ZCOOL KuaiLe', var(--font-interface);
+	--db-progress-from: #f43f5e;
+	--db-progress-to: #a855f7;
+	--db-checkbox: #f43f5e;
+	--db-quote-border: #a855f7;
+	--db-link: #f43f5e;
+
+	--db-aurora-bg: linear-gradient(135deg,
+		#12081a 0%,
+		rgba(244, 63, 94, 0.07) 18%,
+		rgba(168, 85, 247, 0.06) 36%,
+		rgba(245, 158, 11, 0.05) 54%,
+		rgba(244, 63, 94, 0.04) 72%,
+		#12081a 100%);
+	--db-aurora-size: 400% 400%;
+	--db-aurora-speed: 14s;
+}
+.theme-light .obsidian-dashboard-root[data-theme="blossom"] {
+	--db-bg: #faf5f8;
+	--db-bg-section: transparent;
+	--db-bg-card: rgba(255, 255, 255, 0.55);
+	--db-bg-card-hover: rgba(255, 255, 255, 0.70);
+	--db-bg-sidebar: transparent;
+	--db-bg-input: rgba(244, 63, 94, 0.04);
+	--db-bg-btn: rgba(244, 63, 94, 0.07);
+	--db-bg-btn-hover: rgba(244, 63, 94, 0.12);
+	--db-bg-banner: rgba(139, 92, 246, 0.08);
+	--db-bg-overlay: linear-gradient(135deg, rgba(60,20,40,0.5) 0%, rgba(60,20,40,0.2) 100%);
+	--db-bg-hover: rgba(244, 63, 94, 0.05);
+	--db-bg-hover-strong: rgba(244, 63, 94, 0.08);
+	--db-bg-add-section: rgba(244, 63, 94, 0.03);
+
+	--db-border: rgba(244, 63, 94, 0.10);
+	--db-border-card: rgba(244, 63, 94, 0.12);
+	--db-border-section: transparent;
+	--db-border-sidebar: transparent;
+	--db-border-input: rgba(244, 63, 94, 0.10);
+	--db-border-input-focus: rgba(244, 63, 94, 0.6);
+	--db-border-btn: rgba(244, 63, 94, 0.12);
+
+	--db-text: #1c1018;
+	--db-text-muted: #5a3850;
+	--db-text-faint: #907080;
+
+	--db-accent: #e11d48;
+	--db-accent-light: #7c3aed;
+	--db-danger: #dc2626;
+
+	--db-shadow-card: 0 2px 12px rgba(244, 63, 94, 0.05);
+	--db-shadow-card-hover: 0 8px 32px rgba(244, 63, 94, 0.08), 0 4px 16px rgba(0, 0, 0, 0.06);
+	--db-backdrop-blur: none;
+
+	--db-progress-from: #e11d48;
+	--db-progress-to: #7c3aed;
+	--db-checkbox: #e11d48;
+	--db-quote-border: #7c3aed;
+	--db-link: #e11d48;
+
+	--db-aurora-bg: linear-gradient(135deg,
+		#faf5f8 0%,
+		rgba(244, 63, 94, 0.06) 18%,
+		rgba(168, 85, 247, 0.05) 36%,
+		rgba(245, 158, 11, 0.04) 54%,
+		rgba(244, 63, 94, 0.03) 72%,
+		#faf5f8 100%);
+}
+
+/* Blossom: static gradient background */
+.obsidian-dashboard-root[data-theme="blossom"] {
+	background: var(--db-aurora-bg);
+	transition: color 0.3s ease;
+}
+
+/* Tundra: aurora animation — cold gray + avocado green */
+.obsidian-dashboard-root[data-theme="tundra"] {
+	background: var(--db-aurora-bg);
+	background-size: var(--db-aurora-size);
+	animation: db-aurora-shift var(--db-aurora-speed) ease-in-out infinite;
+	transition: color 0.3s ease;
+	will-change: background-position;
+}
+
+/* Haze: smoky mist gradient — white top, blue bottom */
+.obsidian-dashboard-root[data-theme="haze"] {
+	background:
+		radial-gradient(ellipse at 20% 10%, rgba(220, 230, 245, 0.6) 0%, transparent 50%),
+		radial-gradient(ellipse at 75% 5%, rgba(200, 215, 240, 0.4) 0%, transparent 45%),
+		radial-gradient(ellipse at 40% 85%, rgba(10, 13, 20, 0.9) 0%, transparent 50%),
+		radial-gradient(ellipse at 85% 75%, rgba(15, 20, 35, 0.7) 0%, transparent 45%),
+		linear-gradient(180deg, #e8ecf2 0%, #c8d4e8 30%, #6882a8 70%, #0a0d14 100%);
+	transition: color 0.3s ease;
+}
+.theme-dark .obsidian-dashboard-root[data-theme="haze"] {
+	background:
+		radial-gradient(ellipse at 30% 15%, rgba(60, 80, 120, 0.15) 0%, transparent 50%),
+		radial-gradient(ellipse at 70% 10%, rgba(50, 70, 110, 0.10) 0%, transparent 45%),
+		radial-gradient(ellipse at 50% 80%, rgba(5, 8, 18, 0.6) 0%, transparent 50%),
+		linear-gradient(180deg, #1a2030 0%, #0f1520 40%, #0a0d14 100%);
+}
+

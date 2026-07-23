@@ -1,0 +1,103 @@
+	/* ----- 15. CARBON (日食) — Industrial monochrome ----- */
+	.obsidian-dashboard-root[data-theme="carbon"] {
+		--db-bg: #e8e8ea;
+		--db-bg-section: transparent;
+		--db-bg-card: transparent;
+		--db-bg-card-hover: rgba(161, 161, 170, 0.06);
+		--db-bg-sidebar: transparent;
+		--db-bg-input: rgba(113, 113, 122, 0.05);
+		--db-bg-btn: rgba(113, 113, 122, 0.08);
+		--db-bg-btn-hover: rgba(113, 113, 122, 0.14);
+		--db-bg-banner: rgba(113, 113, 122, 0.06);
+		--db-bg-overlay: linear-gradient(135deg, rgba(30,30,35,0.5) 0%, rgba(30,30,35,0.2) 100%);
+		--db-bg-hover: rgba(113, 113, 122, 0.05);
+		--db-bg-hover-strong: rgba(113, 113, 122, 0.09);
+		--db-bg-add-section: rgba(113, 113, 122, 0.04);
+		--db-bg-drop-indicator: rgba(161, 161, 170, 0.08);
+
+		--db-border: rgba(113, 113, 122, 0.12);
+		--db-border-card: rgba(161, 161, 170, 0.20);
+		--db-border-section: transparent;
+		--db-border-sidebar: transparent;
+		--db-border-input: rgba(113, 113, 122, 0.12);
+		--db-border-input-focus: #a1a1aa;
+		--db-border-btn: rgba(113, 113, 122, 0.18);
+		--db-border-add-section: rgba(113, 113, 122, 0.15);
+
+		--db-text: #18181b;
+		--db-text-muted: #e4e4e7;
+		--db-text-faint: #a1a1aa;
+		--db-text-inverse: rgba(255, 255, 255, 0.95);
+		--db-text-inverse-muted: rgba(255, 255, 255, 0.55);
+
+		--db-accent: #a1a1aa;
+		--db-accent-light: #d4d4d8;
+		--db-danger: #ef4444;
+
+		--db-shadow-card: 0 1px 4px rgba(0, 0, 0, 0.08);
+		--db-shadow-card-hover: 0 4px 16px rgba(0, 0, 0, 0.12);
+		--db-backdrop-blur: none;
+
+		--db-radius-sm: 2px;
+		--db-radius-md: 3px;
+		--db-radius-lg: 4px;
+
+		--db-font: 'JetBrains Mono', 'Noto Sans SC', var(--font-interface);
+		--db-progress-from: #a1a1aa;
+		--db-progress-to: #71717a;
+		--db-checkbox: #a1a1aa;
+		--db-quote-border: #71717a;
+		--db-link: #a1a1aa;
+	}
+	.theme-dark .obsidian-dashboard-root[data-theme="carbon"] {
+		--db-bg: #09090b;
+		--db-bg-section: transparent;
+		--db-bg-card: transparent;
+		--db-bg-card-hover: rgba(161, 161, 170, 0.06);
+		--db-bg-sidebar: transparent;
+		--db-bg-input: rgba(161, 161, 170, 0.04);
+		--db-bg-btn: rgba(161, 161, 170, 0.06);
+		--db-bg-btn-hover: rgba(161, 161, 170, 0.10);
+		--db-bg-banner: rgba(161, 161, 170, 0.04);
+		--db-bg-overlay: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%);
+		--db-bg-hover: rgba(161, 161, 170, 0.04);
+		--db-bg-hover-strong: rgba(161, 161, 170, 0.06);
+		--db-bg-add-section: rgba(161, 161, 170, 0.02);
+		--db-border: rgba(161, 161, 170, 0.08);
+		--db-border-card: rgba(161, 161, 170, 0.12);
+		--db-border-section: transparent;
+		--db-border-sidebar: transparent;
+		--db-border-input: rgba(161, 161, 170, 0.08);
+		--db-border-input-focus: #a1a1aa;
+		--db-text: #e4e4e7;
+		--db-text-muted: #a1a1aa;
+		--db-text-faint: #52525b;
+		--db-accent: #a1a1aa;
+		--db-accent-light: #d4d4d8;
+		--db-danger: #ef4444;
+		--db-shadow-card: 0 1px 2px rgba(161, 161, 170, 0.08);
+		--db-shadow-card-hover: 0 0 12px rgba(161, 161, 170, 0.08), 0 4px 16px rgba(0, 0, 0, 0.3);
+		--db-progress-from: #a1a1aa;
+		--db-progress-to: #71717a;
+		--db-checkbox: #a1a1aa;
+		--db-quote-border: #71717a;
+		--db-link: #a1a1aa;
+	}
+	/* Carbon: industrial monochrome gradient */
+	.obsidian-dashboard-root[data-theme="carbon"] {
+		background:
+			radial-gradient(ellipse at 20% 10%, rgba(212, 212, 216, 0.3) 0%, transparent 50%),
+			radial-gradient(ellipse at 75% 5%, rgba(180, 180, 185, 0.2) 0%, transparent 45%),
+			radial-gradient(ellipse at 40% 85%, rgba(9, 9, 11, 0.9) 0%, transparent 50%),
+			radial-gradient(ellipse at 85% 75%, rgba(14, 14, 18, 0.7) 0%, transparent 45%),
+			linear-gradient(180deg, #e8e8ea 0%, #c8c8cc 30%, #3a3a40 70%, #09090b 100%);
+		transition: color 0.3s ease;
+	}
+	.theme-dark .obsidian-dashboard-root[data-theme="carbon"] {
+		background:
+			radial-gradient(ellipse at 30% 15%, rgba(80, 80, 90, 0.08) 0%, transparent 50%),
+			radial-gradient(ellipse at 70% 10%, rgba(60, 60, 70, 0.05) 0%, transparent 45%),
+			radial-gradient(ellipse at 50% 80%, rgba(4, 4, 6, 0.6) 0%, transparent 50%),
+			linear-gradient(180deg, #111114 0%, #09090b 40%, #050507 100%);
+	}
+

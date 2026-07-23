@@ -1,0 +1,117 @@
+	/* ----- 14. LILAC (丁香) — Morandi purple, solid warm ----- */
+	.obsidian-dashboard-root[data-theme="lilac"] {
+		--db-bg: #a898b4;
+		--db-bg-section: transparent;
+		--db-bg-card: #d4cce0;
+		--db-bg-card-hover: #e0d8e8;
+		--db-bg-sidebar: transparent;
+		--db-bg-input: rgba(184, 160, 200, 0.08);
+		--db-bg-btn: #b8a8c4;
+		--db-bg-btn-hover: #ac9cb8;
+		--db-bg-banner: rgba(208, 184, 184, 0.08);
+		--db-bg-overlay: linear-gradient(135deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.3) 100%);
+		--db-bg-hover: rgba(184, 160, 200, 0.06);
+		--db-bg-hover-strong: rgba(184, 160, 200, 0.10);
+		--db-bg-add-section: rgba(184, 160, 200, 0.06);
+		--db-bg-drop-indicator: rgba(184, 160, 200, 0.10);
+
+		--db-border: #9890a4;
+		--db-border-card: #a898b8;
+		--db-border-section: transparent;
+		--db-border-sidebar: transparent;
+		--db-border-input: #a898b8;
+		--db-border-input-focus: #b8a0c8;
+		--db-border-btn: #9888a4;
+		--db-border-add-section: rgba(184, 160, 200, 0.20);
+
+		--db-text: #281e30;
+		--db-text-muted: #5a4068;
+		--db-text-faint: #786080;
+		--db-text-inverse: rgba(255, 255, 255, 0.95);
+		--db-text-inverse-muted: rgba(255, 255, 255, 0.55);
+
+		--db-accent: #8868a0;
+		--db-accent-light: #a88888;
+		--db-danger: #c84040;
+
+		--db-shadow-card: 0 2px 8px rgba(140, 110, 160, 0.10);
+		--db-shadow-card-hover: 0 4px 16px rgba(140, 110, 160, 0.15);
+		--db-backdrop-blur: none;
+
+		--db-radius-sm: 10px;
+		--db-radius-md: 14px;
+		--db-radius-lg: 18px;
+
+		--db-font: 'Nunito', 'LXGW WenKai', var(--font-interface);
+		--db-progress-from: #8868a0;
+		--db-progress-to: #a88888;
+		--db-checkbox: #8868a0;
+		--db-quote-border: #a88888;
+		--db-link: #8868a0;
+
+		--db-aurora-bg: linear-gradient(135deg,
+			#a898b4 0%,
+			rgba(136, 104, 160, 0.12) 18%,
+			rgba(168, 136, 136, 0.08) 36%,
+			rgba(184, 160, 200, 0.10) 54%,
+			rgba(136, 104, 160, 0.06) 72%,
+			#a898b4 100%);
+		--db-aurora-size: 400% 400%;
+		--db-aurora-speed: 14s;
+	}
+	.theme-light .obsidian-dashboard-root[data-theme="lilac"] {
+		--db-bg: #ddd4e4;
+		--db-bg-section: transparent;
+		--db-bg-card: #e4dce8;
+		--db-bg-card-hover: #ece4f0;
+		--db-bg-sidebar: transparent;
+		--db-bg-input: rgba(184, 160, 200, 0.08);
+		--db-bg-btn: #c4b8cc;
+		--db-bg-btn-hover: #b8a8c0;
+		--db-bg-banner: rgba(208, 184, 184, 0.10);
+		--db-bg-overlay: linear-gradient(135deg, rgba(40,20,40,0.4) 0%, rgba(40,20,40,0.15) 100%);
+		--db-bg-hover: rgba(184, 160, 200, 0.06);
+		--db-bg-hover-strong: rgba(184, 160, 200, 0.10);
+		--db-bg-add-section: rgba(184, 160, 200, 0.05);
+
+		--db-border: #b8a8c4;
+		--db-border-card: #b8a8c4;
+		--db-border-section: transparent;
+		--db-border-sidebar: transparent;
+		--db-border-input: #b8a8c4;
+		--db-border-input-focus: #9070a8;
+		--db-border-btn: #a898b4;
+
+		--db-text: #1a101e;
+		--db-text-muted: #5a4068;
+		--db-text-faint: #908098;
+
+		--db-accent: #9070a8;
+		--db-accent-light: #a88888;
+		--db-danger: #dc2626;
+
+		--db-shadow-card: 0 2px 8px rgba(184, 160, 200, 0.08);
+		--db-shadow-card-hover: 0 4px 16px rgba(184, 160, 200, 0.12);
+		--db-backdrop-blur: none;
+
+		--db-progress-from: #9070a8;
+		--db-progress-to: #a88888;
+		--db-checkbox: #9070a8;
+		--db-quote-border: #a88888;
+		--db-link: #9070a8;
+
+		--db-aurora-bg: linear-gradient(135deg,
+			#ddd4e4 0%,
+			rgba(144, 112, 168, 0.10) 18%,
+			rgba(168, 136, 136, 0.06) 36%,
+			rgba(144, 112, 168, 0.08) 54%,
+			rgba(184, 160, 200, 0.04) 72%,
+			#ddd4e4 100%);
+	}
+
+	/* Lilac: gradient background */
+	.obsidian-dashboard-root[data-theme="lilac"] {
+		background: var(--db-aurora-bg);
+		transition: color 0.3s ease;
+	}
+
