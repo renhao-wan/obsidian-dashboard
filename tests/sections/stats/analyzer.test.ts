@@ -127,7 +127,10 @@ describe('StatsAnalyzer', () => {
     });
 
     it('should count files created today', () => {
-      const now = Date.now();
+      jest.useFakeTimers();
+      const fixedNow = new Date('2026-07-23T12:00:00Z').getTime();
+      jest.setSystemTime(fixedNow);
+
       const todayStart = new Date();
       todayStart.setHours(0, 0, 0, 0);
 
@@ -137,8 +140,8 @@ describe('StatsAnalyzer', () => {
           name: 'today.md',
           extension: '.md',
           size: 100,
-          created: now,
-          modified: now,
+          created: fixedNow,
+          modified: fixedNow,
           folder: '',
         },
         {
@@ -147,17 +150,21 @@ describe('StatsAnalyzer', () => {
           extension: '.md',
           size: 100,
           created: todayStart.getTime() - 86400000, // yesterday
-          modified: now,
+          modified: fixedNow,
           folder: '',
         },
       ];
 
       const result = analyzer.analyze(files);
       expect(result.todayCreated).toBe(1);
+      jest.useRealTimers();
     });
 
     it('should count files created this week', () => {
-      const now = Date.now();
+      jest.useFakeTimers();
+      const fixedNow = new Date('2026-07-23T12:00:00Z').getTime();
+      jest.setSystemTime(fixedNow);
+
       const startOfThisWeek = new Date();
       const dayOfWeek = startOfThisWeek.getDay();
       startOfThisWeek.setDate(startOfThisWeek.getDate() - dayOfWeek);
@@ -169,8 +176,8 @@ describe('StatsAnalyzer', () => {
           name: 'this-week.md',
           extension: '.md',
           size: 100,
-          created: now,
-          modified: now,
+          created: fixedNow,
+          modified: fixedNow,
           folder: '',
         },
         {
@@ -179,13 +186,14 @@ describe('StatsAnalyzer', () => {
           extension: '.md',
           size: 100,
           created: startOfThisWeek.getTime() - 86400000 * 8, // over a week ago
-          modified: now,
+          modified: fixedNow,
           folder: '',
         },
       ];
 
       const result = analyzer.analyze(files);
-      expect(result.weekCreated).toBeGreaterThanOrEqual(1);
+      expect(result.weekCreated).toBe(1);
+      jest.useRealTimers();
     });
 
     it('should handle empty file list', () => {
