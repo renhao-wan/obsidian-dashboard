@@ -1,3 +1,24 @@
+/* ===== Stats Overview ===== */
+
+.stats-overview {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	padding: 16px;
+}
+
+.stats-cards {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+	gap: 12px;
+}
+
+.stats-charts {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 24px;
+}
+
 /* ===== Stats Charts ===== */
 
 .stats-chart-wrapper {
