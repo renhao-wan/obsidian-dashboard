@@ -2641,6 +2641,7 @@
 	border: 1px solid var(--background-modifier-border);
 	border-radius: 8px;
 	overflow: hidden;
+	will-change: max-height;
 }
 
 .dashboard-settings-panel:last-child {
@@ -2671,7 +2672,7 @@
 .dashboard-settings-panel-arrow {
 	width: 16px;
 	height: 16px;
-	transition: transform 0.2s ease;
+	transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	color: var(--text-muted);
 }
 
@@ -2698,14 +2699,23 @@
 .dashboard-settings-panel-content {
 	max-height: 0;
 	overflow: hidden;
-	transition: max-height 0.3s ease;
+	transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .dashboard-settings-panel.is-expanded .dashboard-settings-panel-content {
-	max-height: 500px;
+	max-height: 800px;
+	transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .dashboard-settings-panel-content-inner {
 	padding: 8px 16px 16px;
+	opacity: 0;
+	transform: translateY(-10px);
+	transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dashboard-settings-panel.is-expanded .dashboard-settings-panel-content-inner {
+	opacity: 1;
+	transform: translateY(0);
 }
 
