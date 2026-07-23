@@ -2638,6 +2638,9 @@
 /* 折叠面板样式 */
 .dashboard-settings-details {
 	margin-bottom: 8px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 8px;
+	overflow: hidden;
 }
 
 .dashboard-settings-details:last-child {
@@ -2646,11 +2649,17 @@
 
 .dashboard-settings-summary {
 	cursor: pointer;
-	padding: 8px 0;
+	padding: 12px 16px;
 	user-select: none;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	background: var(--background-secondary);
+	transition: background 0.2s ease;
+}
+
+.dashboard-settings-summary:hover {
+	background: var(--background-modifier-hover);
 }
 
 .dashboard-settings-summary-toggle {
@@ -2677,6 +2686,18 @@
 }
 
 .dashboard-settings-details-content {
-	padding-top: 8px;
+	padding: 8px 16px 16px;
+	animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(-8px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
