@@ -309,12 +309,41 @@ export class DashboardSettingTab extends PluginSettingTab {
 			if (e.target instanceof HTMLElement && e.target.closest('.dashboard-settings-panel-toggle')) {
 				return;
 			}
-			pomodoroPanel.toggleClass('is-expanded', !pomodoroPanel.hasClass('is-expanded'));
+
+			const isExpanded = pomodoroPanel.hasClass('is-expanded');
+
+			if (isExpanded) {
+				// 折叠：先设置当前高度，然后动画到0
+				pomodoroContent.style.height = pomodoroContent.scrollHeight + 'px';
+				// 强制重排
+				pomodoroContent.offsetHeight;
+				pomodoroContent.style.height = '0';
+				pomodoroPanel.removeClass('is-expanded');
+			} else {
+				// 展开：设置目标高度
+				pomodoroPanel.addClass('is-expanded');
+				const targetHeight = pomodoroContentInner.scrollHeight;
+				pomodoroContent.style.height = targetHeight + 'px';
+
+				// 动画结束后移除固定高度
+				const onTransitionEnd = () => {
+					pomodoroContent.style.height = '';
+					pomodoroContent.removeEventListener('transitionend', onTransitionEnd);
+				};
+				pomodoroContent.addEventListener('transitionend', onTransitionEnd);
+			}
 		});
 
 		// 内容区域
 		const pomodoroContent = pomodoroPanel.createDiv({ cls: 'dashboard-settings-panel-content' });
 		const pomodoroContentInner = pomodoroContent.createDiv({ cls: 'dashboard-settings-panel-content-inner' });
+
+		// 初始化高度
+		if (this.plugin.settings.pomodoroEnabled) {
+			pomodoroContent.style.height = 'auto';
+		} else {
+			pomodoroContent.style.height = '0';
+		}
 
 		if (this.plugin.settings.pomodoroEnabled) {
 			const workSetting = new Setting(pomodoroContentInner)
