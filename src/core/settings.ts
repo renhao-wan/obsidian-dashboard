@@ -19,7 +19,21 @@ export class DashboardSettingTab extends PluginSettingTab {
 	display(): void {
 		const { containerEl } = this;
 		containerEl.empty();
-		new Setting(containerEl)
+
+		this.renderBasicSettings(containerEl);
+		this.renderPathSettings(containerEl);
+		this.renderFunctionSettings(containerEl);
+		this.renderWidgetSettings(containerEl);
+		this.renderOtherSettings(containerEl);
+
+		containerEl.createDiv({ cls: 'dashboard-settings-footer', text: "crafted by Pandora's Digital Garden" });
+	}
+
+	private renderBasicSettings(containerEl: HTMLElement): void {
+		const group = containerEl.createDiv({ cls: 'settings-group' });
+		new Setting(group).setName(t('settings.basicSettings')).setHeading();
+
+		new Setting(group)
 			.setName(t('settings.language'))
 			.setDesc(t('settings.languageDesc'))
 			.addDropdown(dropdown => dropdown
@@ -37,12 +51,11 @@ export class DashboardSettingTab extends PluginSettingTab {
 					setLanguage(lang);
 					await this.plugin.saveSettings();
 					this.display();
-					// 更新默认内容（如果还是默认状态）
 					await this.plugin.updateDashboardDefaultContent();
 					this.plugin.refreshAllDashboards();
 				}));
 
-		new Setting(containerEl)
+		new Setting(group)
 			.setName(t('settings.stylePreset'))
 			.setDesc(t('settings.stylePresetDesc'))
 			.addDropdown(dropdown => dropdown
@@ -71,7 +84,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 					this.plugin.refreshAllDashboards();
 				}));
 
-		const recentSetting = new Setting(containerEl)
+		const recentSetting = new Setting(group)
 			.setName(t('settings.recentCount') + '  ' + this.plugin.settings.recentDocCount)
 			.setDesc(t('settings.recentCountDesc'))
 			.addSlider(slider => slider
@@ -86,8 +99,13 @@ export class DashboardSettingTab extends PluginSettingTab {
 					await this.plugin.saveSettings();
 					recentSetting.nameEl.setText(t('settings.recentCount') + '  ' + value);
 				}));
+	}
 
-		new Setting(containerEl)
+	private renderPathSettings(containerEl: HTMLElement): void {
+		const group = containerEl.createDiv({ cls: 'settings-group' });
+		new Setting(group).setName(t('settings.pathSettings')).setHeading();
+
+		new Setting(group)
 			.setName(t('settings.dashboardFile'))
 			.setDesc(t('settings.dashboardFileDesc'))
 			.addText(text => text
@@ -101,7 +119,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 					await this.plugin.saveSettings();
 				}));
 
-		new Setting(containerEl)
+		new Setting(group)
 			.setName(t('settings.memoSavePath'))
 			.setDesc(t('settings.memoSavePathDesc'))
 			.addText(text => text
@@ -115,7 +133,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 					await this.plugin.saveSettings();
 				}));
 
-		new Setting(containerEl)
+		new Setting(group)
 			.setName(t('settings.taskArchivePath'))
 			.setDesc(t('settings.taskArchivePathDesc'))
 			.addText(text => text
@@ -128,8 +146,13 @@ export class DashboardSettingTab extends PluginSettingTab {
 					};
 					await this.plugin.saveSettings();
 				}));
+	}
 
-		new Setting(containerEl)
+	private renderFunctionSettings(containerEl: HTMLElement): void {
+		const group = containerEl.createDiv({ cls: 'settings-group' });
+		new Setting(group).setName(t('settings.functionSettings')).setHeading();
+
+		new Setting(group)
 			.setName(t('settings.disableNotePopover'))
 			.setDesc(t('settings.disableNotePopoverDesc'))
 			.addToggle(toggle => toggle
@@ -138,21 +161,22 @@ export class DashboardSettingTab extends PluginSettingTab {
 					this.plugin.settings = { ...this.plugin.settings, disableNotePopover: value };
 					await this.plugin.saveSettings();
 				}));
+	}
 
-		this.renderWidgetSettings(containerEl);
+	private renderOtherSettings(containerEl: HTMLElement): void {
+		const group = containerEl.createDiv({ cls: 'settings-group' });
+		new Setting(group).setName(t('settings.otherSettings')).setHeading();
 
-		this.renderLunarSettings(containerEl);
-
-		this.renderResetSection(containerEl);
-
-		containerEl.createDiv({ cls: 'dashboard-settings-footer', text: "crafted by Pandora's Digital Garden" });
+		this.renderLunarSettings(group);
+		this.renderResetSection(group);
 	}
 
 	private renderWidgetSettings(containerEl: HTMLElement): void {
-		new Setting(containerEl).setName(t('settings.widgetTheme')).setHeading();
+		const group = containerEl.createDiv({ cls: 'settings-group' });
+		new Setting(group).setName(t('settings.widgetTheme')).setHeading();
 
 		// --- Weather card ---
-		const weatherCard = containerEl.createDiv({ cls: 'dashboard-widget-settings-card' });
+		const weatherCard = group.createDiv({ cls: 'dashboard-widget-settings-card' });
 		new Setting(weatherCard)
 			.setName(t('settings.widgetWeatherEnabled'))
 			.setDesc(t('settings.widgetWeatherEnabledDesc'))
@@ -188,7 +212,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 		}
 
 		// --- Pomodoro card ---
-		const pomodoroCard = containerEl.createDiv({ cls: 'dashboard-widget-settings-card' });
+		const pomodoroCard = group.createDiv({ cls: 'dashboard-widget-settings-card' });
 		new Setting(pomodoroCard)
 			.setName(t('settings.pomodoroEnabled'))
 			.setDesc(t('settings.pomodoroEnabledDesc'))
@@ -292,7 +316,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 		}
 
 		// --- Countdown card ---
-		const countdownCard = containerEl.createDiv({ cls: 'dashboard-widget-settings-card' });
+		const countdownCard = group.createDiv({ cls: 'dashboard-widget-settings-card' });
 		new Setting(countdownCard)
 			.setName(t('settings.countdownEnabled'))
 			.setDesc(t('settings.countdownEnabledDesc'))
@@ -313,7 +337,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 		}
 
 		// --- Reading card ---
-		const readingCard = containerEl.createDiv({ cls: 'dashboard-widget-settings-card' });
+		const readingCard = group.createDiv({ cls: 'dashboard-widget-settings-card' });
 		new Setting(readingCard)
 			.setName(t('settings.readingEnabled'))
 			.setDesc(t('settings.readingEnabledDesc'))
@@ -407,8 +431,6 @@ export class DashboardSettingTab extends PluginSettingTab {
 	}
 
 	private renderLunarSettings(containerEl: HTMLElement): void {
-		new Setting(containerEl).setName(t('settings.widgetLunar')).setHeading();
-
 		const lunarCard = containerEl.createDiv({ cls: 'dashboard-widget-settings-card' });
 		new Setting(lunarCard)
 			.setName(t('settings.widgetLunarEnabled'))
@@ -516,8 +538,6 @@ export class DashboardSettingTab extends PluginSettingTab {
 	}
 
 	private renderResetSection(containerEl: HTMLElement): void {
-		new Setting(containerEl).setName(t('settings.resetToDefaults')).setHeading();
-
 		const resetCard = containerEl.createDiv({ cls: 'dashboard-widget-settings-card' });
 		new Setting(resetCard)
 			.setName(t('settings.resetToDefaults'))
