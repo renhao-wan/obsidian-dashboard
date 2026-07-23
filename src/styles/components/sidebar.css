@@ -2638,14 +2638,14 @@
 
 /* Widget 设置卡片样式优化 */
 .dashboard-widget-settings-card {
-	border: 1px solid var(--background-modifier-border);
-	border-radius: 8px;
-	padding: 12px;
-	margin-bottom: 12px;
+	padding: 8px 0;
+	margin-bottom: 4px;
+	border-bottom: 1px solid var(--background-modifier-border);
 }
 
 .dashboard-widget-settings-card:last-child {
 	margin-bottom: 0;
+	border-bottom: none;
 }
 
 .dashboard-widget-settings-card > .setting-item:first-child {
