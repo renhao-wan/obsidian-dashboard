@@ -24,6 +24,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 		this.renderPathSettings(containerEl);
 		this.renderFunctionSettings(containerEl);
 		this.renderWidgetSettings(containerEl);
+		this.renderStatsSettings(containerEl);
 		this.renderOtherSettings(containerEl);
 
 		containerEl.createDiv({ cls: 'dashboard-settings-footer', text: "crafted by Pandora's Digital Garden" });
@@ -179,6 +180,92 @@ export class DashboardSettingTab extends PluginSettingTab {
 		new Setting(group).setName(t('settings.otherSettings')).setHeading();
 
 		this.renderResetSection(group);
+	}
+
+	private renderStatsSettings(containerEl: HTMLElement): void {
+		const group = containerEl.createDiv({ cls: 'settings-group' });
+		new Setting(group).setName(t('stats.title')).setHeading();
+
+		const statsEnabled = this.plugin.settings.stats.enabled;
+		const statsBlock = group.createDiv({ cls: 'dashboard-settings-block' });
+		if (!statsEnabled) statsBlock.addClass('is-disabled');
+
+		new Setting(statsBlock)
+			.setName(t('stats.settings.enable'))
+			.setDesc(t('stats.settings.enableDesc'))
+			.addToggle(toggle => toggle
+				.setValue(statsEnabled)
+				.onChange(async (value) => {
+					this.plugin.settings = {
+						...this.plugin.settings,
+						stats: { ...this.plugin.settings.stats, enabled: value },
+					};
+					await this.plugin.saveSettings();
+					this.plugin.refreshAllDashboards();
+					this.display();
+				}));
+
+		new Setting(statsBlock)
+			.setName(t('stats.settings.fileExtensions'))
+			.setDesc(t('stats.settings.fileExtensionsDesc'))
+			.addText(text => text
+				.setPlaceholder('.md, .txt, .org')
+				.setValue(this.plugin.settings.stats.fileType.extensions.join(', '))
+				.setDisabled(!statsEnabled)
+				.onChange(async (value) => {
+					this.plugin.settings = {
+						...this.plugin.settings,
+						stats: {
+							...this.plugin.settings.stats,
+							fileType: {
+								...this.plugin.settings.stats.fileType,
+								extensions: value.split(',').map(s => s.trim()).filter(Boolean),
+							},
+						},
+					};
+					await this.plugin.saveSettings();
+				}));
+
+		new Setting(statsBlock)
+			.setName(t('stats.settings.excludePatterns'))
+			.setDesc(t('stats.settings.excludePatternsDesc'))
+			.addText(text => text
+				.setPlaceholder('node_modules, .git, .obsidian')
+				.setValue(this.plugin.settings.stats.fileType.excludePatterns.join(', '))
+				.setDisabled(!statsEnabled)
+				.onChange(async (value) => {
+					this.plugin.settings = {
+						...this.plugin.settings,
+						stats: {
+							...this.plugin.settings.stats,
+							fileType: {
+								...this.plugin.settings.stats.fileType,
+								excludePatterns: value.split(',').map(s => s.trim()).filter(Boolean),
+							},
+						},
+					};
+					await this.plugin.saveSettings();
+				}));
+
+		new Setting(statsBlock)
+			.setName(t('stats.settings.cacheEnabled'))
+			.setDesc(t('stats.settings.cacheEnabledDesc'))
+			.addToggle(toggle => toggle
+				.setValue(this.plugin.settings.stats.performance.cacheEnabled)
+				.setDisabled(!statsEnabled)
+				.onChange(async (value) => {
+					this.plugin.settings = {
+						...this.plugin.settings,
+						stats: {
+							...this.plugin.settings.stats,
+							performance: {
+								...this.plugin.settings.stats.performance,
+								cacheEnabled: value,
+							},
+						},
+					};
+					await this.plugin.saveSettings();
+				}));
 	}
 
 	private renderWidgetSettings(containerEl: HTMLElement): void {

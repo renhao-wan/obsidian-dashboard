@@ -1,5 +1,5 @@
 import type { App } from 'obsidian';
-import type { DashboardSettings, DashboardColumn } from '../../core/types';
+import type { DashboardSettings, DashboardColumn, StatsSettings as CoreStatsSettings } from '../../core/types';
 import type { StatsSettings, OverviewStats } from './types';
 import { StatsScanner } from './scanner';
 import { StatsAnalyzer } from './analyzer';
@@ -17,18 +17,18 @@ export class StatsSection {
   constructor(app: App, settings: DashboardSettings) {
     this.app = app;
     this.settings = settings;
-    this.statsSettings = this.getDefaultStatsSettings();
+    this.statsSettings = this.buildStatsSettings(settings.stats);
     this.scanner = new StatsScanner(app, this.statsSettings);
     this.analyzer = new StatsAnalyzer();
-    this.cache = new StatsCacheManager();
+    this.cache = new StatsCacheManager(settings.stats.performance.cacheTTL);
   }
 
-  private getDefaultStatsSettings(): StatsSettings {
+  private buildStatsSettings(coreSettings: CoreStatsSettings): StatsSettings {
     return {
       fileType: {
-        enabled: true,
-        extensions: ['.md', '.txt', '.org'],
-        excludePatterns: ['node_modules', '.git', '.obsidian'],
+        enabled: coreSettings.fileType.enabled,
+        extensions: coreSettings.fileType.extensions,
+        excludePatterns: coreSettings.fileType.excludePatterns,
       },
       stats: {
         fileCount: true,
@@ -38,9 +38,9 @@ export class StatsSection {
         heatmap: true,
       },
       performance: {
-        useWebWorkers: true,
-        cacheEnabled: true,
-        cacheTTL: 5 * 60 * 1000, // 5 minutes
+        useWebWorkers: coreSettings.performance.useWebWorkers,
+        cacheEnabled: coreSettings.performance.cacheEnabled,
+        cacheTTL: coreSettings.performance.cacheTTL,
         maxConcurrentScans: 4,
       },
       ui: {
@@ -85,7 +85,6 @@ export class StatsSection {
 
 export function renderStatsSection(
   el: HTMLElement,
-  column: DashboardColumn,
   app: App,
   settings: DashboardSettings
 ): () => void {

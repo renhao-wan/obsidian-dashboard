@@ -1,5 +1,4 @@
 import { HoverParent, HoverPopover, ItemView, WorkspaceLeaf } from 'obsidian';
-import type { TFile } from 'obsidian';
 import type DashboardPlugin from './main';
 import type { DashboardData } from './types';
 import { SyncEngine } from '../data/sync';
@@ -12,6 +11,7 @@ import { ReadingService } from '../services/reading';
 import { loadHolidayData } from '../modals/lunar';
 import type { HolidayInfo } from '../services/holiday';
 import { t } from '../utils/i18n';
+import { StatsSection } from '../sections/stats';
 
 import { DASHBOARD_VIEW_TYPE } from './view-utils';
 import type { UIState } from './view-ui';
@@ -27,14 +27,11 @@ import {
 } from './view-ui';
 import {
 	openBannerEditModal,
-	openNotePopover,
-	openAddSectionModal,
 	openFolderConfigModal,
 	openHeatmapConfigModal,
 	openCalendarConfigModal,
 	openLibraryConfigModal,
 	navigateToPath as navToPath,
-	addColumnWithType,
 	openAddActionModal,
 	openEditActionModal,
 } from './view-modals';
@@ -91,6 +88,7 @@ export class DashboardView extends ItemView implements HoverParent {
 	private pomodoroService: PomodoroService | null = null;
 	private readingService: ReadingService | null = null;
 	private holidayData: Record<string, HolidayInfo> = {};
+	private statsSection: StatsSection | null = null;
 
 	hoverPopover: HoverPopover | null = null;
 	private popoverModal: import('../modals/note-popover').NotePopoverModal | null = null;
@@ -115,12 +113,16 @@ export class DashboardView extends ItemView implements HoverParent {
 		await this.sync.init();
 		this.registerVaultListeners();
 		startReminderChecker(this.timerState, () => this.doCheckReminders());
-		startWeatherRefresh(this.timerState, this.data, () => { if (this.data) this.render(this.data); });
+		startWeatherRefresh(this.timerState, () => this.data, () => { if (this.data) this.render(this.data); });
 		startDayRolloverChecker(this.timerState, () => this.doCheckDayRollover());
 		this.pomodoroService = new PomodoroService(this.plugin);
 		await this.pomodoroService.loadSessions();
 		this.readingService = new ReadingService(this.plugin);
 		await this.readingService.loadSessions();
+		// Initialize stats section
+		if (this.plugin.settings.stats.enabled) {
+			this.statsSection = new StatsSection(this.app, this.plugin.settings);
+		}
 		void loadHolidayData(this.app).then(data => {
 			this.holidayData = data;
 			const cur = this.sync.getData();
@@ -138,6 +140,7 @@ export class DashboardView extends ItemView implements HoverParent {
 		stopDayRolloverChecker(this.timerState);
 		this.pomodoroService?.destroy(); this.pomodoroService = null;
 		this.readingService?.destroy(); this.readingService = null;
+		this.statsSection?.destroy(); this.statsSection = null;
 		this.sync.destroy();
 	}
 
@@ -220,6 +223,12 @@ export class DashboardView extends ItemView implements HoverParent {
 		const callbacks = this.buildCallbacks();
 		renderDashboard(kanban, data, callbacks, this.app, this.plugin.settings, this);
 		setupDragAndDrop(kanban, callbacks, this.uiState.dndCleanupFns);
+
+		// Render stats section if enabled
+		if (this.statsSection) {
+			const statsContainer = kanban.createDiv({ cls: 'dashboard-stats-section' });
+			this.statsSection.render(statsContainer);
+		}
 		kanban.addEventListener('dashboard-library-config', ((e: CustomEvent) => {
 			const { columnName } = e.detail as { columnName: string };
 			const col = this.data?.columns.find(c => c.name === columnName);

@@ -1,6 +1,20 @@
 import type { Language } from '../utils/i18n';
 import type { TFile } from 'obsidian';
 
+export interface StatsSettings {
+	enabled: boolean;
+	fileType: {
+		enabled: boolean;
+		extensions: string[];
+		excludePatterns: string[];
+	};
+	performance: {
+		useWebWorkers: boolean;
+		cacheEnabled: boolean;
+		cacheTTL: number;
+	};
+}
+
 export interface DashboardSettings {
 	dashboardFile: string;
 	recentDocCount: number;
@@ -31,6 +45,7 @@ export interface DashboardSettings {
 	taskTemplates: TaskTemplate[];
 	memoSavePath: string;
 	taskArchivePath: string;
+	stats: StatsSettings;
 }
 
 export const DEFAULT_SETTINGS: DashboardSettings = {
@@ -60,6 +75,19 @@ export const DEFAULT_SETTINGS: DashboardSettings = {
 	taskTemplates: [],
 	memoSavePath: '.dashboard/memo',
 	taskArchivePath: '.dashboard/archive',
+	stats: {
+		enabled: true,
+		fileType: {
+			enabled: true,
+			extensions: ['.md', '.txt', '.org'],
+			excludePatterns: ['node_modules', '.git', '.obsidian'],
+		},
+		performance: {
+			useWebWorkers: true,
+			cacheEnabled: true,
+			cacheTTL: 5 * 60 * 1000,
+		},
+	},
 };
 
 export interface QuoteItem {

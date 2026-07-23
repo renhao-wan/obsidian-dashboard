@@ -667,6 +667,7 @@ export const en: Record<string, string> = {
 	'library.modified': 'modified',
 	'library.created': 'created',
 	'library.path': 'path',
+	'library.quickFilter': 'Date filter',
 	'library.dateStart': 'Start date',
 	'library.dateEnd': 'End date',
 	'library.filterActive': 'Filter active',
@@ -679,6 +680,7 @@ export const en: Record<string, string> = {
 	'library.deleteFailed': 'Failed to delete file',
 
 	// Stats
+	'stats.title': 'Note Statistics',
 	'stats.totalFiles': 'Total Files',
 	'stats.totalSize': 'Total Size',
 	'stats.today': 'Today',
@@ -687,4 +689,12 @@ export const en: Record<string, string> = {
 	'stats.topFolders': 'Top Folders',
 	'stats.fileCount': '{count} files',
 	'stats.noData': 'No data available',
+	'stats.settings.enable': 'Enable Statistics',
+	'stats.settings.enableDesc': 'Enable note statistics feature',
+	'stats.settings.fileExtensions': 'File Extensions',
+	'stats.settings.fileExtensionsDesc': 'File extensions to include in statistics',
+	'stats.settings.excludePatterns': 'Exclude Patterns',
+	'stats.settings.excludePatternsDesc': 'Patterns to exclude from statistics',
+	'stats.settings.cacheEnabled': 'Enable Cache',
+	'stats.settings.cacheEnabledDesc': 'Cache statistics data for better performance',
 };

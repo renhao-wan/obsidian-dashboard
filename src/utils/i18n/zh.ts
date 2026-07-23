@@ -678,6 +678,7 @@ export const zh: Record<string, string> = {
 	'library.filterValues': '{property}: {values}',
 
 	// Stats
+	'stats.title': '笔记统计',
 	'stats.totalFiles': '总文件数',
 	'stats.totalSize': '总大小',
 	'stats.today': '今日',
@@ -686,4 +687,12 @@ export const zh: Record<string, string> = {
 	'stats.topFolders': '热门文件夹',
 	'stats.fileCount': '{count} 个文件',
 	'stats.noData': '暂无数据',
+	'stats.settings.enable': '启用统计',
+	'stats.settings.enableDesc': '启用笔记统计功能',
+	'stats.settings.fileExtensions': '文件扩展名',
+	'stats.settings.fileExtensionsDesc': '要统计的文件扩展名',
+	'stats.settings.excludePatterns': '排除模式',
+	'stats.settings.excludePatternsDesc': '要排除的文件模式',
+	'stats.settings.cacheEnabled': '启用缓存',
+	'stats.settings.cacheEnabledDesc': '缓存统计数据以提高性能',
 };
