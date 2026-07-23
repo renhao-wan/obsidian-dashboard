@@ -19,16 +19,27 @@ export function renderOverview(
   renderStatCard(cardsContainer, t('stats.todayCreated'), stats.todayCreated, undefined, 'calendar-plus');
   renderStatCard(cardsContainer, t('stats.thisWeek'), stats.weekCreated, undefined, 'calendar-range');
 
-  // Render charts
-  const chartsContainer = container.createDiv({ cls: 'stats-charts' });
+  // Render charts section
+  const chartsSection = container.createDiv({ cls: 'stats-charts-section' });
+  chartsSection.createEl('h2', { text: t('stats.chartsTitle') || 'Statistics Charts', cls: 'stats-charts-title' });
+
+  const chartsContainer = chartsSection.createDiv({ cls: 'stats-charts' });
 
   // File type distribution pie chart
   if (stats.fileTypeStats.length > 0) {
     renderPieChart(chartsContainer, stats.fileTypeStats, t('stats.fileTypeDistribution'), 'pie-chart');
+  } else {
+    // Show placeholder when no data
+    const placeholder = chartsContainer.createDiv({ cls: 'stats-chart-placeholder' });
+    placeholder.createDiv({ text: t('stats.noData') || 'No file type data available', cls: 'stats-chart-placeholder-text' });
   }
 
   // Folder distribution bar chart
   if (stats.folderStats.length > 0) {
     renderBarChart(chartsContainer, stats.folderStats, t('stats.folderDistribution'), 10, 'folder-tree');
+  } else {
+    // Show placeholder when no data
+    const placeholder = chartsContainer.createDiv({ cls: 'stats-chart-placeholder' });
+    placeholder.createDiv({ text: t('stats.noData') || 'No folder data available', cls: 'stats-chart-placeholder-text' });
   }
 }

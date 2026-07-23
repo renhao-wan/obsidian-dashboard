@@ -695,4 +695,5 @@ export const zh: Record<string, string> = {
 	'stats.settings.excludePatternsDesc': '要排除的文件模式',
 	'stats.settings.cacheEnabled': '启用缓存',
 	'stats.settings.cacheEnabledDesc': '缓存统计数据以提高性能',
+	'stats.chartsTitle': '统计图表',
 };

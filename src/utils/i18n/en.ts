@@ -697,4 +697,5 @@ export const en: Record<string, string> = {
 	'stats.settings.excludePatternsDesc': 'Patterns to exclude from statistics',
 	'stats.settings.cacheEnabled': 'Enable Cache',
 	'stats.settings.cacheEnabledDesc': 'Cache statistics data for better performance',
+	'stats.chartsTitle': 'Statistics Charts',
 };
