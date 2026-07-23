@@ -22,5 +22,8 @@ styles.css
 .idea
 *.iml
 
+# Test coverage
+coverage
+
 # AI / Dev helpers
 CLUADE.md
