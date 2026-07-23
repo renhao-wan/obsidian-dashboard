@@ -1,4 +1,4 @@
-import { App, Platform } from 'obsidian';
+import { App } from 'obsidian';
 import type { HoverParent, TFile } from 'obsidian';
 import { t } from '../utils/i18n';
 import { Chart, LineController, LineElement, PointElement, BarController, BarElement, LinearScale, CategoryScale, Filler, Tooltip } from 'chart.js';

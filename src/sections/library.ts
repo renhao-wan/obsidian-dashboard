@@ -4,7 +4,7 @@ import type { LibraryConfig, PropertyFilter, LibraryViewMode } from '../core/typ
 import { t, getLanguage } from '../utils/i18n';
 import { FolderSuggestModal } from '../modals/folder-config';
 import { showConfirmDialog } from '../components/confirm-dialog';
-import { LibraryFileResult, DEFAULT_PAGE_SIZE, PAGE_SIZE_OPTIONS, queryVaultFiles } from './library-config';
+import { DEFAULT_PAGE_SIZE, PAGE_SIZE_OPTIONS, queryVaultFiles } from './library-config';
 import { setLibraryHoverContext, renderGridView, renderListView, renderTableView, renderKanbanView, renderPagination } from './library-views';
 
 // ===== Calendar Popup =====
@@ -407,9 +407,10 @@ export function renderLibrarySection(
 			if (quickStart && quickEnd) {
 				const start = quickStart || '...';
 				const end = quickEnd || '...';
+				const propLabel = quickProp === 'created' ? t('library.created') : t('library.modified');
 				const tag = filterTag.createDiv({
 					cls: 'dashboard-library-filter-tag',
-					text: `${quickProp}: ${start} ~ ${end}`,
+					text: `${propLabel}: ${start} ~ ${end}`,
 				});
 				const x = tag.createSpan({ cls: 'dashboard-library-filter-tag-x', text: '×' });
 				x.addEventListener('click', () => {

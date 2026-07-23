@@ -184,7 +184,7 @@ export async function archiveCompletedTasks(
 		if (!confirmed) return;
 
 		const configured = plugin.settings.taskArchivePath.trim().replace(/^\/+|\/+$/g, '');
-		const fullPath = configured || '归档/已完成.md';
+		const fullPath = configured || t('settings.defaultArchivePath');
 		const slash = fullPath.lastIndexOf('/');
 		const folder = slash >= 0 ? fullPath.slice(0, slash) : '';
 		if (folder) await ensureFolder(app, folder);

@@ -2,6 +2,7 @@ import { Notice } from 'obsidian';
 import type DashboardPlugin from '../core/main';
 import type { DashboardSettings } from '../core/types';
 import { t } from '../utils/i18n';
+import { formatDate, calcStreak, createTickController, type TickController } from './service-utils';
 
 export type PomodoroPhase = 'work' | 'short-break' | 'long-break';
 export type PomodoroStatus = 'idle' | 'running' | 'paused';
@@ -37,7 +38,7 @@ export class PomodoroService {
 	private pausedRemaining = 0;
 	private durationMs = 0;
 	private completedWorkSessions = 0;
-	private tickInterval: number | null = null;
+	private tick: TickController = createTickController();
 	private onTickCallback: (() => void) | null = null;
 	private onCompleteCallback: (() => void) | null = null;
 	private sessions: PomodoroSession[] = [];
@@ -166,18 +167,14 @@ export class PomodoroService {
 	}
 
 	private ensureTickInterval(): void {
-		if (this.tickInterval) return;
-		this.tickInterval = window.setInterval(() => this.tick(), 1000);
+		this.tick.ensureTickInterval(() => this.onTick());
 	}
 
 	private clearTickInterval(): void {
-		if (this.tickInterval) {
-			window.clearInterval(this.tickInterval);
-			this.tickInterval = null;
-		}
+		this.tick.clearTickInterval();
 	}
 
-	private tick(): void {
+	private onTick(): void {
 		if (this.status !== 'running') return;
 		const remaining = this.getRemainingSeconds();
 		if (remaining <= 0) {
@@ -434,41 +431,12 @@ export class PomodoroService {
 	}
 
 	getStreak(): number {
-		const sorted = [...this.sessions]
+		const dates = [...this.sessions]
 			.filter(s => s.completed > 0)
-			.sort((a, b) => b.date.localeCompare(a.date));
-		if (sorted.length === 0) return 0;
-
-		let streak = 0;
-		let expected = formatDate(new Date());
-
-		// If today has no sessions yet, start checking from yesterday
-		if (sorted.length > 0 && sorted[0]!.date !== expected) {
-			const d = new Date();
-			d.setDate(d.getDate() - 1);
-			expected = formatDate(d);
-		}
-
-		for (const s of sorted) {
-			if (s.date === expected) {
-				streak++;
-				const d = new Date(expected + 'T00:00:00');
-				d.setDate(d.getDate() - 1);
-				expected = formatDate(d);
-			} else if (s.date < expected) {
-				break;
-			}
-		}
-
-		return streak;
+			.map(s => s.date)
+			.sort((a, b) => b.localeCompare(a));
+		return calcStreak(dates);
 	}
-}
-
-function formatDate(d: Date): string {
-	const y = d.getFullYear();
-	const m = String(d.getMonth() + 1).padStart(2, '0');
-	const day = String(d.getDate()).padStart(2, '0');
-	return `${y}-${m}-${day}`;
 }
 
 const ACTIVITY_PALETTE = [

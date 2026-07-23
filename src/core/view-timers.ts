@@ -130,8 +130,9 @@ function showReminderModal(
 // Weather refresh
 // ---------------------------------------------------------------------------
 
-export function startWeatherRefresh(state: TimerState, data: DashboardData | null, onRefresh: () => void): void {
+export function startWeatherRefresh(state: TimerState, getData: () => DashboardData | null, onRefresh: () => void): void {
 	state.weatherRefreshTimer = window.setInterval(() => {
+		const data = getData();
 		if (!data) return;
 		const hasWeather = data.columns.some(col =>
 			col.cards.some(c => c.type === 'weather')

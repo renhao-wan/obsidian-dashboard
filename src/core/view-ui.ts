@@ -1,10 +1,10 @@
 import { setIcon, TFile } from 'obsidian';
 import type { App } from 'obsidian';
 import type DashboardPlugin from './main';
-import type { DashboardData, DashboardCard, QuickAction, BannerData, LibraryConfig } from './types';
+import type { DashboardData, QuickAction, BannerData, LibraryConfig } from './types';
 import type { SyncEngine } from '../data/sync';
 import { renderSidebarWidgets, renderSidebarWeekCalendar, renderSidebarPomodoro, renderSidebarReading, renderSection } from '../renderers/dashboard';
-import { renderBanner, resolveVaultImage } from '../renderers/banner';
+import { resolveVaultImage } from '../renderers/banner';
 import { getRecentDocs, renderRecentDocs } from '../components/recent';
 import { renderQuickActions } from '../components/quick-actions';
 import { setupDragAndDrop } from '../utils/dnd';
@@ -14,6 +14,7 @@ import type { HolidayInfo } from '../services/holiday';
 import type { PomodoroService } from '../services/pomodoro';
 import type { ReadingService } from '../services/reading';
 import { t } from '../utils/i18n';
+import { createBaseCallbacks } from './view-callbacks';
 
 // ---------------------------------------------------------------------------
 // Mutable UI state shared between view and extracted functions
@@ -535,51 +536,25 @@ export function refreshSectionInPlace(
 }
 
 /** Minimal callback factory for section refresh (no UI mutation callbacks needed). */
-function createCallbacksForRefresh(deps: UIDeps, state: UIState, data: DashboardData) {
-	const { app, plugin, sync } = deps;
+function createCallbacksForRefresh(deps: UIDeps, _state: UIState, _data: DashboardData) {
+	const { app, sync } = deps;
+	const base = createBaseCallbacks(sync);
 	return {
+		...base,
 		onCardEdit: () => {},
 		onOpenNoteInPopover: (file: TFile) => { void app.workspace.getLeaf(false).openFile(file); },
 		onCardDelete: async () => {},
-		onCheckboxToggle: (cardId: string, taskPath: number[], checked: boolean) => sync.toggleTask(cardId, taskPath, checked),
-		onTaskAdd: (cardId: string, text: string, parentPath?: number[]) => sync.addTask(cardId, text, parentPath),
 		onTaskDelete: async () => {},
-		onTaskReorder: (cardId: string, fromPath: number[], toPath: number[], before: boolean) => sync.reorderTask(cardId, fromPath, toPath, before),
-		onTaskMoveToCard: (srcCardId: string, fromPath: number[], destCardId: string, destPath: number[], mode: 'before' | 'after' | 'nest') => sync.moveTaskToCard(srcCardId, fromPath, destCardId, destPath, mode),
-		onTaskEdit: (cardId: string, taskPath: number[], text: string) => sync.editTask(cardId, taskPath, text),
-		onTaskNest: (cardId: string, taskPath: number[]) => sync.nestTask(cardId, taskPath),
-		onTaskNestInto: (cardId: string, srcPath: number[], destPath: number[]) => sync.nestTaskInto(cardId, srcPath, destPath),
-		onTaskUnnest: (cardId: string, taskPath: number[]) => sync.unnestTask(cardId, taskPath),
-		onTaskToggleCollapse: (cardId: string, taskPath: number[]) => sync.toggleCollapseTask(cardId, taskPath),
-		onMemoUpdate: (card: DashboardCard, updates: { body: string; blockquote: string }) => sync.updateMemoCard(card.id, updates),
 		onMemoSaveAsNote: () => {},
 		onTaskSaveToDaily: () => {},
-		onDocAdd: (cardId: string, path: string) => sync.addDocToCard(cardId, path),
-		onDocDelete: (cardId: string, docPath: number[]) => sync.deleteDoc(cardId, docPath),
-		onDocReorder: (cardId: string, fromPath: number[], toPath: number[], before: boolean) => sync.reorderDocs(cardId, fromPath, toPath, before),
-		onDocMoveToCard: (srcCardId: string, fromPath: number[], destCardId: string, destPath: number[], mode: 'before' | 'after' | 'nest') => sync.moveDocToCard(srcCardId, fromPath, destCardId, destPath, mode),
-		onDocNest: (cardId: string, docPath: number[]) => sync.nestDoc(cardId, docPath),
-		onDocToggleCollapse: (cardId: string, docPath: number[]) => sync.toggleCollapseDoc(cardId, docPath),
 		onCardAdd: () => {},
 		onColumnAdd: () => {},
 		onRequestAddSection: () => {},
 		onBannerEdit: () => {},
 		onQuickActionAdd: () => {},
 		onQuickActionRemove: () => {},
-		onMoveCard: (cardId: string, targetCol: string, targetIdx: number) => sync.moveCard(cardId, targetCol, targetIdx),
-		onMemoColorChange: (card: DashboardCard, color: string) => sync.updateMemoColor(card.id, color),
-		onProjectCoverChange: (card: DashboardCard, imagePath: string) => sync.updateProjectCover(card.id, imagePath),
-		onCardTitleEdit: (cardId: string, newTitle: string) => sync.updateCard(cardId, { title: newTitle }),
-		onCardWidthChange: (cardId: string, width: number) => sync.updateCardWidth(cardId, width),
-		onCardSizeChange: (cardId: string, size: string) => sync.updateCardSize(cardId, size as import('./types').CardSize),
-		onCardGridChange: (cardId: string, gridCols: number, gridRows: number) => sync.updateCardGrid(cardId, gridCols, gridRows),
-		onCardGridMove: (cardId: string, gridCol: number, gridRow: number) => sync.updateCardGridMove(cardId, gridCol, gridRow),
 		onFileDrop: () => {},
-		onColumnRename: (oldName: string, newName: string) => sync.renameColumn(oldName, newName),
 		onColumnDelete: () => {},
-		onColumnMove: (fromIndex: number, toIndex: number) => { void sync.moveColumn(fromIndex, toIndex); },
-		onColumnHeightChange: (name: string, height: number) => { void sync.updateColumnHeight(name, height); },
-		onTaskReminderEdit: (cardId: string, taskPath: number[], reminder: string | undefined) => sync.editTaskReminder(cardId, taskPath, reminder),
 		onAddFromTemplate: () => {},
 		onArchiveTasks: () => {},
 		onLibraryConfigChange: (columnName: string, config: LibraryConfig) => {

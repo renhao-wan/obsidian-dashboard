@@ -350,7 +350,8 @@ export function renderMediaSection(
 		if (filterStart || filterEnd) {
 			const start = filterStart || '...';
 			const end = filterEnd || '...';
-			const tag = filterTagBar.createDiv({ cls: 'dashboard-library-filter-tag', text: `${filterProp}: ${start} ~ ${end}` });
+			const propLabel = filterProp === 'created' ? t('library.created') : t('library.modified');
+			const tag = filterTagBar.createDiv({ cls: 'dashboard-library-filter-tag', text: `${propLabel}: ${start} ~ ${end}` });
 			tag.createSpan({ cls: 'dashboard-library-filter-tag-x', text: '×' }).addEventListener('click', () => { filterStart = ''; filterEnd = ''; refreshMedia(); });
 		}
 		for (const folder of filterFolders) {

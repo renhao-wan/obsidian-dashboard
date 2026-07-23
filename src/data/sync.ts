@@ -1,7 +1,6 @@
 import { App, TFile } from 'obsidian';
 import type { DashboardSettings, DashboardCard, DashboardData, TaskItem, DocNode, QuickAction, BannerData, CardType } from '../core/types';
 import { parse, serialize, generateDefaultMarkdown, isDefaultContent } from './parser';
-import { Storage } from './storage';
 import { t } from '../utils/i18n';
 import {
 	type TaskPath,
@@ -846,11 +845,10 @@ export class SyncEngine {
 		const newData = parse(content);
 
 		// Skip the re-render when the on-disk data is logically equivalent to what
-		// we already hold. Our own writes echo back through the file watcher, and a
-		// byte-level hash misfires on trivial differences (e.g. trailing newlines),
-		// so compare canonical serializations instead — otherwise the whole view
-		// rebuilds a second time (the visible "double flash").
-		if (this.data && serialize(newData) === serialize(this.data)) return;
+		// we already hold. Our own writes echo back through the file watcher.
+		// Use lightweight JSON comparison instead of full serialize() to avoid
+		// rebuilding the entire markdown string on every file-modify event.
+		if (this.data && JSON.stringify(newData) === JSON.stringify(this.data)) return;
 
 		this.data = newData;
 		this.notifyCallbacks();

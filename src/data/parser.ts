@@ -365,6 +365,31 @@ export function isDefaultContent(markdown: string): boolean {
 	return markdown.includes(enMarker) || markdown.includes(zhMarker);
 }
 
+/** Create a DashboardCard with sensible defaults; only supply overrides. */
+function makeDefaultCard(overrides: Partial<DashboardCard> & Pick<DashboardCard, 'id' | 'title' | 'column'>): DashboardCard {
+	return {
+		type: 'generic',
+		body: '',
+		tasks: [],
+		docs: [],
+		url: '',
+		wikiLink: '',
+		progress: -1,
+		streak: 0,
+		dueDate: '',
+		blockquote: '',
+		color: '',
+		coverImage: '',
+		width: 0,
+		size: 'M',
+		gridCols: 0,
+		gridRows: 0,
+		gridCol: 0,
+		gridRow: 0,
+		...overrides,
+	};
+}
+
 export function generateDefaultMarkdown(): string {
 	const today = new Date();
 	const dateStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
@@ -385,75 +410,9 @@ export function generateDefaultMarkdown(): string {
 				color: '#f59e0b',
 				sectionType: 'memo',
 				cards: [
-					{
-						id: 'demo-memo-1',
-						title: t('default.memoTitle', { date: dateStr }),
-						type: 'generic',
-						column: colMemo,
-						body: t('default.memoBody'),
-						tasks: [],
-						docs: [],
-						url: '',
-						wikiLink: '',
-						progress: -1,
-						streak: 0,
-						dueDate: '',
-						blockquote: '',
-						color: '',
-						coverImage: '',
-						width: 0,
-					size: 'M',
-					gridCols: 0,
-					gridRows: 0,
-					gridCol: 0,
-					gridRow: 0,
-					},
-					{
-						id: 'demo-memo-path',
-						title: t('default.memoPathTitle'),
-						type: 'generic',
-						column: colMemo,
-						body: t('default.memoPathBody'),
-						tasks: [],
-						docs: [],
-						url: '',
-						wikiLink: '',
-						progress: -1,
-						streak: 0,
-						dueDate: '',
-						blockquote: '',
-						color: '',
-						coverImage: '',
-						width: 0,
-					size: 'M',
-					gridCols: 0,
-					gridRows: 0,
-					gridCol: 0,
-					gridRow: 0,
-					},
-					{
-						id: 'demo-memo-delete',
-						title: t('default.memoDeleteTitle'),
-						type: 'generic',
-						column: colMemo,
-						body: t('default.memoDeleteBody'),
-						tasks: [],
-						docs: [],
-						url: '',
-						wikiLink: '',
-						progress: -1,
-						streak: 0,
-						dueDate: '',
-						blockquote: '',
-						color: '',
-						coverImage: '',
-						width: 0,
-					size: 'M',
-					gridCols: 0,
-					gridRows: 0,
-					gridCol: 0,
-					gridRow: 0,
-					},
+					makeDefaultCard({ id: 'demo-memo-1', title: t('default.memoTitle', { date: dateStr }), column: colMemo, body: t('default.memoBody') }),
+					makeDefaultCard({ id: 'demo-memo-path', title: t('default.memoPathTitle'), column: colMemo, body: t('default.memoPathBody') }),
+					makeDefaultCard({ id: 'demo-memo-delete', title: t('default.memoDeleteTitle'), column: colMemo, body: t('default.memoDeleteBody') }),
 				],
 			},
 			{
@@ -461,62 +420,24 @@ export function generateDefaultMarkdown(): string {
 				color: '#6366f1',
 				sectionType: 'todo',
 				cards: [
-					{
-						id: 'demo-todo-1',
-						title: t('default.todoTitle1'),
-						type: 'task',
-						column: colTodo,
-						body: '',
+					makeDefaultCard({
+						id: 'demo-todo-1', title: t('default.todoTitle1'), type: 'task', column: colTodo,
 						tasks: [
 							{ text: t('default.todo1'), checked: false },
 							{ text: t('default.todo2'), checked: false },
 							{ text: t('default.todo3'), checked: false },
 							{ text: t('default.todo4'), checked: false },
 						],
-						docs: [],
-						url: '',
-						wikiLink: '',
-						progress: -1,
-						streak: 0,
-						dueDate: '',
-						blockquote: '',
-						color: '',
-						coverImage: '',
-						width: 0,
-					size: 'M',
-					gridCols: 0,
-					gridRows: 0,
-					gridCol: 0,
-					gridRow: 0,
-					},
-					{
-						id: 'demo-todo-2',
-						title: t('default.todoTitle2'),
-						type: 'task',
-						column: colTodo,
-						body: '',
+					}),
+					makeDefaultCard({
+						id: 'demo-todo-2', title: t('default.todoTitle2'), type: 'task', column: colTodo,
 						tasks: [
 							{ text: t('default.guide1'), checked: false },
 							{ text: t('default.guide2'), checked: false },
 							{ text: t('default.guide3'), checked: false },
 							{ text: t('default.guide4'), checked: false },
 						],
-						docs: [],
-						url: '',
-						wikiLink: '',
-						progress: -1,
-						streak: 0,
-						dueDate: '',
-						blockquote: '',
-						color: '',
-						coverImage: '',
-						width: 0,
-					size: 'M',
-					gridCols: 0,
-					gridRows: 0,
-					gridCol: 0,
-					gridRow: 0,
-					},
+					}),
 				],
 			},
 			{
@@ -524,29 +445,7 @@ export function generateDefaultMarkdown(): string {
 				color: '#10b981',
 				sectionType: 'projects',
 				cards: [
-					{
-						id: 'demo-project-1',
-						title: t('default.projectTitle'),
-						type: 'project',
-						column: colProjects,
-						body: '',
-						tasks: [],
-						docs: [],
-						url: '',
-						wikiLink: '',
-						progress: -1,
-						streak: 0,
-						dueDate: '',
-						blockquote: '',
-						color: '',
-						coverImage: '',
-						width: 0,
-					size: 'M',
-					gridCols: 0,
-					gridRows: 0,
-					gridCol: 0,
-					gridRow: 0,
-					},
+					makeDefaultCard({ id: 'demo-project-1', title: t('default.projectTitle'), type: 'project', column: colProjects }),
 				],
 			},
 			{
@@ -554,75 +453,9 @@ export function generateDefaultMarkdown(): string {
 				color: '#8b5cf6',
 				sectionType: 'projects',
 				cards: [
-					{
-						id: 'demo-lib-reading',
-						title: t('default.libReading'),
-						type: 'project',
-						column: colLibrary,
-						body: '',
-						tasks: [],
-						docs: [],
-						url: '',
-						wikiLink: '',
-						progress: -1,
-						streak: 0,
-						dueDate: '',
-						blockquote: '',
-						color: '',
-						coverImage: '',
-						width: 0,
-					size: 'M',
-					gridCols: 0,
-					gridRows: 0,
-					gridCol: 0,
-					gridRow: 0,
-					},
-					{
-						id: 'demo-lib-toread',
-						title: t('default.libToRead'),
-						type: 'project',
-						column: colLibrary,
-						body: '',
-						tasks: [],
-						docs: [],
-						url: '',
-						wikiLink: '',
-						progress: -1,
-						streak: 0,
-						dueDate: '',
-						blockquote: '',
-						color: '',
-						coverImage: '',
-						width: 0,
-					size: 'M',
-					gridCols: 0,
-					gridRows: 0,
-					gridCol: 0,
-					gridRow: 0,
-					},
-					{
-						id: 'demo-lib-done',
-						title: t('default.libDone'),
-						type: 'project',
-						column: colLibrary,
-						body: '',
-						tasks: [],
-						docs: [],
-						url: '',
-						wikiLink: '',
-						progress: -1,
-						streak: 0,
-						dueDate: '',
-						blockquote: '',
-						color: '',
-						coverImage: '',
-						width: 0,
-					size: 'M',
-					gridCols: 0,
-					gridRows: 0,
-					gridCol: 0,
-					gridRow: 0,
-					},
+					makeDefaultCard({ id: 'demo-lib-reading', title: t('default.libReading'), type: 'project', column: colLibrary }),
+					makeDefaultCard({ id: 'demo-lib-toread', title: t('default.libToRead'), type: 'project', column: colLibrary }),
+					makeDefaultCard({ id: 'demo-lib-done', title: t('default.libDone'), type: 'project', column: colLibrary }),
 				],
 			},
 		],
@@ -660,10 +493,12 @@ function parseBanner(fm: Record<string, unknown>): BannerData {
 	const quotesRaw = raw.quotes;
 	let quotes: Array<{ quote: string; author: string }> | undefined;
 	if (Array.isArray(quotesRaw)) {
-		quotes = quotesRaw.map((item: Record<string, string>) => ({
-			quote: item.quote ?? '',
-			author: item.author ?? '',
-		}));
+		quotes = quotesRaw
+			.filter((item: unknown): item is Record<string, unknown> => typeof item === 'object' && item !== null)
+			.map(item => ({
+				quote: typeof item.quote === 'string' ? item.quote : '',
+				author: typeof item.author === 'string' ? item.author : '',
+			}));
 	}
 
 	const imagesRaw = raw.images;
@@ -685,23 +520,27 @@ function parseBanner(fm: Record<string, unknown>): BannerData {
 function parseQuickActions(fm: Record<string, unknown>): QuickAction[] {
 	const rawActions = fm.quickActions;
 	if (Array.isArray(rawActions)) {
-		return rawActions.map((item: Record<string, string>) => ({
-			name: item.name ?? '',
-			icon: item.icon ?? (item.type === 'command' ? 'terminal' : 'file-text'),
-			type: item.type === 'command' ? 'command' as const : 'file' as const,
-			target: item.target ?? '',
-		})).filter(a => a.name && a.target);
+		return rawActions
+			.filter((item: unknown): item is Record<string, unknown> => typeof item === 'object' && item !== null)
+			.map(item => ({
+				name: typeof item.name === 'string' ? item.name : '',
+				icon: typeof item.icon === 'string' ? item.icon : (item.type === 'command' ? 'terminal' : 'file-text'),
+				type: item.type === 'command' ? 'command' as const : 'file' as const,
+				target: typeof item.target === 'string' ? item.target : '',
+			})).filter(a => a.name && a.target);
 	}
 
 	// Backward compat: migrate old quickLinks
 	const rawLinks = fm.quickLinks;
 	if (Array.isArray(rawLinks)) {
-		return rawLinks.map((item: Record<string, string>) => ({
-			name: item.name ?? '',
-			icon: 'file-text',
-			type: 'file' as const,
-			target: item.path ?? '',
-		})).filter(a => a.name && a.target);
+		return rawLinks
+			.filter((item: unknown): item is Record<string, unknown> => typeof item === 'object' && item !== null)
+			.map(item => ({
+				name: typeof item.name === 'string' ? item.name : '',
+				icon: 'file-text',
+				type: 'file' as const,
+				target: typeof item.path === 'string' ? item.path : '',
+			})).filter(a => a.name && a.target);
 	}
 
 	return [];
@@ -1134,7 +973,12 @@ function generateId(title: string, column: string): string {
 }
 
 function escapeYamlString(str: string): string {
-	return str.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, ' ');
+	return str
+		.replace(/\\/g, '\\\\')
+		.replace(/"/g, '\\"')
+		.replace(/\n/g, ' ')
+		.replace(/\t/g, '  ')
+		.replace(/\r/g, '');
 }
 
 function dequote(value: string): string {

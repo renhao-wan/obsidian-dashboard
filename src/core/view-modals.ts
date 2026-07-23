@@ -1,7 +1,7 @@
 import { Notice, TFile } from 'obsidian';
 import type { App } from 'obsidian';
 import type DashboardPlugin from './main';
-import type { DashboardData, DashboardCard, QuickAction, LibraryConfig } from './types';
+import type { DashboardData, DashboardCard, QuickAction } from './types';
 import type { SyncEngine } from '../data/sync';
 import type { AppWithCommands } from '../utils/obsidian-internal';
 import { BannerEditModal } from '../renderers/banner';
@@ -50,12 +50,12 @@ export function openNotePopover(app: App, file: TFile, stylePreset: string): Not
 }
 
 /** Opens a note on card click. Honors the "disable popover" setting. */
-export function openNote(app: App, file: TFile, disableNotePopover: boolean): void {
+export function openNote(app: App, file: TFile, disableNotePopover: boolean, stylePreset: string): void {
 	if (disableNotePopover) {
 		void app.workspace.getLeaf(false).openFile(file);
 		return;
 	}
-	openNotePopover(app, file, '');
+	openNotePopover(app, file, stylePreset);
 }
 
 // ---------------------------------------------------------------------------

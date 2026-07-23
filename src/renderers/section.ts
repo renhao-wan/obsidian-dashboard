@@ -1,8 +1,8 @@
 import { App, Platform, setIcon } from 'obsidian';
-import type { DashboardData, DashboardColumn, DashboardCard, RenderCallbacks, TaskItem, DocNode, DashboardSettings, CardSize } from '../core/types';
+import type { DashboardData, DashboardColumn, DashboardCard, RenderCallbacks, DashboardSettings, CardSize } from '../core/types';
 import { t } from '../utils/i18n';
 import { renderLibrarySection } from '../sections/library';
-import { renderMediaSection, destroyMediaSection } from '../sections/media';
+import { renderMediaSection } from '../sections/media';
 import { renderCalendarSection } from '../sections/calendar';
 import { renderHeatmapSection } from '../sections/heatmap';
 import { resolveVaultImage } from '../renderers/banner';

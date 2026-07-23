@@ -364,7 +364,7 @@ function setupTouchDrag(
 
 	cleanupFns.push(() => {
 		cardEl.removeEventListener('touchstart', onTouchStart);
-		cardEl.removeEventListener('touchmove', onTouchMove);
+		cardEl.removeEventListener('touchmove', onTouchMove, { passive: false } as AddEventListenerOptions);
 		cardEl.removeEventListener('touchend', onTouchEnd);
 		cardEl.removeEventListener('touchcancel', onTouchCancel);
 	});

@@ -1,4 +1,4 @@
-import { App, Platform, setIcon } from 'obsidian';
+import { App, setIcon } from 'obsidian';
 import type { DashboardSettings, WeatherData } from '../core/types';
 import { t, getLanguage } from '../utils/i18n';
 import { renderSidebarLunarWidget } from '../modals/lunar';
