@@ -1,12 +1,15 @@
 import type { OverviewStats, StatsRuntimeConfig } from '../types';
+import type { FileMetadata } from '../types';
 import { renderPieChart, renderBarChart, renderStatCard } from '../../../components/stats/charts';
+import { renderHeatmap, generateHeatmapData } from '../../../components/stats/heatmap';
 import { formatFileSize } from '../../../utils/stats/file-utils';
 import { t } from '../../../utils/i18n';
 
 export function renderOverview(
   container: HTMLElement,
   stats: OverviewStats,
-  settings: StatsRuntimeConfig
+  settings: StatsRuntimeConfig,
+  files?: FileMetadata[]
 ): void {
   // Clear container
   container.empty();
@@ -18,6 +21,25 @@ export function renderOverview(
   renderStatCard(cardsContainer, t('stats.totalSize'), formatFileSize(stats.totalSize), undefined, 'hard-drive');
   renderStatCard(cardsContainer, t('stats.todayCreated'), stats.todayCreated, undefined, 'calendar-plus');
   renderStatCard(cardsContainer, t('stats.thisWeek'), stats.weekCreated, undefined, 'calendar-range');
+
+  // Render heatmap section
+  if (files && files.length > 0) {
+    const heatmapSection = container.createDiv({ cls: 'stats-heatmap-section' });
+
+    // Created time heatmap
+    const createdData = generateHeatmapData(files, 'created');
+    renderHeatmap(heatmapSection, createdData, t('stats.createdHeatmap') || 'Note Creation Activity', {
+      weeks: 52,
+      colorScheme: 'green',
+    });
+
+    // Modified time heatmap
+    const modifiedData = generateHeatmapData(files, 'modified');
+    renderHeatmap(heatmapSection, modifiedData, t('stats.modifiedHeatmap') || 'Note Modification Activity', {
+      weeks: 52,
+      colorScheme: 'blue',
+    });
+  }
 
   // Render charts section
   const chartsSection = container.createDiv({ cls: 'stats-charts-section' });

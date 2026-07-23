@@ -9,14 +9,27 @@
 
 .stats-cards {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+	grid-template-columns: repeat(4, 1fr);
 	gap: 12px;
+}
+
+.stats-charts-section {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	padding: 20px;
+	background: var(--db-bg-card);
+	border-radius: 12px;
+	border: 1px solid var(--db-border-card);
+	backdrop-filter: var(--db-backdrop-blur);
+	-webkit-backdrop-filter: var(--db-backdrop-blur);
 }
 
 .stats-charts {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-	gap: 24px;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 20px;
+	min-height: 280px;
 }
 
 /* ===== Stats Charts ===== */
@@ -31,6 +44,7 @@
 	border: 1px solid var(--db-border-card);
 	backdrop-filter: var(--db-backdrop-blur);
 	-webkit-backdrop-filter: var(--db-backdrop-blur);
+	min-height: 200px;
 }
 
 .stats-chart-title {
@@ -50,8 +64,8 @@
 
 /* Pie Chart */
 .stats-pie-chart {
-	width: 120px;
-	height: 120px;
+	width: 140px;
+	height: 140px;
 	border-radius: 50%;
 	background: var(--db-bg-btn);
 	align-self: center;
@@ -191,19 +205,6 @@
 	height: 16px;
 }
 
-/* Stats Charts Section */
-.stats-charts-section {
-	display: flex;
-	flex-direction: column;
-	gap: 16px;
-	padding: 20px;
-	background: var(--db-bg-card);
-	border-radius: 12px;
-	border: 1px solid var(--db-border-card);
-	backdrop-filter: var(--db-backdrop-blur);
-	-webkit-backdrop-filter: var(--db-backdrop-blur);
-}
-
 .stats-charts-title {
 	font-size: 1.1em;
 	font-weight: 600;
@@ -227,6 +228,65 @@
 .stats-chart-placeholder-text {
 	font-size: 0.9em;
 	color: var(--db-text-muted);
+}
+
+/* Heatmap Section */
+.stats-heatmap-section {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	padding: 20px;
+	background: var(--db-bg-card);
+	border-radius: 12px;
+	border: 1px solid var(--db-border-card);
+	backdrop-filter: var(--db-backdrop-blur);
+	-webkit-backdrop-filter: var(--db-backdrop-blur);
+}
+
+.stats-heatmap-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.stats-heatmap-title {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 0.9em;
+	font-weight: 600;
+	color: var(--db-text-heading);
+	margin: 0;
+	padding: 0;
+}
+
+.stats-heatmap-title-icon {
+	display: flex;
+	align-items: center;
+	color: var(--db-accent);
+}
+
+.stats-heatmap-title-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+/* Heatmap color variables */
+:root {
+	--db-heatmap-empty: #ebedf0;
+	--db-heatmap-level-1: #9be9a8;
+	--db-heatmap-level-2: #40c463;
+	--db-heatmap-level-3: #30a14e;
+	--db-heatmap-level-4: #216e39;
+}
+
+/* Dark theme overrides */
+.theme-dark {
+	--db-heatmap-empty: #161b22;
+	--db-heatmap-level-1: #0e4429;
+	--db-heatmap-level-2: #006d32;
+	--db-heatmap-level-3: #26a641;
+	--db-heatmap-level-4: #39d353;
 }
 
 /* ===== Dashboard Stats Overview ===== */

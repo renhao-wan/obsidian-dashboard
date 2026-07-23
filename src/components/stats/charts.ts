@@ -4,7 +4,7 @@
  */
 
 import { setIcon } from 'obsidian';
-import type { FileTypeStats, FolderStats } from '../../sections/stats/types';
+import type { FileTypeStats } from '../../sections/stats/types';
 import { formatFileSize } from '../../utils/stats/file-utils';
 import { calculatePercentage } from '../../utils/stats/math-utils';
 import { t } from '../../utils/i18n';
@@ -60,11 +60,35 @@ export function renderPieChart(
 }
 
 /**
+ * Render a statistics card with title, value, and optional subtitle
+ */
+export function renderStatCard(
+  container: HTMLElement,
+  title: string,
+  value: string | number,
+  subtitle?: string,
+  icon?: string
+): void {
+  const card = container.createDiv({ cls: 'stats-card' });
+
+  if (icon) {
+    const iconEl = card.createDiv({ cls: 'stats-card-icon' });
+    setIcon(iconEl, icon);
+  }
+
+  card.createDiv({ text: title, cls: 'stats-card-title' });
+  card.createDiv({ text: String(value), cls: 'stats-card-value' });
+  if (subtitle) {
+    card.createDiv({ text: subtitle, cls: 'stats-card-subtitle' });
+  }
+}
+
+/**
  * Render a horizontal bar chart for folder distribution
  */
 export function renderBarChart(
   container: HTMLElement,
-  data: FolderStats[],
+  data: Array<{ path: string; count: number; totalSize: number }>,
   title: string,
   maxItems: number = 10,
   icon?: string
@@ -95,37 +119,13 @@ export function renderBarChart(
 
     const barContainer = barWrapper.createDiv({ cls: 'stats-bar-container' });
     const bar = barContainer.createDiv({ cls: 'stats-bar' });
-    const percentage = calculatePercentage(item.count, maxValue);
+    const percentage = maxValue > 0 ? (item.count / maxValue) * 100 : 0;
     bar.style.width = `${percentage}%`;
     bar.style.backgroundColor = getChartColor(index);
 
     const value = barWrapper.createDiv({ cls: 'stats-bar-value' });
     value.textContent = t('stats.fileCount', { count: item.count });
   });
-}
-
-/**
- * Render a statistics card with title, value, and optional subtitle
- */
-export function renderStatCard(
-  container: HTMLElement,
-  title: string,
-  value: string | number,
-  subtitle?: string,
-  icon?: string
-): void {
-  const card = container.createDiv({ cls: 'stats-card' });
-
-  if (icon) {
-    const iconEl = card.createDiv({ cls: 'stats-card-icon' });
-    setIcon(iconEl, icon);
-  }
-
-  card.createDiv({ text: title, cls: 'stats-card-title' });
-  card.createDiv({ text: String(value), cls: 'stats-card-value' });
-  if (subtitle) {
-    card.createDiv({ text: subtitle, cls: 'stats-card-subtitle' });
-  }
 }
 
 /**

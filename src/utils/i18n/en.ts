@@ -698,4 +698,6 @@ export const en: Record<string, string> = {
 	'stats.settings.cacheEnabled': 'Enable Cache',
 	'stats.settings.cacheEnabledDesc': 'Cache statistics data for better performance',
 	'stats.chartsTitle': 'Statistics Charts',
+	'stats.createdHeatmap': 'Note Creation Activity',
+	'stats.modifiedHeatmap': 'Note Modification Activity',
 };

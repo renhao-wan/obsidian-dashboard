@@ -46,6 +46,7 @@ const CSS_FILES = [
   'components/media.css',
   'components/calendar.css',
   'components/fortune.css',
+  'components/stats.css',
 ];
 
 function buildCSS() {

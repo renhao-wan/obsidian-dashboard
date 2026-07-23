@@ -1,6 +1,6 @@
 import type { App } from 'obsidian';
 import type { DashboardSettings, StatsSettings as CoreStatsSettings } from '../../core/types';
-import type { StatsRuntimeConfig, OverviewStats } from './types';
+import type { StatsRuntimeConfig, OverviewStats, FileMetadata } from './types';
 import { StatsScanner } from './scanner';
 import { StatsAnalyzer } from './analyzer';
 import { StatsCacheManager } from './cache';
@@ -52,8 +52,8 @@ export class StatsSection {
   }
 
   async render(container: HTMLElement): Promise<void> {
-    const stats = await this.getStats();
-    renderOverview(container, stats, this.statsSettings);
+    const { stats, files } = await this.getStatsWithFiles();
+    renderOverview(container, stats, this.statsSettings, files);
   }
 
   destroy(): void {
@@ -96,6 +96,28 @@ export class StatsSection {
     }
 
     return stats;
+  }
+
+  private async getStatsWithFiles(): Promise<{ stats: OverviewStats; files: FileMetadata[] }> {
+    // Check cache first
+    if (this.statsSettings.performance.cacheEnabled) {
+      const cached = this.cache.get();
+      if (cached) {
+        return { stats: cached.data, files: this.scanner.scan() };
+      }
+    }
+
+    // Scan files and analyze
+    const files = this.scanner.scan();
+    const stats = this.analyzer.analyze(files);
+
+    // Update cache with a hash based on stats data
+    if (this.statsSettings.performance.cacheEnabled) {
+      const hash = this.calculateStatsHash(stats);
+      this.cache.set(stats, hash);
+    }
+
+    return { stats, files };
   }
 }
 

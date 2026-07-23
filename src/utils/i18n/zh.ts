@@ -696,4 +696,6 @@ export const zh: Record<string, string> = {
 	'stats.settings.cacheEnabled': '启用缓存',
 	'stats.settings.cacheEnabledDesc': '缓存统计数据以提高性能',
 	'stats.chartsTitle': '统计图表',
+	'stats.createdHeatmap': '笔记创建活动',
+	'stats.modifiedHeatmap': '笔记修改活动',
 };
