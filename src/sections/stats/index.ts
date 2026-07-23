@@ -3,7 +3,7 @@ import type { DashboardSettings, DashboardColumn } from '../../core/types';
 import type { StatsSettings, OverviewStats } from './types';
 import { StatsScanner } from './scanner';
 import { StatsAnalyzer } from './analyzer';
-import { StatsCache } from './cache';
+import { StatsCacheManager } from './cache';
 import { renderOverview } from './views/overview';
 
 export class StatsSection {
@@ -12,7 +12,7 @@ export class StatsSection {
   private statsSettings: StatsSettings;
   private scanner: StatsScanner;
   private analyzer: StatsAnalyzer;
-  private cache: StatsCache;
+  private cache: StatsCacheManager;
 
   constructor(app: App, settings: DashboardSettings) {
     this.app = app;
@@ -20,7 +20,7 @@ export class StatsSection {
     this.statsSettings = this.getDefaultStatsSettings();
     this.scanner = new StatsScanner(app, this.statsSettings);
     this.analyzer = new StatsAnalyzer();
-    this.cache = new StatsCache();
+    this.cache = new StatsCacheManager();
   }
 
   private getDefaultStatsSettings(): StatsSettings {
