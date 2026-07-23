@@ -94,52 +94,6 @@
 	flex-shrink: 0;
 }
 
-/* Bar Chart */
-.stats-bar-chart {
-	display: flex;
-	flex-direction: column;
-	gap: 8px;
-}
-
-.stats-bar-wrapper {
-	display: flex;
-	align-items: center;
-	gap: 8px;
-}
-
-.stats-bar-label {
-	font-size: 0.8em;
-	color: var(--db-text-secondary);
-	width: 80px;
-	flex-shrink: 0;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-
-.stats-bar-container {
-	flex: 1;
-	height: 16px;
-	background: var(--db-bg-btn);
-	border-radius: 8px;
-	overflow: hidden;
-}
-
-.stats-bar {
-	height: 100%;
-	border-radius: 8px;
-	transition: width 0.4s ease;
-	min-width: 2px;
-}
-
-.stats-bar-value {
-	font-size: 0.75em;
-	color: var(--db-text-muted);
-	width: 60px;
-	flex-shrink: 0;
-	text-align: right;
-}
-
 /* Stat Card */
 .stats-card {
 	display: flex;
@@ -287,6 +241,348 @@
 	--db-heatmap-level-2: #006d32;
 	--db-heatmap-level-3: #26a641;
 	--db-heatmap-level-4: #39d353;
+}
+
+/* Timeline Section */
+.stats-timeline-section {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	padding: 20px;
+	background: var(--db-bg-card);
+	border-radius: 12px;
+	border: 1px solid var(--db-border-card);
+	backdrop-filter: var(--db-backdrop-blur);
+	-webkit-backdrop-filter: var(--db-backdrop-blur);
+}
+
+.stats-timeline-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.stats-timeline-title {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 0.9em;
+	font-weight: 600;
+	color: var(--db-text-heading);
+	margin: 0;
+	padding: 0;
+}
+
+.stats-timeline-title-icon {
+	display: flex;
+	align-items: center;
+	color: var(--db-accent);
+}
+
+.stats-timeline-title-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.stats-timeline-chart {
+	width: 100%;
+	overflow: hidden;
+}
+
+.stats-trend-summary {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	background: var(--db-bg-input);
+	border-radius: 8px;
+	font-size: 0.85em;
+}
+
+.stats-trend-icon {
+	font-weight: bold;
+}
+
+.stats-trend-up {
+	color: #22c55e;
+}
+
+.stats-trend-down {
+	color: #ef4444;
+}
+
+.stats-trend-stable {
+	color: var(--db-text-muted);
+}
+
+.stats-trend-text {
+	color: var(--db-text-secondary);
+}
+
+/* Content Section */
+.stats-content-section {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	padding: 20px;
+	background: var(--db-bg-card);
+	border-radius: 12px;
+	border: 1px solid var(--db-border-card);
+	backdrop-filter: var(--db-backdrop-blur);
+	-webkit-backdrop-filter: var(--db-backdrop-blur);
+}
+
+.stats-section-title {
+	font-size: 1.1em;
+	font-weight: 600;
+	color: var(--db-text-heading);
+	margin: 0;
+	padding: 0;
+	padding-bottom: 12px;
+	border-bottom: 1px solid var(--db-border-card);
+}
+
+/* Tag Cloud */
+.stats-tag-cloud-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.stats-tag-cloud-title {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 0.9em;
+	font-weight: 600;
+	color: var(--db-text-heading);
+	margin: 0;
+	padding: 0;
+}
+
+.stats-tag-cloud-title-icon {
+	display: flex;
+	align-items: center;
+	color: var(--db-accent);
+}
+
+.stats-tag-cloud-title-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.stats-tag-cloud {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	align-items: center;
+}
+
+.stats-tag-cloud-item {
+	display: inline-block;
+	padding: 4px 8px;
+	background: var(--db-accent-bg);
+	color: var(--db-accent);
+	border-radius: 4px;
+	cursor: default;
+	transition: background 0.2s ease;
+}
+
+.stats-tag-cloud-item:hover {
+	background: var(--db-accent);
+	color: white;
+}
+
+/* Keyword Cloud */
+.stats-keyword-cloud-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.stats-keyword-cloud-title {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 0.9em;
+	font-weight: 600;
+	color: var(--db-text-heading);
+	margin: 0;
+	padding: 0;
+}
+
+.stats-keyword-cloud-title-icon {
+	display: flex;
+	align-items: center;
+	color: var(--db-accent);
+}
+
+.stats-keyword-cloud-title-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.stats-keyword-cloud {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	align-items: center;
+}
+
+.stats-keyword-cloud-item {
+	display: inline-block;
+	padding: 4px 8px;
+	background: var(--db-bg-input);
+	color: var(--db-text);
+	border-radius: 4px;
+	cursor: default;
+	transition: background 0.2s ease;
+}
+
+.stats-keyword-cloud-item:hover {
+	background: var(--db-accent-bg);
+	color: var(--db-accent);
+}
+
+/* Content Stats */
+.stats-content-stats-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.stats-content-stats-title {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 0.9em;
+	font-weight: 600;
+	color: var(--db-text-heading);
+	margin: 0;
+	padding: 0;
+}
+
+.stats-content-stats-title-icon {
+	display: flex;
+	align-items: center;
+	color: var(--db-accent);
+}
+
+.stats-content-stats-title-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.stats-content-stats-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+	gap: 12px;
+}
+
+.stats-content-stat-card {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	padding: 12px;
+	background: var(--db-bg-input);
+	border-radius: 8px;
+}
+
+.stats-content-stat-card--wide {
+	grid-column: span 2;
+}
+
+.stats-content-stat-value {
+	font-size: 1.4em;
+	font-weight: 700;
+	color: var(--db-text-heading);
+}
+
+.stats-content-stat-label {
+	font-size: 0.8em;
+	color: var(--db-text-muted);
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+.stats-content-stat-path {
+	font-size: 0.75em;
+	color: var(--db-text-secondary);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* Word Distribution */
+.stats-word-distribution-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.stats-word-distribution-title {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 0.9em;
+	font-weight: 600;
+	color: var(--db-text-heading);
+	margin: 0;
+	padding: 0;
+}
+
+.stats-word-distribution-title-icon {
+	display: flex;
+	align-items: center;
+	color: var(--db-accent);
+}
+
+.stats-word-distribution-title-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.stats-word-distribution-chart {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.stats-word-distribution-bar-wrapper {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.stats-word-distribution-label {
+	font-size: 0.8em;
+	color: var(--db-text-muted);
+	width: 80px;
+	flex-shrink: 0;
+}
+
+.stats-word-distribution-bar-container {
+	flex: 1;
+	height: 16px;
+	background: var(--db-bg-input);
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.stats-word-distribution-bar {
+	height: 100%;
+	background: var(--db-accent);
+	border-radius: 8px;
+	transition: width 0.4s ease;
+	min-width: 2px;
+}
+
+.stats-word-distribution-value {
+	font-size: 0.75em;
+	color: var(--db-text-muted);
+	width: 60px;
+	flex-shrink: 0;
+	text-align: right;
 }
 
 /* ===== Dashboard Stats Overview ===== */

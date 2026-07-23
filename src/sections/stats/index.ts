@@ -1,10 +1,12 @@
 import type { App } from 'obsidian';
+import { TFile } from 'obsidian';
 import type { DashboardSettings, StatsSettings as CoreStatsSettings } from '../../core/types';
 import type { StatsRuntimeConfig, OverviewStats, FileMetadata } from './types';
 import { StatsScanner } from './scanner';
 import { StatsAnalyzer } from './analyzer';
 import { StatsCacheManager } from './cache';
 import { renderOverview } from './views/overview';
+import type { TagData, KeywordData, ContentStats, WordLengthDistribution } from '../../components/stats/content-analysis';
 
 export class StatsSection {
   private app: App;
@@ -52,8 +54,20 @@ export class StatsSection {
   }
 
   async render(container: HTMLElement): Promise<void> {
-    const { stats, files } = await this.getStatsWithFiles();
-    renderOverview(container, stats, this.statsSettings, files);
+    const { stats, files, contentData } = await this.getStatsWithFiles();
+
+    // Analyze content data
+    const tags = this.analyzer.analyzeTags(contentData);
+    const keywords = this.analyzer.analyzeKeywords(contentData);
+    const contentStats = this.analyzer.analyzeContentStats(contentData);
+    const wordDistribution = this.analyzer.analyzeWordLengthDistribution(contentData);
+
+    renderOverview(container, stats, this.statsSettings, files, {
+      tags,
+      keywords,
+      contentStats,
+      wordDistribution,
+    });
   }
 
   destroy(): void {
@@ -98,18 +112,25 @@ export class StatsSection {
     return stats;
   }
 
-  private async getStatsWithFiles(): Promise<{ stats: OverviewStats; files: FileMetadata[] }> {
+  private async getStatsWithFiles(): Promise<{
+    stats: OverviewStats;
+    files: FileMetadata[];
+    contentData: Array<{ path: string; content: string }>;
+  }> {
     // Check cache first
     if (this.statsSettings.performance.cacheEnabled) {
       const cached = this.cache.get();
       if (cached) {
-        return { stats: cached.data, files: this.scanner.scan() };
+        const files = this.scanner.scan();
+        const contentData = await this.loadFileContents(files);
+        return { stats: cached.data, files, contentData };
       }
     }
 
     // Scan files and analyze
     const files = this.scanner.scan();
     const stats = this.analyzer.analyze(files);
+    const contentData = await this.loadFileContents(files);
 
     // Update cache with a hash based on stats data
     if (this.statsSettings.performance.cacheEnabled) {
@@ -117,7 +138,33 @@ export class StatsSection {
       this.cache.set(stats, hash);
     }
 
-    return { stats, files };
+    return { stats, files, contentData };
+  }
+
+  /**
+   * Load file contents for content analysis
+   */
+  private async loadFileContents(files: FileMetadata[]): Promise<Array<{ path: string; content: string }>> {
+    const contentData: Array<{ path: string; content: string }> = [];
+    const maxFiles = 1000; // Limit to prevent performance issues
+
+    for (let i = 0; i < Math.min(files.length, maxFiles); i++) {
+      const file = files[i];
+      if (!file) continue;
+
+      try {
+        const tFile = this.app.vault.getAbstractFileByPath(file.path);
+        if (tFile instanceof TFile) {
+          const content = await this.app.vault.read(tFile);
+          contentData.push({ path: file.path, content });
+        }
+      } catch (error) {
+        // Skip files that can't be read
+        console.warn(`Failed to read file ${file.path}:`, error);
+      }
+    }
+
+    return contentData;
   }
 }
 
