@@ -2641,6 +2641,7 @@
 	border: 1px solid var(--background-modifier-border);
 	border-radius: 8px;
 	overflow: hidden;
+	overflow-anchor: none;
 }
 
 .dashboard-settings-panel:last-child {
@@ -2699,6 +2700,7 @@
 	max-height: 0;
 	overflow: hidden;
 	transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	overflow-anchor: none;
 }
 
 .dashboard-settings-panel.is-expanded .dashboard-settings-panel-content {
@@ -2707,5 +2709,6 @@
 
 .dashboard-settings-panel-content-inner {
 	padding: 8px 16px 16px;
+	overflow-anchor: none;
 }
 
