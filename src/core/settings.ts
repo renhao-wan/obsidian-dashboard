@@ -229,7 +229,15 @@ export class DashboardSettingTab extends PluginSettingTab {
 				}));
 
 		if (this.plugin.settings.pomodoroEnabled) {
-			const workSetting = new Setting(pomodoroCard)
+			// 折叠面板
+			const details = pomodoroCard.createEl('details');
+			const summary = details.createEl('summary');
+			summary.textContent = t('settings.pomodoroAdvanced');
+			summary.className = 'dashboard-settings-summary';
+
+			const advancedSettings = details.createDiv({ cls: 'dashboard-settings-advanced' });
+
+			const workSetting = new Setting(advancedSettings)
 				.setName(t('settings.pomodoroWork') + '  ' + this.plugin.settings.pomodoroWorkMinutes + ' min')
 				.addSlider(slider => slider
 					.setLimits(15, 60, 5)
@@ -244,7 +252,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 						workSetting.nameEl.setText(t('settings.pomodoroWork') + '  ' + value + ' min');
 					}));
 
-			const shortSetting = new Setting(pomodoroCard)
+			const shortSetting = new Setting(advancedSettings)
 				.setName(t('settings.pomodoroShortBreak') + '  ' + this.plugin.settings.pomodoroShortBreakMinutes + ' min')
 				.addSlider(slider => slider
 					.setLimits(1, 15, 1)
@@ -259,7 +267,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 						shortSetting.nameEl.setText(t('settings.pomodoroShortBreak') + '  ' + value + ' min');
 					}));
 
-			const longSetting = new Setting(pomodoroCard)
+			const longSetting = new Setting(advancedSettings)
 				.setName(t('settings.pomodoroLongBreak') + '  ' + this.plugin.settings.pomodoroLongBreakMinutes + ' min')
 				.addSlider(slider => slider
 					.setLimits(5, 30, 5)
@@ -274,7 +282,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 						longSetting.nameEl.setText(t('settings.pomodoroLongBreak') + '  ' + value + ' min');
 					}));
 
-			const intervalSetting = new Setting(pomodoroCard)
+			const intervalSetting = new Setting(advancedSettings)
 				.setName(t('settings.pomodoroInterval') + '  ' + this.plugin.settings.pomodoroLongBreakInterval)
 				.addSlider(slider => slider
 					.setLimits(2, 6, 1)
@@ -289,7 +297,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 						intervalSetting.nameEl.setText(t('settings.pomodoroInterval') + '  ' + value);
 					}));
 
-			new Setting(pomodoroCard)
+			new Setting(advancedSettings)
 				.setName(t('settings.pomodoroAutoStart'))
 				.setDesc(t('settings.pomodoroAutoStartDesc'))
 				.addToggle(toggle => toggle
@@ -302,7 +310,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 						await this.plugin.saveSettings();
 					}));
 
-			new Setting(pomodoroCard)
+			new Setting(advancedSettings)
 				.setName(t('settings.pomodoroSound'))
 				.addToggle(toggle => toggle
 					.setValue(this.plugin.settings.pomodoroSoundEnabled)

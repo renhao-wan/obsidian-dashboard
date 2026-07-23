@@ -37,6 +37,7 @@ export const en: Record<string, string> = {
 	'settings.pathSettings': 'Path Settings',
 	'settings.functionSettings': 'Function Settings',
 	'settings.otherSettings': 'Other Settings',
+	'settings.pomodoroAdvanced': 'Advanced Settings',
 
 	// Style Presets
 	'settings.stylePreset': 'Style',

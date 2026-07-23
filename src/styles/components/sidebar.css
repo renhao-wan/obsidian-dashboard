@@ -2649,3 +2649,20 @@
 	margin-bottom: 0;
 }
 
+/* 折叠面板样式 */
+.dashboard-settings-summary {
+	cursor: pointer;
+	padding: 8px 0;
+	font-size: 0.9em;
+	color: var(--text-muted);
+	user-select: none;
+}
+
+.dashboard-settings-summary:hover {
+	color: var(--text-normal);
+}
+
+.dashboard-settings-advanced {
+	padding-top: 8px;
+}
+

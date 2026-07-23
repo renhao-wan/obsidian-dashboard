@@ -37,6 +37,7 @@ export const zh: Record<string, string> = {
 	'settings.pathSettings': '路径设置',
 	'settings.functionSettings': '功能设置',
 	'settings.otherSettings': '其他设置',
+	'settings.pomodoroAdvanced': '高级设置',
 
 	// Style Presets
 	'settings.stylePreset': '样式',
