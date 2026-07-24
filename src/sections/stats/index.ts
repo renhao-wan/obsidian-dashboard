@@ -7,6 +7,7 @@ import { StatsAnalyzer } from './analyzer';
 import { StatsCacheManager } from './cache';
 import { renderOverview } from './views/overview';
 import type { TagData, KeywordData, ContentStats, WordLengthDistribution } from '../../components/stats/content-analysis';
+import { t } from '../../utils/i18n';
 
 export class StatsSection {
   private app: App;
@@ -51,20 +52,35 @@ export class StatsSection {
   }
 
   async render(container: HTMLElement): Promise<void> {
-    const { stats, files, contentData } = await this.getStatsWithFiles();
+    // Show loading state
+    container.empty();
+    const loadingEl = container.createDiv({ cls: 'stats-loading' });
+    const spinnerEl = loadingEl.createDiv({ cls: 'stats-loading-spinner' });
+    loadingEl.createDiv({ text: t('stats.loading') || '加载中...', cls: 'stats-loading-text' });
 
-    // Analyze content data
-    const tags = this.analyzer.analyzeTags(contentData);
-    const keywords = this.analyzer.analyzeKeywords(contentData);
-    const contentStats = this.analyzer.analyzeContentStats(contentData);
-    const wordDistribution = this.analyzer.analyzeWordLengthDistribution(contentData);
+    try {
+      const { stats, files, contentData } = await this.getStatsWithFiles();
 
-    renderOverview(container, stats, this.statsSettings, files, {
-      tags,
-      keywords,
-      contentStats,
-      wordDistribution,
-    });
+      // Analyze content data
+      const tags = this.analyzer.analyzeTags(contentData);
+      const keywords = this.analyzer.analyzeKeywords(contentData);
+      const contentStats = this.analyzer.analyzeContentStats(contentData);
+      const wordDistribution = this.analyzer.analyzeWordLengthDistribution(contentData);
+
+      // Remove loading and render content
+      container.empty();
+      renderOverview(container, stats, this.statsSettings, files, {
+        tags,
+        keywords,
+        contentStats,
+        wordDistribution,
+      });
+    } catch (error) {
+      console.error('[Stats] Render failed:', error);
+      container.empty();
+      const errorEl = container.createDiv({ cls: 'stats-error' });
+      errorEl.createDiv({ text: t('stats.loadError') || '加载失败', cls: 'stats-error-text' });
+    }
   }
 
   destroy(): void {

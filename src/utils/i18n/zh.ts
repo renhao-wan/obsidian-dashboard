@@ -681,6 +681,8 @@ export const zh: Record<string, string> = {
 
 	// Stats
 	'stats.title': '笔记统计',
+	'stats.loading': '加载中...',
+	'stats.loadError': '加载失败',
 	'stats.totalNotes': '总笔记数',
 	'stats.totalSize': '总大小',
 	'stats.todayCreated': '今日新增',

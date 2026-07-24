@@ -683,6 +683,8 @@ export const en: Record<string, string> = {
 
 	// Stats
 	'stats.title': 'Note Statistics',
+	'stats.loading': 'Loading...',
+	'stats.loadError': 'Failed to load',
 	'stats.totalNotes': 'Total Notes',
 	'stats.totalSize': 'Total Size',
 	'stats.todayCreated': 'Today Created',
