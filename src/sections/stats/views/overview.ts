@@ -131,10 +131,11 @@ export async function renderOverview(
     await renderDistribution('word');
 
     // Selector change handler
-    selector.addEventListener('change', async () => {
-      await renderDistribution(selector.value);
-      // Remove focus after selection
-      selector.blur();
+    selector.addEventListener('change', () => {
+      void renderDistribution(selector.value).then(() => {
+        // Remove focus after selection
+        selector.blur();
+      });
     });
   }
 

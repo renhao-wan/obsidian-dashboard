@@ -8,7 +8,6 @@ data.json
 .DS_Store
 
 # Source code
-version-bump.mjs
 .npmrc
 .editorconfig
 

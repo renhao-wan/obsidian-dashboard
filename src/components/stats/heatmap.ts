@@ -4,7 +4,6 @@
  */
 
 import { setIcon } from 'obsidian';
-import { t } from '../../utils/i18n';
 
 export interface HeatmapData {
   date: string; // YYYY-MM-DD format
@@ -74,16 +73,6 @@ function formatDate(date: Date): string {
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const day = String(date.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
-}
-
-/**
- * Get the start of the week (Sunday)
- */
-function getWeekStart(date: Date): Date {
-  const d = new Date(date);
-  d.setDate(d.getDate() - d.getDay());
-  d.setHours(0, 0, 0, 0);
-  return d;
 }
 
 /**

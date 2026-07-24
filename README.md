@@ -57,11 +57,10 @@ The sidebar shows recently edited files with relative timestamps, so you can jum
 | **Tundra** | Cold gray + avocado green aurora, sage glass cards |
 | **Blossom** | Rose glass glow, transparent sections |
 | **Haze** | Smoky white-to-blue mist, extreme glass transparency |
-| **Ember** | Warm campfire smoke gradient, amber glow |
 | **Jade** | Green bamboo mist, crisp jade-cut edges |
 | **Matcha** | Morandi green, solid warm tones |
 | **Lilac** | Morandi purple, soft and muted |
-| **Eclipse** | Industrial monochrome, sharp lines |
+| **Carbon** | Industrial monochrome, sharp lines |
 | **Onyx** | Pure black with lemon accent, identical in light & dark |
 | **Mono** | Pure black/white minimal, no glass or gradients |
 
@@ -115,7 +114,7 @@ src/
 
 ## Compatibility
 
-- Obsidian v0.15.0+
+- Obsidian v1.8.7+
 - Desktop and mobile
 - All themes work in both light and dark Obsidian modes
 

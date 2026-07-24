@@ -37,7 +37,7 @@ export function extractTags(content: string): string[] {
   const tags: string[] = [];
 
   // Match #tag format
-  const hashtagRegex = /#([a-zA-Z0-9_\-\/]+)/g;
+  const hashtagRegex = /#([a-zA-Z0-9_\-/]+)/g;
   let match;
   while ((match = hashtagRegex.exec(content)) !== null) {
     if (match[1]) {

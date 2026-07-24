@@ -6,7 +6,6 @@ import { StatsScanner } from './scanner';
 import { StatsAnalyzer } from './analyzer';
 import { StatsCacheManager } from './cache';
 import { renderOverview } from './views/overview';
-import type { TagData, KeywordData, ContentStats, WordLengthDistribution } from '../../components/stats/content-analysis';
 import { t } from '../../utils/i18n';
 
 export class StatsSection {
@@ -55,7 +54,7 @@ export class StatsSection {
     // Show loading state
     container.empty();
     const loadingEl = container.createDiv({ cls: 'stats-loading' });
-    const spinnerEl = loadingEl.createDiv({ cls: 'stats-loading-spinner' });
+    loadingEl.createDiv({ cls: 'stats-loading-spinner' });
     loadingEl.createDiv({ text: t('stats.loading') || '加载中...', cls: 'stats-loading-text' });
 
     try {
@@ -69,7 +68,7 @@ export class StatsSection {
 
       // Remove loading and render content
       container.empty();
-      renderOverview(container, stats, this.statsSettings, files, {
+      await renderOverview(container, stats, this.statsSettings, files, {
         tags,
         keywords,
         contentStats,

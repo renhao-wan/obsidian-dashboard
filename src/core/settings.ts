@@ -1,4 +1,4 @@
-import { App, Notice, PluginSettingTab, Setting } from 'obsidian';
+import { App, Modal, Notice, PluginSettingTab, Setting } from 'obsidian';
 import type DashboardPlugin from './main';
 import { DEFAULT_SETTINGS, type DashboardSettings, type CountdownConfig } from './types';
 import { t, setLanguage, type Language } from '../utils/i18n';
@@ -257,13 +257,11 @@ export class DashboardSettingTab extends PluginSettingTab {
 	}
 
 	private openExtensionsModal(currentExtensions: string[]): void {
-		const { Modal } = require('obsidian');
-
 		class ExtensionsModal extends Modal {
 			private extensions: string[];
-			private onSave: (extensions: string[]) => void;
+			private onSave: (extensions: string[]) => void | Promise<void>;
 
-			constructor(app: App, extensions: string[], onSave: (extensions: string[]) => void) {
+			constructor(app: App, extensions: string[], onSave: (extensions: string[]) => void | Promise<void>) {
 				super(app);
 				this.extensions = [...extensions];
 				this.onSave = onSave;
@@ -273,7 +271,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 				const { contentEl } = this;
 				contentEl.empty();
 
-				contentEl.createEl('h2', { text: t('stats.settings.fileExtensions') });
+				new Setting(contentEl).setName("").setHeading();
 
 				// Preset checkboxes
 				const presets = ['.md', '.txt', '.org', '.canvas', '.csv', '.json', '.xml', '.yaml', '.yml', '.html', '.css', '.js', '.ts'];
@@ -300,7 +298,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 				}
 
 				// Custom extensions
-				contentEl.createEl('h3', { text: t('stats.settings.customExtensions') || '自定义扩展名' });
+				new Setting(contentEl).setName("").setHeading();
 				const customContainer = contentEl.createDiv({ cls: 'dashboard-extensions-custom' });
 				const customList = customContainer.createDiv({ cls: 'dashboard-extensions-custom-list' });
 
@@ -352,7 +350,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 
 				const saveBtn = btnRow.createEl('button', { text: t('common.save') || '保存', cls: 'mod-cta' });
 				saveBtn.addEventListener('click', () => {
-					this.onSave(this.extensions);
+					void this.onSave(this.extensions);
 					this.close();
 				});
 			}
@@ -697,9 +695,10 @@ export class DashboardSettingTab extends PluginSettingTab {
 		close();
 		if (results.length === 0) return dropdown;
 
-		const next = inputEl.ownerDocument.createElement('div');
-		next.className = 'dashboard-city-suggest';
-		Object.assign(next.style, {
+		const doc = inputEl.ownerDocument;
+		const win = doc.defaultView || window;
+		const next = win.createDiv({ cls: 'dashboard-city-suggest' });
+		next.setCssProps({
 			position: 'absolute',
 			zIndex: '100',
 			background: 'var(--background-secondary)',
@@ -712,14 +711,16 @@ export class DashboardSettingTab extends PluginSettingTab {
 		});
 
 		const rect = inputEl.getBoundingClientRect();
-		next.style.left = rect.left + 'px';
-		next.style.top = (rect.bottom + 4) + 'px';
+		next.setCssProps({
+			left: rect.left + 'px',
+			top: (rect.bottom + 4) + 'px',
+		});
 
 		for (const r of results) {
-			const item = next.createDiv({ cls: 'dashboard-city-suggest-item' });
+			const item = win.createDiv({ cls: 'dashboard-city-suggest-item', parent: next });
 			const label = r.admin1 ? `${r.name}, ${r.admin1}, ${r.country}` : `${r.name}, ${r.country}`;
 			item.textContent = label;
-			Object.assign(item.style, {
+			item.setCssProps({
 				padding: '6px 10px',
 				cursor: 'pointer',
 				fontSize: '0.85em',
@@ -747,7 +748,7 @@ export class DashboardSettingTab extends PluginSettingTab {
 			});
 		}
 
-		inputEl.ownerDocument.body.appendChild(next);
+		doc.body.appendChild(next);
 		return next;
 	}
 
