@@ -58,6 +58,18 @@ export interface FolderStats {
   totalSize: number;
 }
 
+export interface SizeDistribution {
+  range: string;
+  count: number;
+  percentage: number;
+}
+
+export interface DepthDistribution {
+  depth: number;
+  count: number;
+  percentage: number;
+}
+
 export interface OverviewStats {
   totalFiles: number;
   totalSize: number;
@@ -65,6 +77,8 @@ export interface OverviewStats {
   weekCreated: number;
   fileTypeStats: FileTypeStats[];
   folderStats: FolderStats[];
+  sizeDistribution: SizeDistribution[];
+  depthDistribution: DepthDistribution[];
 }
 
 export interface CachedStatsData {

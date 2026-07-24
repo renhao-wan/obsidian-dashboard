@@ -163,6 +163,132 @@
 	flex-shrink: 0;
 }
 
+/* Overview Layout */
+.stats-overview-layout {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 20px;
+}
+
+.stats-overview-left,
+.stats-overview-right {
+	display: flex;
+	flex-direction: column;
+}
+
+.stats-overview-left .stats-chart-wrapper,
+.stats-overview-right .stats-chart-wrapper {
+	flex: 1;
+}
+
+/* Distribution Selector */
+.stats-chart-header {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 8px;
+	margin-bottom: 12px;
+}
+
+.stats-distribution-select {
+	padding: 4px 8px;
+	background-color: var(--db-bg-input);
+	border: 1px solid var(--db-border-card);
+	border-radius: 4px;
+	color: var(--db-text-muted);
+	font-size: 0.8em;
+	cursor: pointer;
+	outline: none;
+}
+
+.stats-distribution-select:hover {
+	color: var(--db-text);
+	background-color: var(--db-bg-hover);
+}
+
+.stats-distribution-select:focus {
+	color: var(--db-text);
+	background-color: var(--db-bg-hover);
+	outline: none;
+	box-shadow: 0 0 0 2px var(--db-accent);
+}
+
+.stats-distribution-select:active {
+	outline: none;
+	box-shadow: none;
+}
+
+.stats-distribution-select option {
+	background-color: var(--db-bg-card);
+	color: var(--db-text);
+}
+
+.stats-distribution-container {
+	flex: 1;
+}
+
+.stats-distribution-container .stats-chart-wrapper {
+	padding: 16px;
+	background: var(--db-bg-card);
+	border: 1px solid var(--db-border-card);
+	border-radius: 12px;
+}
+
+.stats-distribution-container .stats-progress-chart {
+	flex: 1;
+}
+
+/* Progress Chart */
+.stats-progress-chart {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.stats-progress-row {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.stats-progress-label {
+	font-size: 0.8em;
+	color: var(--db-text-secondary);
+	width: 100px;
+	flex-shrink: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.stats-progress-bar-bg {
+	flex: 1;
+	height: 8px;
+	background: var(--db-bg-input);
+	border-radius: 4px;
+	overflow: hidden;
+}
+
+.stats-progress-bar-fill {
+	height: 100%;
+	border-radius: 4px;
+	transition: width 0.4s ease;
+	min-width: 4px;
+}
+
+.stats-progress-value {
+	font-size: 0.8em;
+	font-weight: 600;
+	color: var(--db-text-heading);
+	width: 40px;
+	flex-shrink: 0;
+	text-align: right;
+}
+
+.stats-progress-row--empty {
+	opacity: 0.4;
+}
+
 /* Stat Card */
 .stats-card {
 	display: flex;
@@ -606,77 +732,6 @@
 }
 
 /* Word Distribution */
-.stats-word-distribution-wrapper {
-	display: flex;
-	flex-direction: column;
-	gap: 12px;
-}
-
-.stats-word-distribution-title {
-	display: flex;
-	align-items: center;
-	gap: 8px;
-	font-size: 0.9em;
-	font-weight: 600;
-	color: var(--db-text-heading);
-	margin: 0;
-	padding: 0;
-}
-
-.stats-word-distribution-title-icon {
-	display: flex;
-	align-items: center;
-	color: var(--db-accent);
-}
-
-.stats-word-distribution-title-icon svg {
-	width: 16px;
-	height: 16px;
-}
-
-.stats-word-distribution-chart {
-	display: flex;
-	flex-direction: column;
-	gap: 8px;
-}
-
-.stats-word-distribution-bar-wrapper {
-	display: flex;
-	align-items: center;
-	gap: 8px;
-}
-
-.stats-word-distribution-label {
-	font-size: 0.8em;
-	color: var(--db-text-muted);
-	width: 80px;
-	flex-shrink: 0;
-}
-
-.stats-word-distribution-bar-container {
-	flex: 1;
-	height: 16px;
-	background: var(--db-bg-input);
-	border-radius: 8px;
-	overflow: hidden;
-}
-
-.stats-word-distribution-bar {
-	height: 100%;
-	background: var(--db-accent);
-	border-radius: 8px;
-	transition: width 0.4s ease;
-	min-width: 2px;
-}
-
-.stats-word-distribution-value {
-	font-size: 0.75em;
-	color: var(--db-text-muted);
-	width: 60px;
-	flex-shrink: 0;
-	text-align: right;
-}
-
 /* ===== Dashboard Stats Overview ===== */
 
 .dashboard-stats-overview {

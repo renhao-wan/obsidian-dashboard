@@ -1,4 +1,4 @@
-import type { FileMetadata, OverviewStats, FileTypeStats, FolderStats } from './types';
+import type { FileMetadata, OverviewStats, FileTypeStats, FolderStats, SizeDistribution, DepthDistribution } from './types';
 import { groupBy, sumBy, sortBy } from '../../utils/stats/math-utils';
 import { isCreatedToday, isCreatedThisWeek } from '../../utils/stats/file-utils';
 import { extractTags, extractKeywords, calculateContentStats, calculateWordLengthDistribution } from '../../components/stats/content-analysis';
@@ -13,6 +13,8 @@ export class StatsAnalyzer {
 
     const fileTypeStats = this.calculateFileTypeStats(files);
     const folderStats = this.calculateFolderStats(files);
+    const sizeDistribution = this.calculateSizeDistribution(files);
+    const depthDistribution = this.calculateDepthDistribution(files);
 
     return {
       totalFiles,
@@ -21,6 +23,8 @@ export class StatsAnalyzer {
       weekCreated,
       fileTypeStats,
       folderStats,
+      sizeDistribution,
+      depthDistribution,
     };
   }
 
@@ -46,6 +50,50 @@ export class StatsAnalyzer {
     }));
 
     return sortBy(stats, s => s.count, true);
+  }
+
+  private calculateSizeDistribution(files: FileMetadata[]): SizeDistribution[] {
+    const ranges = [
+      { range: '< 1 KB', min: 0, max: 1024 },
+      { range: '1 - 10 KB', min: 1024, max: 10240 },
+      { range: '10 - 100 KB', min: 10240, max: 102400 },
+      { range: '100 KB - 1 MB', min: 102400, max: 1048576 },
+      { range: '> 1 MB', min: 1048576, max: Infinity },
+    ];
+
+    const total = files.length;
+    return ranges.map(({ range, min, max }) => {
+      const count = files.filter(f => f.size >= min && f.size < max).length;
+      return {
+        range,
+        count,
+        percentage: total > 0 ? Math.round((count / total) * 100) : 0,
+      };
+    });
+  }
+
+  private calculateDepthDistribution(files: FileMetadata[]): DepthDistribution[] {
+    const depthMap = new Map<number, number>();
+
+    for (const file of files) {
+      const depth = file.folder ? file.folder.split('/').length : 0;
+      // Group depths >= 4 into "4+"
+      const key = depth >= 4 ? 4 : depth;
+      depthMap.set(key, (depthMap.get(key) || 0) + 1);
+    }
+
+    const total = files.length;
+    const result: DepthDistribution[] = [];
+
+    for (const [depth, count] of depthMap.entries()) {
+      result.push({
+        depth,
+        count,
+        percentage: total > 0 ? Math.round((count / total) * 100) : 0,
+      });
+    }
+
+    return result.sort((a, b) => a.depth - b.depth);
   }
 
   /**

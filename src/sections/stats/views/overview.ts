@@ -1,5 +1,5 @@
 import type { OverviewStats, StatsRuntimeConfig, FileMetadata } from '../types';
-import { renderPieChart, renderStatCard } from '../../../components/stats/charts';
+import { renderPieChart, renderStatCard, renderSizeDistributionChart, renderDepthDistributionChart, getChartColor } from '../../../components/stats/charts';
 import { renderHeatmap, generateHeatmapData } from '../../../components/stats/heatmap';
 import { renderTimeline, generateTimelineData } from '../../../components/stats/timeline';
 import { renderTagCloud, renderKeywordCloud, renderContentStats, renderWordLengthDistribution } from '../../../components/stats/content-analysis';
@@ -78,17 +78,64 @@ export async function renderOverview(
     });
   }
 
-  // Tab 1: Overview - Pie chart
+  // Tab 1: Overview - Pie chart (left) + Distribution selector (right)
   const overviewContent = tabContents['overview'];
   if (overviewContent) {
-    const chartsContainer = overviewContent.createDiv({ cls: 'stats-charts' });
+    const overviewLayout = overviewContent.createDiv({ cls: 'stats-overview-layout' });
 
+    // Left: File type distribution pie chart
+    const leftColumn = overviewLayout.createDiv({ cls: 'stats-overview-left' });
     if (stats.fileTypeStats.length > 0) {
-      renderPieChart(chartsContainer, stats.fileTypeStats, t('stats.fileTypeDistribution'), 'pie-chart');
+      renderPieChart(leftColumn, stats.fileTypeStats, t('stats.fileTypeDistribution'), 'pie-chart');
     } else {
-      const placeholder = chartsContainer.createDiv({ cls: 'stats-chart-placeholder' });
+      const placeholder = leftColumn.createDiv({ cls: 'stats-chart-placeholder' });
       placeholder.createDiv({ text: t('stats.noData') || 'No file type data available', cls: 'stats-chart-placeholder-text' });
     }
+
+    // Right: Distribution chart with selector
+    const rightColumn = overviewLayout.createDiv({ cls: 'stats-overview-right' });
+
+    // Selector dropdown (outside chart wrapper)
+    const selectorContainer = rightColumn.createDiv({ cls: 'stats-chart-header' });
+    const selector = selectorContainer.createEl('select', { cls: 'stats-distribution-select' });
+    const options = [
+      { value: 'word', label: t('stats.wordDistribution') || '字数分布' },
+      { value: 'size', label: t('stats.sizeDistribution') || '文件大小分布' },
+      { value: 'depth', label: t('stats.depthDistribution') || '文件夹深度分布' },
+    ];
+    for (const opt of options) {
+      const optionEl = selector.createEl('option', { value: opt.value, text: opt.label });
+      if (opt.value === 'word') optionEl.selected = true;
+    }
+
+    // Container for the selected chart
+    const distContainer = rightColumn.createDiv({ cls: 'stats-distribution-container' });
+
+    // Render the selected distribution
+    const renderDistribution = async (type: string): Promise<void> => {
+      distContainer.empty();
+
+      if (type === 'word' && contentData && contentData.wordDistribution.length > 0) {
+        const wordColors = contentData.wordDistribution.map((_, i) => getChartColor(i));
+        await renderWordLengthDistribution(distContainer, contentData.wordDistribution, t('stats.wordDistribution') || '字数分布', wordColors);
+      } else if (type === 'size' && stats.sizeDistribution && stats.sizeDistribution.length > 0) {
+        renderSizeDistributionChart(distContainer, stats.sizeDistribution, t('stats.sizeDistribution') || '文件大小分布', 'hard-drive');
+      } else if (type === 'depth' && stats.depthDistribution && stats.depthDistribution.length > 0) {
+        renderDepthDistributionChart(distContainer, stats.depthDistribution, t('stats.depthDistribution') || '文件夹深度分布', 'folder-tree');
+      } else {
+        distContainer.createDiv({ text: t('stats.noData') || 'No data available', cls: 'stats-chart-empty' });
+      }
+    };
+
+    // Initial render
+    await renderDistribution('word');
+
+    // Selector change handler
+    selector.addEventListener('change', async () => {
+      await renderDistribution(selector.value);
+      // Remove focus after selection
+      selector.blur();
+    });
   }
 
   // Tab 2: Activity - Heatmap + Timeline
@@ -126,7 +173,7 @@ export async function renderOverview(
     });
   }
 
-  // Tab 3: Analysis - Content analysis
+  // Tab 3: Analysis - Content analysis (without word distribution, moved to Overview)
   const analysisContent = tabContents['analysis'];
   if (analysisContent) {
     if (contentData) {
@@ -141,10 +188,6 @@ export async function renderOverview(
 
         if (contentData.keywords.length > 0) {
           await renderKeywordCloud(contentSection, contentData.keywords, t('stats.keywordCloud') || 'Keyword Cloud', 30);
-        }
-
-        if (contentData.wordDistribution.length > 0) {
-          await renderWordLengthDistribution(contentSection, contentData.wordDistribution, t('stats.wordDistribution') || 'Word Count Distribution');
         }
       } catch (err) {
         console.error('[Stats] Content analysis render failed:', err);

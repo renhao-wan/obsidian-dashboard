@@ -686,6 +686,8 @@ export const zh: Record<string, string> = {
 	'stats.todayCreated': '今日新增',
 	'stats.thisWeek': '本周新增',
 	'stats.fileTypeDistribution': '文件类型分布',
+	'stats.sizeDistribution': '文件大小分布',
+	'stats.depthDistribution': '文件夹深度分布',
 	'stats.noData': '暂无数据',
 	'stats.settings.fileExtensions': '文件扩展名',
 	'stats.settings.fileExtensionsDesc': '要统计的文件扩展名',

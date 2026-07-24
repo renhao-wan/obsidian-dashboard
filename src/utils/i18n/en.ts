@@ -688,6 +688,8 @@ export const en: Record<string, string> = {
 	'stats.todayCreated': 'Today Created',
 	'stats.thisWeek': 'This Week',
 	'stats.fileTypeDistribution': 'File Types',
+	'stats.sizeDistribution': 'File Size Distribution',
+	'stats.depthDistribution': 'Folder Depth Distribution',
 	'stats.noData': 'No data available',
 	'stats.settings.fileExtensions': 'File Extensions',
 	'stats.settings.fileExtensionsDesc': 'File extensions to include in statistics',

@@ -355,14 +355,14 @@ export async function renderContentStats(
 export async function renderWordLengthDistribution(
   container: HTMLElement,
   distribution: WordLengthDistribution[],
-  title: string
+  title: string,
+  colors?: string[]
 ): Promise<void> {
-  
-  const wrapper = container.createDiv({ cls: 'stats-word-distribution-wrapper' });
+  const wrapper = container.createDiv({ cls: 'stats-chart-wrapper' });
 
   // Create title with icon
-  const titleEl = wrapper.createEl('h3', { cls: 'stats-word-distribution-title' });
-  const iconEl = titleEl.createSpan({ cls: 'stats-word-distribution-title-icon' });
+  const titleEl = wrapper.createEl('h3', { cls: 'stats-chart-title' });
+  const iconEl = titleEl.createSpan({ cls: 'stats-chart-title-icon' });
   setIcon(iconEl, 'bar-chart-2');
   titleEl.createSpan({ text: title });
 
@@ -373,24 +373,25 @@ export async function renderWordLengthDistribution(
 
   const maxCount = Math.max(...distribution.map(d => d.count), 1);
 
-  // Create chart
-  const chartContainer = wrapper.createDiv({ cls: 'stats-word-distribution-chart' });
+  // Default colors if not provided
+  const defaultColors = ['#3498db', '#2ecc71', '#e74c3c', '#f39c12', '#9b59b6', '#1abc9c', '#e67e22', '#34495e', '#16a085', '#c0392b'];
 
-  for (const item of distribution) {
-    const barWrapper = chartContainer.createDiv({ cls: 'stats-word-distribution-bar-wrapper' });
+  // Create chart using the same progress style
+  const chartContainer = wrapper.createDiv({ cls: 'stats-progress-chart' });
 
-    // Label
-    const label = barWrapper.createDiv({ cls: 'stats-word-distribution-label' });
+  distribution.forEach((item, index) => {
+    const row = chartContainer.createDiv({ cls: 'stats-progress-row' });
+
+    const label = row.createDiv({ cls: 'stats-progress-label' });
     label.textContent = item.range;
 
-    // Bar container
-    const barContainer = barWrapper.createDiv({ cls: 'stats-word-distribution-bar-container' });
-    const bar = barContainer.createDiv({ cls: 'stats-word-distribution-bar' });
+    const barContainer = row.createDiv({ cls: 'stats-progress-bar-bg' });
+    const bar = barContainer.createDiv({ cls: 'stats-progress-bar-fill' });
     const percentage = (item.count / maxCount) * 100;
     bar.style.width = `${percentage}%`;
+    bar.style.backgroundColor = colors?.[index] ?? defaultColors[index % defaultColors.length] ?? '#3498db';
 
-    // Value
-    const value = barWrapper.createDiv({ cls: 'stats-word-distribution-value' });
+    const value = row.createDiv({ cls: 'stats-progress-value' });
     value.textContent = item.count.toString();
-  }
+  });
 }
